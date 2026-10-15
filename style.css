@@ -36,9 +36,20 @@ body.ready #forge{animation:shine 6s linear infinite}@keyframes rise{from{opacit
 header{background:linear-gradient(#000 70%,rgba(0,0,0,0))}#stage{z-index:0}header,.line,.corner,footer{z-index:30}
 .logo{-webkit-background-clip:initial;background:none;color:#fff;gap:10px}.logo b{font-family:"Archivo Black";font-size:17px;letter-spacing:0}
 .mini{width:52px;height:38px;display:block}.mini svg{width:100%;height:100%}
-#forge{position:absolute;left:50%;top:48%;width:min(560px,82vw);aspect-ratio:4/3;transform:translate3d(-50%,-50%,300px);z-index:10;filter:drop-shadow(0 30px 40px rgba(0,0,0,.9)) drop-shadow(0 0 30px rgba(200,220,255,.18));background:none;animation:none}
+#forge{position:absolute;left:50%;top:48%;width:min(560px,82vw);aspect-ratio:4/3;transform:translate3d(-50%,-50%,300px);z-index:10;background:none;animation:none}
 #forge svg{width:100%;height:100%;display:block}#forge::after{content:none}
 .tag{top:calc(48% + min(220px,32vw))}
 .card{border-radius:6px}.card b{top:50%;bottom:auto;transform:translateY(-50%);text-align:center;font-size:clamp(16px,2vw,26px)}
 .bottomfade{position:fixed;left:0;right:0;bottom:0;height:calc(92px + env(safe-area-inset-bottom));background:#000;z-index:25}
 @media(max-width:600px){.bottomfade{height:calc(78px + env(safe-area-inset-bottom))}.logo b{font-size:14px}.mini{width:42px;height:31px}}
+
+.view button,.view button.on{background:none;border:none;width:26px;height:26px;padding:2px}.view button svg{width:100%;height:100%}.view button:not(.on){opacity:.8}
+.burger{border-radius:0;width:36px;height:28px;background:none;box-shadow:none;gap:5px}.burger i{width:34px;height:5px;border-radius:1px;background:linear-gradient(180deg,#fff,#8a9099 55%,#e5e8ec);box-shadow:0 0 4px rgba(255,255,255,.3)}
+@media(max-width:600px){
+.line,footer,.tag,.bottomfade{display:none}
+header{background:#000;padding:calc(18px + env(safe-area-inset-top)) 14px 10px}.view span{display:inline;font-family:system-ui;font-size:14px;letter-spacing:0;text-transform:none;color:#fff;margin-right:6px}
+.logo b{font-size:19px}.mini{width:48px;height:36px}
+#forge{width:45vw;top:45%}
+.corner{flex-direction:column!important;gap:12px;font-size:9px;letter-spacing:.18em;bottom:calc(46px + env(safe-area-inset-bottom))}.corner.l{left:8vw}.corner.r{right:12vw}
+.vinyl{width:104px;height:104px}.vinyl span{width:8px;height:8px;border:0;background:#111}.swirl{width:72px;height:96px;border-radius:46%}
+.card b{top:auto;bottom:8px;transform:none;font-family:Unbounded;font-size:6px;letter-spacing:.2em}.card small{display:none}}
