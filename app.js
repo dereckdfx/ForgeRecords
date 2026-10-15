@@ -29,10 +29,10 @@ const f=document.getElementById('forge');let auto=true;addEventListener('mousemo
 function loop(t){if(auto&&mob){tx=Math.sin(t/3000)*.3;ty=Math.cos(t/4000)*.2}
 mx+=(tx-mx)*.06;my+=(ty-my)*.06;const W=innerWidth,H=innerHeight;
 w.style.transform=`rotateY(${mx*14}deg) rotateX(${-my*10}deg)`;
-f.style.transform=`translate3d(-50%,-50%,140px) rotateY(${mx*35+Math.sin(t/2500)*10}deg) rotateX(${8-my*22}deg) rotateZ(-3deg)`;
+f.style.transform=`translate3d(-50%,-50%,300px) rotateY(${mx*35+Math.sin(t/2500)*10}deg) rotateX(${8-my*22}deg) rotateZ(-3deg)`;
 cards.forEach(k=>{const a=k.ang+t*k.sp;const x=Math.cos(a)*W*k.r*(mob?1.1:1.2),y=Math.max(-H/2+90+k.s*.62,Math.min(H/2-110-k.s*.62,Math.sin(a)*H*k.r*.9))+Math.sin(t/1800+k.ph)*12;
 k.c.style.transform=`translate3d(${x-k.s/2-mx*(k.z+600)*.15}px,${y-k.s*.62-my*(k.z+600)*.1}px,${k.z}px) rotateY(${k.rot+mx*20}deg) rotateZ(${k.rot*.4}deg)`;
-k.c.style.zIndex=k.z>0?6:1});requestAnimationFrame(loop)}
+k.c.style.zIndex=1});requestAnimationFrame(loop)}
 requestAnimationFrame(loop);
 setTimeout(()=>{document.getElementById('intro').classList.add('out');document.body.classList.add('ready')},1500);
 document.querySelectorAll('.view button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.view button').forEach(x=>x.classList.remove('on'));b.classList.add('on')});
