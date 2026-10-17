@@ -127,10 +127,7 @@ html,body{height:auto;overflow-x:hidden;overflow-y:auto}body.menu-open{overflow:
 #world{transform-style:flat}#stage{perspective:none}.card{left:0!important;top:0!important;transform-origin:center;will-change:transform,filter}
 #forge{z-index:10}
 
-.card{transition:opacity .15s ease}
 header{z-index:100!important;background:#000!important}body.menu-open header{background:transparent!important}
 #menu{z-index:90}
 #hero nav.social,#hero footer{display:none!important}
 #hero .corner{z-index:30}#hero #stage{z-index:0}
-@media(max-width:600px){.corner.l{bottom:calc(34px + env(safe-area-inset-bottom))}.corner.r{bottom:calc(40px + env(safe-area-inset-bottom))}}
-@media(min-width:601px){#hero .corner{bottom:calc(22px + env(safe-area-inset-bottom))}}
