@@ -1,17 +1,3 @@
-function badgeSVG(id){return `<svg viewBox="-20 -20 440 350" xmlns="http://www.w3.org/2000/svg"><defs>
-<linearGradient id="c${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".18" stop-color="#e3e7ec"/><stop offset=".42" stop-color="#6b7179"/><stop offset=".5" stop-color="#1c1f23"/><stop offset=".56" stop-color="#f7f9fb"/><stop offset=".75" stop-color="#9aa1a9"/><stop offset="1" stop-color="#40454c"/></linearGradient>
-<linearGradient id="d${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdfdfd"/><stop offset=".3" stop-color="#7a8088"/><stop offset=".5" stop-color="#eef1f4"/><stop offset=".7" stop-color="#2a2e33"/><stop offset="1" stop-color="#c9ced4"/></linearGradient>
-<linearGradient id="k${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050607"/><stop offset=".5" stop-color="#23272c"/><stop offset="1" stop-color="#08090a"/></linearGradient>
-<filter id="b${id}" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="bl"/><feSpecularLighting in="bl" surfaceScale="5" specularConstant="1.1" specularExponent="22" lighting-color="#fff" result="sp"><feDistantLight azimuth="235" elevation="48"/></feSpecularLighting><feComposite in="sp" in2="SourceAlpha" operator="in" result="s2"/><feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k2="1" k3=".75"/></filter>
-<g id="sw${id}"><path d="M0 0 C 6 -30, 34 -44, 58 -30 C 40 -30, 22 -20, 0 0Z"/></g></defs>
-<filter id="s${id}" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#000" flood-opacity=".9"/></filter><rect x="8" y="8" width="384" height="284" rx="46" fill="#000" filter="url(#s${id})"/><rect x="8" y="8" width="384" height="284" rx="46" fill="url(#d${id})" filter="url(#b${id})"/>
-<rect x="22" y="22" width="356" height="256" rx="34" fill="url(#k${id})" stroke="#000" stroke-width="2"/>
-<text x="150" y="196" text-anchor="middle" font-family="Archivo Black" font-style="italic" font-size="215" fill="url(#c${id})" stroke="#f4f6f8" stroke-width="2.5" filter="url(#b${id})" transform="skewX(-10)">1</text>
-<g transform="translate(272 118)" fill="url(#c${id})" stroke="#fff" stroke-width="1.2" filter="url(#b${id})">
-<circle r="62" fill="none" stroke="url(#d${id})" stroke-width="7"/>
-${[0,60,120,180,240,300].map(a=>`<use href="#sw${id}" transform="rotate(${a})"/>`).join('')}<circle r="9" fill="url(#d${id})"/></g>
-<rect x="40" y="206" width="320" height="56" rx="28" fill="url(#k${id})" stroke="url(#d${id})" stroke-width="5" filter="url(#b${id})"/>
-<text x="200" y="250" text-anchor="middle" font-family="Archivo Black" font-size="46" letter-spacing="10" textLength="270" fill="url(#c${id})" stroke="#fff" stroke-width="1" filter="url(#b${id})">FORGE</text></svg>`}
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG(i));
 const A=[["NOX DEL SUR",1],["LOS FORJADOS",2],["LUNA CROMA",3],["LAS REINAS DEL PERREO",4],["SOLENNE",5],["MOTELES",4],["ALWAYS",5],["VALKYRA",3],["KAI VERTIGO",1],["REY HIERRO",2],["MIRA SAINT",5],["DJ OBSIDIANA",1],["ATLAS ROSE",3],["ZAFIRO 99",2]];
 const w=document.getElementById('world'),mob=innerWidth<600,cards=[];
@@ -22,13 +8,28 @@ c.innerHTML=`<div class="art" style="background-image:url(img/c${a[1]}.jpg)"></d
 w.appendChild(c);const s=(mob?78:120)*(1+(i%3)*.18),ar=[1.15,.85,1.3][i%3];
 c.style.width=s+'px';c.style.height=s*ar+'px';cards.push({c,s,h:s*ar,a0:i/N*Math.PI*2,yo:YO[i%YO.length]})});
 const f=document.getElementById('forge'),PER=26000;
+let OB=null,OBt=0;function obst(){const now=performance.now();if(OB&&now-OBt<500)return OB;OBt=now;const pad=10,rc=e=>{const q=e.getBoundingClientRect();return{l:q.left-pad,r:q.right+pad,t:q.top-pad,b:q.bottom+pad}};
+const fr=f.getBoundingClientRect(),bw=fr.width,bh=fr.height;// use unrotated footprint, svg has padding inside
+const B={l:fr.left+bw*.02-pad,r:fr.right-bw*.02+pad,t:fr.top+bh*.03-pad,b:fr.bottom-bh*.03+pad};
+const hd=document.querySelector('header').getBoundingClientRect().bottom+8;
+const so=document.querySelector('#hero .social').getBoundingClientRect();
+OB={badge:B,corners:[...document.querySelectorAll('#hero .corner')].map(rc),top:hd,bot:innerHeight-so.top+10};return OB}
 function loop(t){const W=innerWidth,H=innerHeight,R=mob?W*.5:W*.36,P=mob?700:1100,cx=W/2,cy=H*(mob?.43:.48);
 w.style.transform='none';
 f.style.transform=`translate(-50%,-50%) perspective(700px) rotateY(${Math.sin(t/3400)*9}deg) rotateX(${4+Math.cos(t/4300)*3}deg) rotateZ(-1deg)`;
+const ob=obst();
 cards.forEach(k=>{const a=k.a0+t/PER*Math.PI*2,x=Math.sin(a)*R,z=Math.cos(a)*R,sc=P/(P-z*.9),d=(z/R+1)/2;
-const y=k.yo*H*(mob?.85:.8)-z*.1;const X=cx+x*sc-k.s/2;let Y=cy+y*sc-k.h/2;Y=Math.max(mob?88:70,Math.min(H-(mob?150:130)-k.h*sc*.5,Y));
-k.c.style.transform=`translate(${X}px,${Y}px) scale(${sc}) perspective(600px) rotateY(${Math.sin(a)*48}deg) rotateZ(${Math.sin(a*2+k.a0)*4}deg)`;
-k.c.style.zIndex=z>R*.15?20:1;k.c.style.filter=`brightness(${.55+.5*d})`;k.c.style.opacity=.75+.25*d});
+const y=k.yo*H*(mob?.85:.8)-z*.1;const cw=k.s*sc,ch=k.h*sc,ccx=cx+x*sc;let ccy=cy+y*sc;
+const top=ob.top+ch/2,bot=H-ob.bot-ch/2;ccy=Math.max(top,Math.min(bot,ccy));
+// badge: glide above/below when horizontally near
+const b=ob.badge,gx=Math.max(b.l-(ccx+cw/2),(ccx-cw/2)-b.r);let fb=Math.max(0,Math.min(1,1-gx/90));fb=fb*fb*(3-2*fb);
+if(fb>0){const up=(k.side??=(ccy<(b.t+b.b)/2?-1:1));const safe=up<0?Math.min(ccy,b.t-ch/2):Math.max(ccy,b.b+ch/2);ccy+= (safe-ccy)*fb}else k.side=null;
+// corners: glide up above vinyl/swirl when horizontally near
+for(const c of ob.corners){const g=Math.max(c.l-(ccx+cw/2),(ccx-cw/2)-c.r);let fc=Math.max(0,Math.min(1,1-g/70));fc=fc*fc*(3-2*fc);if(fc>0){const safe=Math.min(ccy,c.t-ch/2);ccy+=(safe-ccy)*fc}}
+const r={l:ccx-cw/2,r:ccx+cw/2,t:ccy-ch/2,b:ccy+ch/2};
+const hit=[b,...ob.corners].some(o=>r.l<o.r&&r.r>o.l&&r.t<o.b&&r.b>o.t)||r.t<ob.top||r.b>H-ob.bot;
+k.c.style.transform=`translate(${ccx-k.s/2}px,${ccy-k.h/2}px) scale(${sc}) perspective(600px) rotateY(${Math.sin(a)*48}deg) rotateZ(${Math.sin(a*2+k.a0)*4}deg)`;
+k.c.style.zIndex=1;k.c.style.filter=`brightness(${.55+.5*d})`;k.c.style.opacity=hit?0:.75+.25*d});
 requestAnimationFrame(loop)}
 requestAnimationFrame(loop);
 setTimeout(()=>{document.getElementById('intro').classList.add('out');document.body.classList.add('ready')},1500);

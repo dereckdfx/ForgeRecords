@@ -126,3 +126,5 @@ html,body{height:auto;overflow-x:hidden;overflow-y:auto}body.menu-open{overflow:
 @media(min-width:601px){.site-foot{padding-top:110px}.fchk p{font-size:12px}.flogos>*{max-width:110px;height:44px}}
 #world{transform-style:flat}#stage{perspective:none}.card{left:0!important;top:0!important;transform-origin:center;will-change:transform,filter}
 #forge{z-index:10}
+
+.card{transition:opacity .15s ease}
