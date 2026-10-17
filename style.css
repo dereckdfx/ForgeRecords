@@ -53,3 +53,27 @@ header{background:#000;padding:calc(18px + env(safe-area-inset-top)) 14px 10px}.
 .corner{flex-direction:column!important;gap:12px;font-size:9px;letter-spacing:.18em;bottom:calc(46px + env(safe-area-inset-bottom))}.corner.l{left:8vw}.corner.r{right:12vw}
 .vinyl{width:104px;height:104px}.vinyl span{width:8px;height:8px;border:0;background:#111}.swirl{width:72px;height:96px;border-radius:46%}
 .card b{top:auto;bottom:8px;transform:none;font-family:Unbounded;font-size:6px;letter-spacing:.2em}.card small{display:none}}
+
+.card{background:#111;border-radius:2px;box-shadow:0 18px 40px rgba(0,0,0,.85)}.card .art{background-size:cover;background-position:center;filter:saturate(.85) contrast(1.05)}
+.card::after{background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.55)),linear-gradient(120deg,rgba(255,255,255,.08),transparent 40%)}
+.card b,.card b{top:auto;bottom:8px;transform:none;left:4px;right:4px;text-align:center;font-family:Unbounded;font-weight:700;font-size:8px;letter-spacing:.25em;text-shadow:0 1px 4px #000;z-index:2}
+.card small{display:none}
+.swirl{width:84px;height:84px;border-radius:0;background:none;-webkit-mask:none;mask:none;filter:drop-shadow(0 6px 10px rgba(0,0,0,.8));animation:spin 8s linear infinite}
+.vinyl{background:repeating-radial-gradient(circle,#9aa0a7 0 1px,#d9dde2 1.5px,#7c828a 2.5px),conic-gradient(from 20deg,#f4f6f8,#7d838b,#e9ecef,#5d636b,#f4f6f8);background-blend-mode:multiply;box-shadow:0 8px 20px rgba(0,0,0,.7),inset 0 0 0 2px rgba(255,255,255,.3)}
+.vinyl span{width:5px;height:5px;border:0;background:#111}
+.social{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(26px + env(safe-area-inset-bottom));display:flex;gap:22px;z-index:31;align-items:center}
+.social a{display:block;width:16px;height:16px}.social svg{width:100%;height:100%;fill:#fff;display:block}.social a[aria-label=SoundCloud],.social a[aria-label=YouTube]{width:19px}
+@media(max-width:600px){
+#forge{width:42vw;top:43%}
+.corner{flex-direction:column!important;gap:16px;font-size:8px;letter-spacing:.22em}
+.corner.l{left:calc(19.5vw - 44px);bottom:calc(154px + env(safe-area-inset-bottom))}.corner.r{right:calc(19.2vw - 44px);bottom:calc(160px + env(safe-area-inset-bottom))}
+.vinyl{width:88px;height:88px}.swirl{width:84px;height:84px}
+.social{bottom:calc(8px + env(safe-area-inset-bottom));gap:24px}
+.card b{font-size:5px;letter-spacing:.3em;bottom:6px}
+#stage{perspective:none}
+}
+@media(max-width:600px){.card{left:0;top:0}}
+.social a[aria-label=Instagram] svg{fill:none}
+#forge{filter:none!important}
+#forge{width:min(400px,36vw)}
+@media(max-width:600px){#forge{width:50vw;top:43%}}

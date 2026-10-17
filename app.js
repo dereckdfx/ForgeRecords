@@ -13,27 +13,32 @@ ${[0,60,120,180,240,300].map(a=>`<use href="#sw${id}" transform="rotate(${a})"/>
 <rect x="40" y="206" width="320" height="56" rx="28" fill="url(#k${id})" stroke="url(#d${id})" stroke-width="5" filter="url(#b${id})"/>
 <text x="200" y="250" text-anchor="middle" font-family="Archivo Black" font-size="46" letter-spacing="10" textLength="270" fill="url(#c${id})" stroke="#fff" stroke-width="1" filter="url(#b${id})">FORGE</text></svg>`}
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG(i));
-const A=[["LAS REINAS DEL PERREO","ÁLBUM"],["MOTELES","SINGLE"],["ALWAYS","SINGLE"],["VALKYRA","ARTISTA"],["NOX DEL SUR","ARTISTA"],["LUNA CROMA","ARTISTA"],["KAI VERTIGO","ARTISTA"],["MIRA SAINT","ARTISTA"],["DJ OBSIDIANA","ARTISTA"],["REY HIERRO","ARTISTA"],["SOLENNE","ARTISTA"],["ZAFIRO 99","ARTISTA"],["ECHO BLANCO","ARTISTA"],["LA DIVINA K","ARTISTA"],["ATLAS ROSE","ARTISTA"],["NEÓN BRAVA","ARTISTA"]];
-const P=[["#ff2d95","#2b0018"],["#c9a227","#1a1205"],["#3a4cff","#05051a"],["#00e0c6","#00211c"],["#ff6a00","#200800"],["#b14dff","#12001f"],["#e6e6e6","#222"],["#ff004c","#0a0005"]];
+const A=[["NOX DEL SUR",1],["LOS FORJADOS",2],["LUNA CROMA",3],["LAS REINAS DEL PERREO",4],["SOLENNE",5],["MOTELES",4],["ALWAYS",5],["VALKYRA",3],["KAI VERTIGO",1],["REY HIERRO",2],["MIRA SAINT",5],["DJ OBSIDIANA",1],["ATLAS ROSE",3],["ZAFIRO 99",2]];
 const w=document.getElementById('world'),mob=innerWidth<600,cards=[];
-const MP=[[-.36,-.27,165,118,-14],[.52,-.17,120,90,18],[-.5,.06,110,150,12],[.02,.115,128,96,-6],[.4,.3,130,100,-16]];
-(mob?[A[3],A[0],A[4],A[1],A[2]]:A).forEach((a,i)=>{const c=document.createElement('div');c.className='card';const p=P[i%P.length],g=(i*47)%360;
-const s=150+(i%3)*30;if(mob){c.style.width=MP[i][2]+'px';c.style.height=MP[i][3]+'px'}else{c.style.width=s+'px';c.style.height=s*1.25+'px'}
-c.innerHTML=`<div class="art" style="background:radial-gradient(circle at ${20+i*13%60}% ${30+i*7%50}%,${p[0]},transparent 60%),conic-gradient(from ${g}deg at 70% 70%,${p[1]},${p[0]}55,#000,${p[1]}),${p[1]}"></div><small>FORGE · ${a[1]}</small><b>${a[0]}</b>`;
-w.appendChild(c);const ang=i/A.length*Math.PI*2;
-cards.push({c,ang,r:(mob?.42:.36)+(i%4)*.05,z:-520+(i%5)*140,rot:(i%2?1:-1)*(8+i%4*6),sp:.00004+(i%3)*.00002,s,ph:i});});
+// mobile: [cx,cy,w,h,rotY,rotZ,idx]
+const MP=[[.025,.25,72,150,42,-3,4],[.27,.27,128,146,24,-6,0],[.985,.44,84,128,-40,4,2],[.165,.545,142,116,16,4,1],[.06,.73,74,100,26,2,3]];
+const list=mob?MP.map(m=>A[m[6]]):A;
+list.forEach((a,i)=>{const c=document.createElement('div');c.className='card';
+c.innerHTML=`<div class="art" style="background-image:url(img/c${a[1]}.jpg)"></div><b>${a[0]}</b>`;
+w.appendChild(c);
+if(mob){const m=MP[i];c.style.width=m[2]+'px';c.style.height=m[3]+'px';cards.push({c,m,i})}
+else{const s=150+(i%3)*34;c.style.width=s+'px';c.style.height=s*1.3+'px';cards.push({c,ang:i/list.length*Math.PI*2,r:.36+(i%4)*.05,z:-520+(i%5)*140,rot:(i%2?1:-1)*(14+i%4*7),sp:.00004+(i%3)*.00002,s,ph:i})}});
 let mx=0,my=0,tx=0,ty=0;
 addEventListener('mousemove',e=>{tx=e.clientX/innerWidth-.5;ty=e.clientY/innerHeight-.5});
 addEventListener('touchmove',e=>{const t=e.touches[0];tx=t.clientX/innerWidth-.5;ty=t.clientY/innerHeight-.5},{passive:true});
 addEventListener('deviceorientation',e=>{if(e.gamma!=null){tx=Math.max(-.5,Math.min(.5,e.gamma/60));ty=Math.max(-.5,Math.min(.5,(e.beta-45)/60))}});
 const f=document.getElementById('forge');let auto=true;addEventListener('mousemove',()=>auto=false,{once:true});
-function loop(t){if(auto&&mob){tx=Math.sin(t/3000)*.3;ty=Math.cos(t/4000)*.2}
+function loop(t){if(auto&&mob){tx=Math.sin(t/3000)*.2;ty=Math.cos(t/4000)*.12}
 mx+=(tx-mx)*.06;my+=(ty-my)*.06;const W=innerWidth,H=innerHeight;
-w.style.transform=`rotateY(${mx*14}deg) rotateX(${-my*10}deg)`;
+if(mob){w.style.transform='none';
+f.style.transform=`translate(-50%,-50%) perspective(700px) rotateY(${mx*22+Math.sin(t/2500)*6}deg) rotateX(${4-my*14}deg) rotateZ(-1deg)`;
+cards.forEach(({c,m,i})=>{const x=m[0]*W-m[2]/2+Math.sin(t/2600+i)*5-mx*16,y=m[1]*H-m[3]/2+Math.cos(t/3100+i)*5-my*10;
+c.style.transform=`translate(${x}px,${y}px) perspective(500px) rotateY(${m[4]+mx*10}deg) rotateZ(${m[5]}deg)`})}
+else{w.style.transform=`rotateY(${mx*14}deg) rotateX(${-my*10}deg)`;
 f.style.transform=`translate3d(-50%,-50%,300px) rotateY(${mx*35+Math.sin(t/2500)*10}deg) rotateX(${8-my*22}deg) rotateZ(-3deg)`;
-if(mob){cards.forEach((k,i)=>{const m=MP[i];const x=m[0]*W-m[2]/2+Math.sin(t/2600+i)*8-mx*20,y=m[1]*H-m[3]/2+H*-.05+Math.cos(t/3100+i)*8-my*14;k.c.style.transform=`translate3d(${x}px,${y}px,${i==3?60:-60}px) rotateY(${m[4]+mx*15}deg) rotateX(${-6}deg) rotateZ(${m[4]*.3}deg)`})}else cards.forEach(k=>{const a=k.ang+t*k.sp;const x=Math.cos(a)*W*k.r*(mob?1.1:1.2),y=Math.max(-H/2+90+k.s*.62,Math.min(H/2-110-k.s*.62,Math.sin(a)*H*k.r*.9))+Math.sin(t/1800+k.ph)*12;
-k.c.style.transform=`translate3d(${x-k.s/2-mx*(k.z+600)*.15}px,${y-k.s*.62-my*(k.z+600)*.1}px,${k.z}px) rotateY(${k.rot+mx*20}deg) rotateZ(${k.rot*.4}deg)`;
-k.c.style.zIndex=1});requestAnimationFrame(loop)}
+cards.forEach(k=>{const a=k.ang+t*k.sp;const x=Math.cos(a)*W*k.r*1.2,y=Math.max(-H/2+90+k.s*.65,Math.min(H/2-110-k.s*.65,Math.sin(a)*H*k.r*.9+Math.sin(t/1800+k.ph)*12));
+k.c.style.transform=`translate3d(${x-k.s/2-mx*(k.z+600)*.15}px,${y-k.s*.65-my*(k.z+600)*.1}px,${k.z}px) rotateY(${(x<0?1:-1)*28+mx*20}deg) rotateZ(${k.rot*.15}deg)`;k.c.style.zIndex=1})}
+requestAnimationFrame(loop)}
 requestAnimationFrame(loop);
 setTimeout(()=>{document.getElementById('intro').classList.add('out');document.body.classList.add('ready')},1500);
 document.querySelectorAll('.view button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.view button').forEach(x=>x.classList.remove('on'));b.classList.add('on')});
