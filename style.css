@@ -131,3 +131,5 @@ header{z-index:100!important;background:#000!important}body.menu-open header{bac
 #menu{z-index:90}
 #hero nav.social,#hero footer{display:none!important}
 #hero .corner{z-index:30}#hero #stage{z-index:0}
+
+a.card{display:block;color:#fff;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}

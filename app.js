@@ -1,43 +1,66 @@
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG(i));
-const A=[["NOX DEL SUR",1],["LOS FORJADOS",2],["LUNA CROMA",3],["LAS REINAS DEL PERREO",4],["SOLENNE",5],["MOTELES",4],["ALWAYS",5],["VALKYRA",3],["KAI VERTIGO",1],["REY HIERRO",2],["MIRA SAINT",5],["DJ OBSIDIANA",1],["ATLAS ROSE",3],["ZAFIRO 99",2]];
-const w=document.getElementById('world'),mob=innerWidth<600,cards=[];
-const N=mob?9:12,list=A.slice(0,N);
-const YO=mob?[-.24,.02,-.08,.26,-.2,.12,-.02,.22,-.14]:[-.26,.05,-.12,.24,-.22,.14,-.02,.28,-.16,.08,-.3,.2];
-list.forEach((a,i)=>{const c=document.createElement('div');c.className='card';
-c.innerHTML=`<div class="art" style="background-image:url(img/c${a[1]}.jpg)"></div><b>${a[0]}</b>`;
+const w=document.getElementById('world'),mob=innerWidth<600,cards=[],GAP=6;
+const N=mob?12:15,list=CARDS.slice(0,N);
+// deterministic pseudo-random per card
+const rnd=(i,k)=>{const x=Math.sin((i+1)*12.9898+k*78.233)*43758.5453;return x-Math.floor(x)};
+list.forEach((a,i)=>{const c=document.createElement('a');c.className='card';c.href=`artist.html?a=${a.s}&frontpage=true`;c.setAttribute('aria-label',a.n);
+c.innerHTML=`<div class="art" style="background-image:url(${a.img})"></div><b>${a.n}</b>`;
 w.appendChild(c);const s=(mob?78:120)*(1+(i%3)*.18),ar=[1.15,.85,1.3][i%3];
-c.style.width=s+'px';c.style.height=s*ar+'px';cards.push({c,s,h:s*ar,a0:i/N*Math.PI*2,yo:YO[i%YO.length]})});
-const f=document.getElementById('forge'),PER=26000;
-const hero=document.getElementById('hero');
-const TOFF=+(new URLSearchParams(location.search).get('t')||0);let OBS=null;addEventListener('resize',()=>OBS=null);
+c.style.width=s+'px';c.style.height=s*ar+'px';
+cards.push({c,i,s,h:s*ar,f1:.05+rnd(i,1)*.06,f2:.04+rnd(i,2)*.05,p1:rnd(i,3)*6.28,p2:rnd(i,4)*6.28,zf:1/(9+rnd(i,5)*9),zp:rnd(i,6)*6.28,
+ry:18+rnd(i,7)*26,ryf:1/(7+rnd(i,8)*8),rx:4+rnd(i,9)*6,rz:3+rnd(i,10)*4,sp:(mob?26:38)*(.75+rnd(i,11)*.5)})});
+const f=document.getElementById('forge'),hero=document.getElementById('hero');
+const TOFF=+(new URLSearchParams(location.search).get('t')||0);let OBS=null;addEventListener('resize',()=>{OBS=null;init=false});
 function obs(){const hr=hero.getBoundingClientRect(),rel=q=>{const r=q.getBoundingClientRect();return{l:r.left-hr.left,r:r.right-hr.left,t:r.top-hr.top,b:r.bottom-hr.top}};
 const ft=f.style.transform;f.style.transform='translate(-50%,-50%)';const B=rel(f);f.style.transform=ft;
-const bw=B.r-B.l,bh=B.b-B.t,g=6;B.l+=bw*.01-g;B.r-=bw*.01-g;B.t+=bh*.02-g;B.b-=bh*.02-g;// frame + room for idle tilt + gap
-const C=[...hero.querySelectorAll('.corner')].map(c=>{const rs=[...c.children].map(rel);return{l:Math.min(...rs.map(r=>r.l))-g,r:Math.max(...rs.map(r=>r.r))+g,t:Math.min(...rs.map(r=>r.t))-g,b:Math.max(...rs.map(r=>r.b))+g}});
-return OBS={B,C,all:[B,...C]}}
-const ss=v=>{v=Math.max(0,Math.min(1,v));return v*v*(3-2*v)};
-function loop(t){t+=TOFF;const W=hero.clientWidth,H=hero.clientHeight,R=mob?W*.5:W*.36,P=mob?700:1100,cx=W/2,cy=H*(mob?.43:.48);
-w.style.transform='none';const O=OBS||obs();
-f.style.transform=`translate(-50%,-50%) perspective(700px) rotateY(${Math.sin(t/3400)*9}deg) rotateX(${4+Math.cos(t/4300)*3}deg) rotateZ(-1deg)`;
-cards.forEach(k=>{const a=k.a0+t/PER*Math.PI*2,x=Math.sin(a)*R,z=Math.cos(a)*R,sc0=P/(P-z*.9),d=(z/R+1)/2;
-const y=k.yo*H*(mob?.85:.8)-z*.1;const X=cx+x*sc0-k.s/2;let Y=cy+y*sc0-k.h/2;Y=Math.max(mob?88:70,Math.min(H-(mob?150:130)-k.h*sc0*.5,Y));
-// minimal local avoidance of the badge, vinyl and swirl: gentle push, then a slight scale if still needed
-const ccx=X+k.s/2;let ccy=Y+k.h/2;const fx=1.3,fy=1.2,hw1=k.s*fx/2,hh1=k.h*fy/2,hw=hw1*sc0,hh=hh1*sc0;
-const b=O.B,gb=Math.max(b.l-(ccx+hw),(ccx-hw)-b.r),wb=ss(1-gb/60);
-if(wb>0){const safe=k.yo<0?Math.min(ccy,b.t-hh):Math.max(ccy,b.b+hh);ccy+=(safe-ccy)*wb}
-for(const c of O.C){const gc=Math.max(c.l-(ccx+hw),(ccx-hw)-c.r),wc=ss(1-gc/50);if(wc>0){let safe=Math.min(ccy,c.t-hh);const m=Math.min(wb,wc);if(m>0&&k.yo>=0&&c.t-b.b<2*hh){safe=(b.b+c.t)/2}ccy+=(safe-ccy)*(m>0&&k.yo>=0?Math.max(wc,m):wc)}}
-let sc=sc0;for(const o of O.all){const kx=(Math.abs(ccx-(o.l+o.r)/2)-(o.r-o.l)/2)/hw1,ky=(Math.abs(ccy-(o.t+o.b)/2)-(o.b-o.t)/2)/hh1;sc=Math.min(sc,Math.max(kx,ky))}
-sc=Math.max(0,sc);k.sc=sc;k.sc0=sc0;
-k.c.style.transform=`translate(${ccx-k.s/2}px,${ccy-k.h/2}px) scale(${sc}) perspective(600px) rotateY(${Math.sin(a)*48}deg) rotateZ(${Math.sin(a*2+k.a0)*4}deg)`;
-k.c.style.zIndex=z>R*.15?6:1;k.c.style.filter=`brightness(${.55+.5*d})`;k.c.style.opacity=.75+.25*d});
-if(!NOLOOP)requestAnimationFrame(loop)}
-let NOLOOP=location.search.includes('check');
-if(NOLOOP)setTimeout(()=>{const O=obs(),hr=hero.getBoundingClientRect();let hits=0,mn=9,red=9,log=[];
-for(let i=0;i<520;i++){loop(i/520*PER-TOFF);for(const k of cards){const r=k.c.getBoundingClientRect(),q={l:r.left-hr.left,r:r.right-hr.left,t:r.top-hr.top,b:r.bottom-hr.top};
-if(q.r>0&&q.l<hero.clientWidth){red=Math.min(red,k.sc/k.sc0)}
-O.all.forEach((o,j)=>{const ox=Math.min(q.r,o.r)-Math.max(q.l,o.l),oy=Math.min(q.b,o.b)-Math.max(q.t,o.t);if(ox>0&&oy>0){hits++;if(log.length<4)log.push(i+':'+j+':'+ox.toFixed(1)+'x'+oy.toFixed(1))}})}}
-document.title='HITS '+hits+' minScaleRatio '+red.toFixed(2)+' '+log.join(' ')},300);
-if(!NOLOOP)requestAnimationFrame(loop);
+const bw=B.r-B.l,bh=B.b-B.t;B.l+=bw*.01-GAP;B.r-=bw*.01-GAP;B.t+=bh*.02-GAP;B.b-=bh*.02-GAP;
+const C=[...hero.querySelectorAll('.corner')].map(c=>{const rs=[...c.children].map(rel);return{l:Math.min(...rs.map(r=>r.l))-GAP,r:Math.max(...rs.map(r=>r.r))+GAP,t:Math.min(...rs.map(r=>r.t))-GAP,b:Math.max(...rs.map(r=>r.b))+GAP}});
+const top=document.querySelector('header').getBoundingClientRect().bottom-hr.top+GAP;
+return OBS={all:[B,...C],top,W:hero.clientWidth,H:hero.clientHeight}}
+const FX=1.32,FY=1.25;// bbox allowance for 3D tilt
+const half=(k,sc)=>[k.s*sc*FX/2,k.h*sc*FY/2];
+function sdepth(k,t){return .82+.3*(.5+.5*Math.sin(t/1000*k.zf*6.283+k.zp))}// 0.82..1.12 "depth" scale
+// push a card centre out of an expanded rect along the shallowest axis
+function resolve(k,O,sc){const [hw,hh]=half(k,sc);for(let it=0;it<3;it++){let moved=false;for(const o of O.all){
+const ox=Math.min(k.x+hw,o.r)-Math.max(k.x-hw,o.l),oy=Math.min(k.y+hh,o.b)-Math.max(k.y-hh,o.t);
+if(ox>0&&oy>0){const cx=(o.l+o.r)/2,cy=(o.t+o.b)/2;if(ox<oy){k.x+=(k.x>cx?1:-1)*(ox+.01);k.vx*=.3}else{k.y+=(k.y>cy?1:-1)*(oy+.01);k.vy*=.3}moved=true}}
+const yt=O.top+hh;if(k.y<yt){k.y=yt;k.vy=Math.abs(k.vy)*.3;moved=true}const yb=O.H-hh;if(k.y>yb){k.y=yb;k.vy=-Math.abs(k.vy)*.3;moved=true}
+const xl=-hw*1.05,xr=O.W+hw*1.05;if(k.x<xl){k.x=xl;k.vx=Math.abs(k.vx)*.3}if(k.x>xr){k.x=xr;k.vx=-Math.abs(k.vx)*.3}
+if(!moved)break}}
+let init=false,last=null;
+function setup(O){cards.forEach(k=>{for(let tries=0;tries<200;tries++){k.x=rnd(k.i,20+tries)*O.W;k.y=O.top+rnd(k.i,40+tries)*(O.H-O.top);const [hw,hh]=half(k,1.15);
+if(!O.all.some(o=>k.x+hw>o.l&&k.x-hw<o.r&&k.y+hh>o.t&&k.y-hh<o.b)&&k.y-hh>O.top)break}k.vx=0;k.vy=0;resolve(k,O,sdepth(k,0))});init=true}
+function step(t,dt){const O=OBS||obs();if(!init)setup(O);const ts=t/1000;
+cards.forEach(k=>{// wander: each card seeks its own slowly moving target spread over the whole hero
+const tx=O.W*(.5+.5*Math.sin(ts*k.f1+k.p1)*Math.cos(ts*k.f2*.6+k.p2*.5)),ty=O.top+(O.H-O.top)*(.5+.48*Math.sin(ts*k.f2+k.p2));
+const Ym=(O.all[0].t+O.all[0].b)/2,rc=k.y<Ym?0:1;k.rt=ty<Ym-40?0:ty>Ym+40?1:(k.rt??rc);
+let gx=tx,gy=ty;if(k.rt!==rc){const [hw0]=half(k,1.15);if(k.lane==null)k.lane=k.x<O.W/2?-hw0*.97:O.W+hw0*.97;if(Math.abs(k.x-k.lane)>12){gx=k.lane;gy=k.y}else{gx=k.lane;gy=k.rt?Math.max(ty,Ym+80):Math.min(ty,Ym-80)}}else k.lane=null;
+let dx0=gx-k.x,dy0=gy-k.y;const L0=Math.hypot(dx0,dy0)||1,sp=k.sp*Math.min(1,L0/60);
+let ax=(dx0/L0*sp-k.vx)*.9,ay=(dy0/L0*sp-k.vy)*.9;
+const sc=sdepth(k,t),[hw,hh]=half(k,sc);
+// steer away from obstacles before reaching them
+for(const o of O.all){const dx=Math.max(o.l-(k.x+hw),0,(k.x-hw)-o.r),dy=Math.max(o.t-(k.y+hh),0,(k.y-hh)-o.b),d=Math.hypot(dx,dy);
+if(d<45){const cx=(o.l+o.r)/2,cy=(o.t+o.b)/2;let nx=k.x-cx,ny=k.y-cy;const L=Math.hypot(nx,ny)||1;const s=(45-d)/45*70;nx/=L;ny/=L;ax+=nx*s;ay+=ny*s;let tx2=-ny,ty2=nx;if(tx2*dx0+ty2*dy0<0){tx2=-tx2;ty2=-ty2}const st=(45-d)/45*k.sp*3;ax+=tx2*st;ay+=ty2*st}}
+// soft bounds
+k.vx+=ax*dt;k.vy+=ay*dt;const v=Math.hypot(k.vx,k.vy),vm=k.sp*1.6;if(v>vm){k.vx*=vm/v;k.vy*=vm/v}
+k.x+=k.vx*dt;k.y+=k.vy*dt;resolve(k,O,sc);
+// if squeezed between elements, shrink just enough to keep the gap (continuous, never hidden)
+const hw1=k.s*FX/2,hh1=k.h*FY/2;let kf=sc;for(const o of O.all){const kx=(Math.abs(k.x-(o.l+o.r)/2)-(o.r-o.l)/2)/hw1,ky=(Math.abs(k.y-(o.t+o.b)/2)-(o.b-o.t)/2)/hh1;kf=Math.min(kf,Math.max(kx,ky))}
+kf=Math.min(kf,(k.y-O.top)/hh1);k.sc=Math.max(.05,Math.min(sc,(k.sc??sc)+.02,kf))});}
+function render(t){f.style.transform=`translate(-50%,-50%) perspective(700px) rotateY(${Math.sin(t/3400)*9}deg) rotateX(${4+Math.cos(t/4300)*3}deg) rotateZ(-1deg)`;
+cards.forEach(k=>{const ts=t/1000,d=(k.sc-.82)/.3;
+k.c.style.transform=`translate(${k.x-k.s/2}px,${k.y-k.h/2}px) scale(${k.sc}) perspective(600px) rotateY(${Math.sin(ts*k.ryf*6.283+k.p2)*k.ry}deg) rotateX(${Math.sin(ts*.13+k.p1)*k.rx}deg) rotateZ(${Math.sin(ts*.09+k.zp)*k.rz}deg)`;
+k.c.style.zIndex=1+Math.round(d*7);k.c.style.filter=`brightness(${.55+.5*d})`;k.c.style.opacity=.8+.2*d})}
+const NOLOOP=location.search.includes('check');
+const SIM=+(new URLSearchParams(location.search).get('sim')||0);let simDone=false;
+function loop(now){if(!simDone){simDone=true;for(let i=0;i<SIM/16;i++)step(i*16,.016);if(SIM){last=null}}if(last==null)last=now;const dt=Math.min(.05,(now-last)/1000);last=now;step(now+TOFF+SIM,dt);render(now+TOFF+SIM);requestAnimationFrame(loop)}
+if(NOLOOP)setTimeout(()=>{const O=obs();const hr=hero.getBoundingClientRect();let hits=0,hdr=0,log=[];const R=O.all.map(o=>({l:o.l+GAP,r:o.r-GAP,t:o.t+GAP,b:o.b-GAP}));
+let mn=9,ys=cards.map(()=>[1e9,-1e9]),jump=0;const prev=cards.map(k=>k.sc);
+for(let i=0;i<8000;i++){const t=i*16;step(t,.016);cards.forEach((k,j)=>{if(k.x>0&&k.x<O.W)mn=Math.min(mn,k.sc);ys[j][0]=Math.min(ys[j][0],k.y);ys[j][1]=Math.max(ys[j][1],k.y);jump=Math.max(jump,Math.abs(k.sc-prev[j]));prev[j]=k.sc});if(i%4)continue;render(t);for(const k of cards){const r=k.c.getBoundingClientRect(),q={l:r.left-hr.left,r:r.right-hr.left,t:r.top-hr.top,b:r.bottom-hr.top};
+R.forEach((o,j)=>{const ox=Math.min(q.r,o.r+GAP)-Math.max(q.l,o.l-GAP),oy=Math.min(q.b,o.b+GAP)-Math.max(q.t,o.t-GAP);if(ox>0&&oy>0){hits++;if(log.length<4)log.push(k.i+'@'+i+':'+j+':'+ox.toFixed(1)+'x'+oy.toFixed(1))}});
+if(q.t<O.top-GAP){hdr++;if(log.length<4)log.push(k.i+'hdr'+(O.top-GAP-q.t).toFixed(1))}}}
+document.title='HITS '+hits+' HDR '+hdr+' minsc '+mn.toFixed(2)+' maxScaleStep '+(+jump||0).toFixed(3)+' yrange '+ys.map(r=>(r[1]-r[0])|0).join(',')+' pos '+cards.map(k=>[k.x|0,k.y|0,k.sc.toFixed(2)].join('/')).join(' ')+' '+log.join(' ')},300);
+else requestAnimationFrame(loop);
 setTimeout(()=>{document.getElementById('intro').classList.add('out');document.body.classList.add('ready')},1500);
 document.querySelectorAll('.view button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.view button').forEach(x=>x.classList.remove('on'));b.classList.add('on')});
 if(location.search.includes('shot')){document.getElementById('intro').classList.add('out');document.getElementById('intro').style.display='none';document.body.classList.add('ready')}
