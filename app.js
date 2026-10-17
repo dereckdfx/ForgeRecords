@@ -24,11 +24,8 @@ w.appendChild(c);
 if(mob){const m=MP[i];c.style.width=m[2]+'px';c.style.height=m[3]+'px';cards.push({c,m,i})}
 else{const s=150+(i%3)*34;c.style.width=s+'px';c.style.height=s*1.3+'px';cards.push({c,ang:i/list.length*Math.PI*2,r:.36+(i%4)*.05,z:-520+(i%5)*140,rot:(i%2?1:-1)*(14+i%4*7),sp:.00004+(i%3)*.00002,s,ph:i})}});
 let mx=0,my=0,tx=0,ty=0;
-addEventListener('mousemove',e=>{tx=e.clientX/innerWidth-.5;ty=e.clientY/innerHeight-.5});
-addEventListener('touchmove',e=>{const t=e.touches[0];tx=t.clientX/innerWidth-.5;ty=t.clientY/innerHeight-.5},{passive:true});
-addEventListener('deviceorientation',e=>{if(e.gamma!=null){tx=Math.max(-.5,Math.min(.5,e.gamma/60));ty=Math.max(-.5,Math.min(.5,(e.beta-45)/60))}});
-const f=document.getElementById('forge');let auto=true;addEventListener('mousemove',()=>auto=false,{once:true});
-function loop(t){if(auto&&mob){tx=Math.sin(t/3000)*.2;ty=Math.cos(t/4000)*.12}
+const f=document.getElementById('forge');
+function loop(t){tx=Math.sin(t/3400)*.18;ty=Math.cos(t/4300)*.1;
 mx+=(tx-mx)*.06;my+=(ty-my)*.06;const W=innerWidth,H=innerHeight;
 if(mob){w.style.transform='none';
 f.style.transform=`translate(-50%,-50%) perspective(700px) rotateY(${mx*22+Math.sin(t/2500)*6}deg) rotateX(${4-my*14}deg) rotateZ(-1deg)`;
@@ -43,3 +40,10 @@ requestAnimationFrame(loop);
 setTimeout(()=>{document.getElementById('intro').classList.add('out');document.body.classList.add('ready')},1500);
 document.querySelectorAll('.view button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.view button').forEach(x=>x.classList.remove('on'));b.classList.add('on')});
 if(location.search.includes('shot')){document.getElementById('intro').classList.add('out');document.getElementById('intro').style.display='none';document.body.classList.add('ready')}
+
+const menu=document.getElementById('menu'),bg=document.querySelector('.burger');
+menu.querySelector('.msoc').innerHTML=document.querySelector('nav.social').innerHTML;
+bg.onclick=()=>{const o=!document.body.classList.contains('menu-open');document.body.classList.toggle('menu-open',o);menu.setAttribute('aria-hidden',!o);bg.setAttribute('aria-expanded',o)};
+addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('menu-open'))bg.click()});
+menu.querySelector('form').onsubmit=e=>{e.preventDefault();const i=e.target.querySelector('input');if(i.checkValidity()){e.target.innerHTML='<p class="ok">¡Gracias! Te avisaremos.</p>'}};
+if(location.search.includes('menu')){document.body.classList.add('notrans');bg.click()}
