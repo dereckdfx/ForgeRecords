@@ -15,26 +15,20 @@ ${[0,60,120,180,240,300].map(a=>`<use href="#sw${id}" transform="rotate(${a})"/>
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG(i));
 const A=[["NOX DEL SUR",1],["LOS FORJADOS",2],["LUNA CROMA",3],["LAS REINAS DEL PERREO",4],["SOLENNE",5],["MOTELES",4],["ALWAYS",5],["VALKYRA",3],["KAI VERTIGO",1],["REY HIERRO",2],["MIRA SAINT",5],["DJ OBSIDIANA",1],["ATLAS ROSE",3],["ZAFIRO 99",2]];
 const w=document.getElementById('world'),mob=innerWidth<600,cards=[];
-// mobile: [cx,cy,w,h,rotY,rotZ,idx]
-const MP=[[.025,.25,72,150,42,-3,4],[.27,.27,128,146,24,-6,0],[.985,.44,84,128,-40,4,2],[.165,.545,142,116,16,4,1],[.06,.73,74,100,26,2,3]];
-const list=mob?MP.map(m=>A[m[6]]):A;
+const N=mob?9:12,list=A.slice(0,N);
+const YO=mob?[-.24,.02,-.08,.26,-.2,.12,-.02,.22,-.14]:[-.26,.05,-.12,.24,-.22,.14,-.02,.28,-.16,.08,-.3,.2];
 list.forEach((a,i)=>{const c=document.createElement('div');c.className='card';
 c.innerHTML=`<div class="art" style="background-image:url(img/c${a[1]}.jpg)"></div><b>${a[0]}</b>`;
-w.appendChild(c);
-if(mob){const m=MP[i];c.style.width=m[2]+'px';c.style.height=m[3]+'px';cards.push({c,m,i})}
-else{const s=150+(i%3)*34;c.style.width=s+'px';c.style.height=s*1.3+'px';cards.push({c,ang:i/list.length*Math.PI*2,r:.36+(i%4)*.05,z:-520+(i%5)*140,rot:(i%2?1:-1)*(14+i%4*7),sp:.00004+(i%3)*.00002,s,ph:i})}});
-let mx=0,my=0,tx=0,ty=0;
-const f=document.getElementById('forge');
-function loop(t){tx=Math.sin(t/3400)*.18;ty=Math.cos(t/4300)*.1;
-mx+=(tx-mx)*.06;my+=(ty-my)*.06;const W=innerWidth,H=innerHeight;
-if(mob){w.style.transform='none';
-f.style.transform=`translate(-50%,-50%) perspective(700px) rotateY(${mx*22+Math.sin(t/2500)*6}deg) rotateX(${4-my*14}deg) rotateZ(-1deg)`;
-cards.forEach(({c,m,i})=>{const x=m[0]*W-m[2]/2+Math.sin(t/2600+i)*5-mx*16,y=m[1]*H-m[3]/2+Math.cos(t/3100+i)*5-my*10;
-c.style.transform=`translate(${x}px,${y}px) perspective(500px) rotateY(${m[4]+mx*10}deg) rotateZ(${m[5]}deg)`})}
-else{w.style.transform=`rotateY(${mx*14}deg) rotateX(${-my*10}deg)`;
-f.style.transform=`translate3d(-50%,-50%,300px) rotateY(${mx*35+Math.sin(t/2500)*10}deg) rotateX(${8-my*22}deg) rotateZ(-3deg)`;
-cards.forEach(k=>{const a=k.ang+t*k.sp;const x=Math.cos(a)*W*k.r*1.2,y=Math.max(-H/2+90+k.s*.65,Math.min(H/2-110-k.s*.65,Math.sin(a)*H*k.r*.9+Math.sin(t/1800+k.ph)*12));
-k.c.style.transform=`translate3d(${x-k.s/2-mx*(k.z+600)*.15}px,${y-k.s*.65-my*(k.z+600)*.1}px,${k.z}px) rotateY(${(x<0?1:-1)*28+mx*20}deg) rotateZ(${k.rot*.15}deg)`;k.c.style.zIndex=1})}
+w.appendChild(c);const s=(mob?78:120)*(1+(i%3)*.18),ar=[1.15,.85,1.3][i%3];
+c.style.width=s+'px';c.style.height=s*ar+'px';cards.push({c,s,h:s*ar,a0:i/N*Math.PI*2,yo:YO[i%YO.length]})});
+const f=document.getElementById('forge'),PER=26000;
+function loop(t){const W=innerWidth,H=innerHeight,R=mob?W*.5:W*.36,P=mob?700:1100,cx=W/2,cy=H*(mob?.43:.48);
+w.style.transform='none';
+f.style.transform=`translate(-50%,-50%) perspective(700px) rotateY(${Math.sin(t/3400)*9}deg) rotateX(${4+Math.cos(t/4300)*3}deg) rotateZ(-1deg)`;
+cards.forEach(k=>{const a=k.a0+t/PER*Math.PI*2,x=Math.sin(a)*R,z=Math.cos(a)*R,sc=P/(P-z*.9),d=(z/R+1)/2;
+const y=k.yo*H*(mob?.85:.8)-z*.1;const X=cx+x*sc-k.s/2;let Y=cy+y*sc-k.h/2;Y=Math.max(mob?88:70,Math.min(H-(mob?150:130)-k.h*sc*.5,Y));
+k.c.style.transform=`translate(${X}px,${Y}px) scale(${sc}) perspective(600px) rotateY(${Math.sin(a)*48}deg) rotateZ(${Math.sin(a*2+k.a0)*4}deg)`;
+k.c.style.zIndex=z>R*.15?20:1;k.c.style.filter=`brightness(${.55+.5*d})`;k.c.style.opacity=.75+.25*d});
 requestAnimationFrame(loop)}
 requestAnimationFrame(loop);
 setTimeout(()=>{document.getElementById('intro').classList.add('out');document.body.classList.add('ready')},1500);
@@ -47,3 +41,9 @@ bg.onclick=()=>{const o=!document.body.classList.contains('menu-open');document.
 addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('menu-open'))bg.click()});
 menu.querySelector('form').onsubmit=e=>{e.preventDefault();const i=e.target.querySelector('input');if(i.checkValidity()){e.target.innerHTML='<p class="ok">¡Gracias! Te avisaremos.</p>'}};
 if(location.search.includes('menu')){document.body.classList.add('notrans');bg.click()}
+
+document.querySelectorAll('.fsoc').forEach(e=>e.innerHTML=document.querySelector('nav.social').innerHTML);
+function wireFoot(root){const fm=root.querySelector('.fform');fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}fm.innerHTML='<p class="fthanks">¡Gracias! Te mantendremos al tanto.</p>'}}
+wireFoot(document.getElementById('foot'));
+{const cl=document.getElementById('foot').cloneNode(true);cl.removeAttribute('id');cl.querySelectorAll('.fl')[0].remove();cl.querySelector('.fsoc').remove();cl.querySelector('.fform').remove();cl.querySelectorAll('.fjoin').forEach(x=>x.remove());const fl=cl.querySelectorAll('.fl');if(fl[0])fl[0].remove();menu.querySelector('.mwrap').appendChild(cl)}
+if(location.search.includes('foot'))document.getElementById('hero').style.display='none';

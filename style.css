@@ -99,3 +99,30 @@ body.menu-open .mwrap>*:nth-child(1){transition-delay:0.085s}body.menu-open .mwr
 body.menu-open .burger i:nth-child(1){transform:translateY(10px) rotate(45deg)}body.menu-open .burger i:nth-child(2){opacity:0}body.menu-open .burger i:nth-child(3){transform:translateY(-10px) rotate(-45deg)}
 body.notrans *,body.notrans *::before{transition:none!important}
 .ml{background:linear-gradient(90deg,transparent,rgba(140,146,154,.5) 15%,#dfe3e7 40%,#fff 50%,#dfe3e7 60%,rgba(140,146,154,.5) 85%,transparent);height:2px}
+
+html,body{height:auto;overflow-x:hidden;overflow-y:auto}body.menu-open{overflow:hidden}
+#hero{position:relative;height:100vh;height:100svh;overflow:hidden}
+#hero #stage,#hero .line,#hero .corner,#hero .bottomfade,#hero .social,#hero footer{position:absolute}
+.site-foot{position:relative;z-index:2;background:#000;padding:90px 24px 40px;max-width:640px;margin:0 auto;display:flex;flex-direction:column;align-items:center;font-family:Unbounded}
+.fl{display:block;width:100%;height:2px;margin:26px 0;background:linear-gradient(90deg,transparent,rgba(140,146,154,.5) 12%,#dfe3e7 40%,#fff 50%,#dfe3e7 60%,rgba(140,146,154,.5) 88%,transparent);box-shadow:0 0 10px rgba(255,255,255,.25)}
+.site-foot>.fl:first-child{margin-top:0;width:100vw;max-width:none}
+.fsoc{display:flex;gap:22px;align-items:center;margin-bottom:28px}.fsoc a{display:block;width:17px;height:17px}.fsoc svg{width:100%;height:100%;fill:#fff;display:block}.fsoc a[aria-label=Instagram] svg{fill:none}.fsoc a[aria-label=SoundCloud],.fsoc a[aria-label=YouTube]{width:20px}
+.fform{width:100%}.frow{display:flex;gap:12px}
+.frow input{flex:1;min-width:0;background:#000;border:1.5px solid #fff;border-radius:6px;color:#fff;padding:13px 12px;font:700 17px Unbounded;outline:none}.frow input::placeholder{color:#fff;opacity:1}
+.frow button{width:110px;border:0;border-radius:3px;font:700 16px Unbounded;color:#000;cursor:pointer;background:radial-gradient(ellipse at center,#fff 0%,#e3e6e9 40%,#9ca2a9 85%,#6e747b 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
+.fchk{display:flex;gap:16px;align-items:flex-start;margin-top:36px;cursor:pointer}.fchk input{position:absolute;opacity:0}
+.fchk span{flex:none;width:26px;height:26px;border:2px solid #fff;border-radius:2px;margin-top:2px;position:relative}.fchk input:checked+span::after{content:"";position:absolute;left:7px;top:2px;width:7px;height:13px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg)}
+.fchk p{font-size:10.5px;font-weight:700;line-height:1.35;letter-spacing:.02em}.fchk a{color:#fff;text-decoration:underline}
+.fthanks{font-size:13px;font-weight:700;text-align:center;padding:14px 0}
+.fjoin{text-align:center}.ft{color:#fff;text-decoration:none;font-weight:700;font-size:clamp(22px,6vw,32px);letter-spacing:.03em}
+.fsub{display:flex;gap:14px;justify-content:center;margin-top:12px}.fsub a{color:#fff;text-decoration:none;font-weight:700;font-size:11px;letter-spacing:.2em}
+.flogos{display:flex;justify-content:space-between;align-items:center;width:100%;gap:6px;margin:4px 0 26px}.flogos>*{height:34px;width:auto;flex:1;max-width:80px;display:block}.flogos svg{height:100%;width:100%}.fbadge svg{height:100%;width:100%}
+.flogos svg[aria-label="Forge emblem"]{height:48px}.flogos svg[aria-label="Forge swirl"]{height:42px}
+.fcopy{font:700 11px system-ui,sans-serif;margin-bottom:4px}
+.flegal{display:flex;flex-wrap:wrap;justify-content:center;font:12.5px system-ui,sans-serif;line-height:1.7;max-width:420px}.flegal a{color:#fff;text-decoration:none;padding:0 7px;border-left:1px solid #fff;line-height:1}.flegal a:first-child{border:0}
+.flegal a{margin:4px 0}
+.fend{display:block;width:100vw;height:1px;background:#444;margin-top:70px}
+#menu .site-foot{padding:10px 0 0;width:100%}#menu .site-foot .fl:first-child{width:100%}
+@media(min-width:601px){.site-foot{padding-top:110px}.fchk p{font-size:12px}.flogos>*{max-width:110px;height:44px}}
+#world{transform-style:flat}#stage{perspective:none}.card{left:0!important;top:0!important;transform-origin:center;will-change:transform,filter}
+#forge{z-index:10}
