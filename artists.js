@@ -1,6 +1,6 @@
 // Forge Records artist data (shared by index and artist pages)
-const FOUND={d:'27/07/2026',t:'Forge Records fue fundada'},TL=(...items)=>[{y:2026,items:items.reverse()}],// pass entries oldest→newest; shown newest first
-JOIN=TL(FOUND,{d:'10/2026',h:'Se unió a Forge Records'});
+const FOUND={d:'27/07/2026',t:'Forge Records fue fundada'},SALE={d:'07/08/2026',h:'Alice Whitman compró Forge Records y pasó a ser parte de Starlight Records',q:'Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.'},TL=(...items)=>[{y:2026,items:items.reverse()}],// pass entries oldest→newest; shown newest first
+JOIN=TL(FOUND,{...SALE},{d:'10/2026',h:'Se unió a Forge Records'});
 // Dereck DFX releases, exactly in the order the user gave them
 const DFX_RELEASES=[
 {t:'The eye always looks at you (From “La Historia: Chapter 4” Original Game Soundtrack)',d:'07/2026'},
@@ -17,8 +17,8 @@ const DFX_ANNOUNCED=[{d:'10/2026',h:'Anunció su álbum “Las Reinas del Perreo
 const ORD=['primer','segundo','tercer','cuarto','quinto','sexto','séptimo','octavo','noveno','décimo','undécimo','duodécimo'];
 [...DFX_RELEASES.map(r=>(r.rel=1,r)),...DFX_ANNOUNCED].filter(r=>r.rel).forEach((r,k)=>{r.n=`Su ${ORD[k]} lanzamiento`+(r.ar?' · Con AR':'')});
 const ARTISTS=[
-{s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tl:TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...DFX_RELEASES.map(r=>({d:r.d||'',t:r.t,n:r.n})),...DFX_ANNOUNCED.map(r=>({...r})))},
-{s:'ar',n:'AR',img:'img/c6.jpg',tl:TL(FOUND,...DFX_RELEASES.filter(r=>r.ar).map(r=>({d:r.d,t:r.t})),{d:'10/2026',h:'Se unió a Forge Records'})},
+{s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tl:TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...DFX_RELEASES.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...DFX_ANNOUNCED.map(r=>({...r})))},
+{s:'ar',n:'AR',img:'img/c6.jpg',tl:TL(FOUND,...DFX_RELEASES.filter(r=>r.ar).map(r=>({d:r.d,t:r.t})),{...SALE},{d:'10/2026',h:'Se unió a Forge Records'})},
 {s:'zoe-jpr',n:'Zoe J. P. R.',img:'img/c7.jpg'},
 {s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/c8.jpg'}
 ].map(a=>({...a,tl:a.tl||JOIN}));
@@ -32,6 +32,7 @@ const LABEL_TL=TL(
 {d:'27/07/2026',h:'Fundación de Forge Records'},
 {d:'27/07/2026',t:'Dereck DFX se unió a Forge Records',a:'dereck-dfx'},
 ...DFX_RELEASES.map(r=>({d:r.d||'',t:(r.by||'Dereck DFX')+' — '+r.t,n:r.n,a:'dereck-dfx'})),
+{...SALE},
 {d:'10/2026',t:'Dereck DFX anunció su álbum “Las Reinas del Perreo”',a:'dereck-dfx'},
 {d:'10/2026',t:'Dereck DFX — sencillo “Moteles”',n:DFX_ANNOUNCED[1].n,a:'dereck-dfx'},
 {d:'10/2026',t:'Dereck DFX — sencillo “Always”',n:DFX_ANNOUNCED[2].n,a:'dereck-dfx'},
