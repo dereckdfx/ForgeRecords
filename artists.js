@@ -16,10 +16,11 @@ const DFX_RELEASES=[
 {t:'Entering the Elevator (AR Remix)',d:'04/08/2026',by:'Dereck DFX & AR',ar:1},
 {t:'The Elevator (AR Remix)',d:'04/08/2026',by:'Dereck DFX & AR',ar:1},
 {t:'Pink Diamond (feat. AR)',d:'13/08/2026',by:'Dereck DFX feat. AR',ar:1,post:1,q:'Primer lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.'},
-{t:'Persona featuring. ALC (Alice Whitman) (feat. ALC (Alice Whitman))',d:'17/08/2026',con:'ALC (Alice Whitman)',post:1,q:'Segundo lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.'}];
+{t:'Persona featuring. ALC (Alice Whitman) (feat. ALC (Alice Whitman))',d:'17/08/2026',con:'ALC (Alice Whitman)',post:1,q:'Segundo lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.'},
+{t:'Purple',d:'25/08/2026',post:1,q:'Tercer lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.'}];
 const DFX_ANNOUNCED=[{d:'10/2026',h:'Anunció su álbum “Las Reinas del Perreo”'},{d:'10/2026',t:'Sencillo “Moteles”',rel:1},{d:'10/2026',t:'Sencillo “Always”',rel:1}];
 // "Su primer lanzamiento", "Su segundo lanzamiento"… counted oldest→newest over releases only (the album announcement is not a release)
-const ORD=['primer','segundo','tercer','cuarto','quinto','sexto','séptimo','octavo','noveno','décimo','undécimo','duodécimo','decimotercer','decimocuarto','decimoquinto','decimosexto'];
+const ORD=['primer','segundo','tercer','cuarto','quinto','sexto','séptimo','octavo','noveno','décimo','undécimo','duodécimo','decimotercer','decimocuarto','decimoquinto','decimosexto','decimoséptimo','decimoctavo','decimonoveno','vigésimo'];
 [...DFX_RELEASES.map(r=>(r.rel=1,r)),...DFX_ANNOUNCED].filter(r=>r.rel).forEach((r,k)=>{r.n=`Su ${ORD[k]} lanzamiento`+(r.con?' · Con '+r.con:r.ar?' · Con AR':'')});
 const PRE=DFX_RELEASES.filter(r=>!r.post),POST=DFX_RELEASES.filter(r=>r.post),AR_JOIN={d:'03/08/2026',h:'Se unió a Forge Records'};
 const ARTISTS=[
