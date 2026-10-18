@@ -4,7 +4,7 @@ const N=mob?(innerHeight<740?8:10):14;
 // random order on every visit (like a shuffled artist feed); artist cards are always included
 let SEED=location.search.includes('check')?7:(Date.now()%1e9);const R=()=>{SEED|=0;SEED=SEED+0x6D2B79F5|0;let t=Math.imul(SEED^SEED>>>15,1|SEED);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
 const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=R()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
-const must=CARDS.filter(c=>/^(DERECK DFX|AR|ZOE J\. P\. R\.)$/.test(c.n)),list=shuf([...must,...shuf(CARDS.filter(c=>!must.includes(c))).slice(0,N-must.length)]);
+const seq=[];while(seq.length<N)seq.push(...shuf(CARDS));const list=[...seq.slice(0,CARDS.length),...shuf(seq.slice(CARDS.length,N))];// every artist/release at least once, repeats fill the hero
 // deterministic pseudo-random per card
 const rnd=(i,k)=>{const x=Math.sin((i+1)*12.9898+k*78.233)*43758.5453;return x-Math.floor(x)};
 list.forEach((a,i)=>{const c=document.createElement('a');c.className='card';c.href=`artist.html?a=${a.s}&frontpage=true`;c.setAttribute('aria-label',a.n);
@@ -83,7 +83,7 @@ kf=Math.min(kf,(k.y-O.top)/hh1);k.sc=Math.max(.05,Math.min(sc,(k.sc??sc)+.02,kf)
 // hard pass: separate any overlapping pair, then re-apply obstacle constraints (obstacles always win)
 for(let it=0;it<5;it++){let any=false;for(let a1=0;a1<cards.length;a1++)for(let b1=a1+1;b1<cards.length;b1++){const p=cards[a1],q=cards[b1];if(ghost(p,O)||ghost(q,O))continue;const [pw,ph]=half(p,p.sc),[qw,qh]=half(q,q.sc);
 const ox=pw+qw+PAD-Math.abs(p.x-q.x),oy=ph+qh+PAD-Math.abs(p.y-q.y);if(ox>0&&oy>0){any=true;const sv=[p.x,p.y,q.x,q.y],tryAx=ax2=>{p.x=sv[0];p.y=sv[1];q.x=sv[2];q.y=sv[3];if(ax2){const s=(p.x<q.x?-1:1)*ox/2;p.x+=s;q.x-=s}else{const s=(p.y<q.y?-1:1)*oy/2;p.y+=s;q.y-=s}resolve(p,O,p.sc);resolve(q,O,q.sc);return Math.max(0,Math.min(pw+qw-Math.abs(p.x-q.x),ph+qh-Math.abs(p.y-q.y)))};
-if(tryAx(ox<oy)>0&&tryAx(!(ox<oy))>0&&it===4){const v=p.sc<q.sc?p:q;v.sq=Math.max(.45,v.sq-.012);v.sc=Math.max(.3,v.sc-.006)}}}if(!any)break}}
+if(tryAx(ox<oy)>0&&tryAx(!(ox<oy))>0&&it===4){const v=p.sc<q.sc?p:q;v.sq=Math.max(.45,v.sq-.03);v.sc=Math.max(.3,v.sc-.012)}}}if(!any)break}}
 function render(t){f.style.transform=`translate(-50%,-50%) perspective(700px) rotateY(${Math.sin(t/3400)*9}deg) rotateX(${4+Math.cos(t/4300)*3}deg) rotateZ(-1deg)`;
 cards.forEach(k=>{const ts=t/1000,d=(k.sc-.82)/.3;
 k.c.style.transform=`translate(${k.x-k.s/2}px,${k.y-k.h/2}px) scale(${k.sc}) perspective(600px) rotateY(${Math.sin(ts*k.ryf*6.283+k.p2)*k.ry}deg) rotateX(${Math.sin(ts*.13+k.p1)*k.rx}deg) rotateZ(${Math.sin(ts*.09+k.zp)*k.rz}deg)`;
@@ -105,7 +105,7 @@ else requestAnimationFrame(loop);
 setTimeout(()=>{document.getElementById('intro').classList.add('out');document.body.classList.add('ready')},1500);
 // View by: grid (the floating artists) or time (label timeline), like the reference site
 {const tvl=document.getElementById('tvl'),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-tvl.innerHTML=LABEL_TL.map(g=>`<h2 class="yr">${g.y}</h2>`+g.items.map(it=>{const tx=`<div class="d">${it.d}</div><div class="h">${esc(it.h||it.t)}</div>`;return `<div class="ev${it.h?'':' s'}">${it.a?`<a href="artist.html?a=${it.a}&frontpage=true">${tx}</a>`:tx}</div>`}).join('')).join('');
+tvl.innerHTML=LABEL_TL.map(g=>`<h2 class="yr${isNaN(g.y)?' sm':''}">${g.y}</h2>`+g.items.map(it=>{const tx=`${it.d?`<div class="d">${it.d}</div>`:''}<div class="h">${esc(it.h||it.t)}</div>`;return `<div class="ev${it.h?'':' s'}">${it.a?`<a href="artist.html?a=${it.a}&frontpage=true">${tx}</a>`:tx}</div>`}).join('')).join('');
 const vb=[...document.querySelectorAll('.view button')],setView=v=>{document.body.classList.toggle('timeView',v==='time');vb.forEach((x,i)=>x.classList.toggle('on',(i===1)===(v==='time')));scrollTo(0,0);OBS=null};
 vb[0].onclick=()=>setView('grid');vb[1].onclick=()=>setView('time');
 document.querySelector('header .logo').onclick=()=>setView(document.body.classList.contains('timeView')?'grid':'time');

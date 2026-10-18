@@ -1,7 +1,7 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Artistas · Forge Records</title><meta name="theme-color" content="#000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=26">
+<link rel="stylesheet" href="style.css?v=27">
 <style>
 html,body{overflow-x:hidden;overflow-y:auto;height:auto}body{background:#000}
 .atabs{flex:1;display:flex;gap:16px;margin-left:14px}.atabs a{font-family:Unbounded;font-weight:700;font-size:15px;color:#777;text-decoration:none}.atabs a.on{color:#fff}
@@ -52,14 +52,14 @@ header .logo b{display:none}
 <nav class="flegal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Press</a><a href="#">Careers</a><a href="#">Contact Us</a><a href="#">Cookies Policy</a><a href="#">Cookies Settings</a></nav>
 <i class="fend"></i>
 </section>
-<script src="badge.js?v=26"></script><script src="artists.js?v=26"></script>
+<script src="badge.js?v=27"></script><script src="artists.js?v=27"></script>
 <script>
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG('b'+i));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const url=a=>`artist.html?a=${a.s}&frontpage=true`,list=[...ARTISTS].sort((x,y)=>x.n.localeCompare(y.n,'es'));
 const g=document.getElementById('agrid'),sel=document.getElementById('asel');
 let html='';list.forEach((a,i)=>{html+=`<a class="acard" href="${url(a)}" style="background-image:url('${a.img}')"><b>${esc(a.n)}</b></a>`;
-if(i===5)html+=`<section class="amail"><h3>Únete a nuestra lista para enterarte de lo último de todos nuestros artistas</h3><form class="aform" novalidate><div class="frow"><input type="email" placeholder="Email" aria-label="Email" required><button type="submit">Submit</button></div></form></section>`});
+if(i===Math.min(5,list.length-1))html+=`<section class="amail"><h3>Únete a nuestra lista para enterarte de lo último de todos nuestros artistas</h3><form class="aform" novalidate><div class="frow"><input type="email" placeholder="Email" aria-label="Email" required><button type="submit">Submit</button></div></form></section>`});
 g.innerHTML=html;list.forEach(a=>sel.add(new Option(a.n,url(a))));sel.onchange=()=>{if(sel.value)location.href=sel.value};
 document.querySelectorAll('form.aform,#foot .fform').forEach(fm=>fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}fm.innerHTML='<p class="ok fthanks">¡Gracias! Te mantendremos al tanto.</p>'});
 </script></body></html>
