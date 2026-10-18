@@ -25,7 +25,7 @@ const H=hero.clientHeight,ct=Math.min(...C.map(c=>c.t)),cb=Math.max(...C.map(c=>
 const bands=[[top,B.t],[B.b,ct],[cb,H]].map(([t0,b0])=>[t0+28,b0-28]).filter(([t0,b0])=>b0>t0);
 return OBS={all:[B,...C],top,W:hero.clientWidth,H,bands}}
 function laneY(O,f){const tot=O.bands.reduce((s,b)=>s+b[1]-b[0],0);let d=Math.min(.999,Math.max(0,f))*tot;for(const b of O.bands){const L=b[1]-b[0];if(d<=L)return b[0]+d;d-=L}return O.bands.at(-1)[1]}
-const FX=1.32,FY=1.25,SEP=26,PAD=2,LR=mob?170:260,LRF=mob?22:30;// bbox allowance for 3D tilt
+const FX=1.32,FY=1.28,SEP=26,PAD=2,LR=mob?170:260,LRF=mob?22:30;// bbox allowance for 3D tilt
 const half=(k,sc)=>[k.s*sc*FX/2,k.h*sc*FY/2];
 function sdepth(k,t){return .82+.3*(.5+.5*Math.sin(t/1000*k.zf*6.283+k.zp))}// 0.82..1.12 "depth" scale
 // push a card centre out of an expanded rect along the shallowest axis
@@ -105,7 +105,7 @@ else requestAnimationFrame(loop);
 setTimeout(()=>{document.getElementById('intro').classList.add('out');document.body.classList.add('ready')},1500);
 // View by: grid (the floating artists) or time (label timeline), like the reference site
 {const tvl=document.getElementById('tvl'),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-tvl.innerHTML=LABEL_TL.map(g=>`<h2 class="yr${isNaN(g.y)?' sm':''}">${g.y}</h2>`+g.items.map(it=>{const tx=`${it.d?`<div class="d">${it.d}</div>`:''}<div class="h">${esc(it.h||it.t)}</div>`;return `<div class="ev${it.h?'':' s'}">${it.a?`<a href="artist.html?a=${it.a}&frontpage=true">${tx}</a>`:tx}</div>`}).join('')).join('');
+tvl.innerHTML=LABEL_TL.map(g=>`<h2 class="yr${isNaN(g.y)?' sm':''}">${g.y}</h2>`+g.items.map(it=>{const tx=`${it.d?`<div class="d">${it.d}</div>`:''}<div class="h">${esc(it.h||it.t)}</div>${it.n?`<div class="n">${esc(it.n)}</div>`:''}`;return `<div class="ev${it.h?'':' s'}">${it.a?`<a href="artist.html?a=${it.a}&frontpage=true">${tx}</a>`:tx}</div>`}).join('')).join('');
 const vb=[...document.querySelectorAll('.view button')],setView=v=>{document.body.classList.toggle('timeView',v==='time');vb.forEach((x,i)=>x.classList.toggle('on',(i===1)===(v==='time')));scrollTo(0,0);OBS=null};
 vb[0].onclick=()=>setView('grid');vb[1].onclick=()=>setView('time');
 document.querySelector('header .logo').onclick=()=>setView(document.body.classList.contains('timeView')?'grid':'time');
