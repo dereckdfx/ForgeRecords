@@ -4,12 +4,13 @@ const N=mob?(innerHeight<740?8:10):14;
 // random order on every visit (like a shuffled artist feed); artist cards are always included
 let SEED=location.search.includes('check')?7:(Date.now()%1e9);const R=()=>{SEED|=0;SEED=SEED+0x6D2B79F5|0;let t=Math.imul(SEED^SEED>>>15,1|SEED);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
 const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=R()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
-const seq=[];while(seq.length<N)seq.push(...shuf(CARDS));const list=[...seq.slice(0,CARDS.length),...shuf(seq.slice(CARDS.length,N))];// every artist/release at least once, repeats fill the hero
+const GC=typeof GUEST_CARDS!=='undefined'?GUEST_CARDS:[],NG=Math.min(GC.length,Math.round((N-CARDS.length)*.55));// core 4 always present (and repeated); a few featured collaborators fill the rest
+const seq=[];while(seq.length<N-NG)seq.push(...shuf(CARDS));const list=[...seq.slice(0,CARDS.length),...shuf([...seq.slice(CARDS.length,N-NG),...shuf(GC).slice(0,NG)])];// every artist/release at least once, repeats fill the hero
 // deterministic pseudo-random per card
 const rnd=(i,k)=>{const x=Math.sin((i+1)*12.9898+k*78.233)*43758.5453;return x-Math.floor(x)};
 list.forEach((a,i)=>{const c=document.createElement('a');c.className='card';c.href=`artist.html?a=${a.s}&frontpage=true`;c.setAttribute('aria-label',a.n);
 c.innerHTML=`<div class="art" style="background-image:url(${a.img})"></div><b>${a.n}</b>`;
-w.appendChild(c);const s=(mob?72:112)*(1+(i%3)*.16),ar=[1.15,.85,1.3][i%3];
+w.appendChild(c);const s=(mob?72:112)*(a.g?.94:1+(i%3)*.16),ar=[1.15,.85,1.3][i%3];
 c.style.width=s+'px';c.style.height=s*ar+'px';
 cards.push({c,i,s,h:s*ar,f1:.05+rnd(i,1)*.06,f2:.04+rnd(i,2)*.05,p1:rnd(i,3)*6.28,p2:rnd(i,4)*6.28,zf:1/(9+rnd(i,5)*9),zp:rnd(i,6)*6.28,
 ry:18+rnd(i,7)*26,ryf:1/(7+rnd(i,8)*8),rx:4+rnd(i,9)*6,rz:3+rnd(i,10)*4,sp:(mob?26:38)*(.75+rnd(i,11)*.5)})});
@@ -93,7 +94,8 @@ const SIM=+(new URLSearchParams(location.search).get('sim')||0);let simDone=fals
 function loop(now){if(!simDone){simDone=true;for(let i=0;i<SIM/16;i++)step(i*16,.016);if(SIM){last=null}}if(last==null)last=now;const dt=Math.min(.05,(now-last)/1000);last=now;if(!document.body.classList.contains('timeView')){step(now+TOFF+SIM,dt);render(now+TOFF+SIM)}requestAnimationFrame(loop)}
 if(NOLOOP)setTimeout(()=>{const O=obs();const hr=hero.getBoundingClientRect();let hits=0,hdr=0,log=[];const R=O.all.map(o=>({l:o.l+GAP,r:o.r-GAP,t:o.t+GAP,b:o.b-GAP}));
 let mn=9,xs=cards.map(()=>[1e9,-1e9]),ys=cards.map(()=>[1e9,-1e9]),jump=0,mxo=0,trj=[],offn=0,offl=0,offs=0,wl='',ov5=0,run=0,mrun=0,vis=0,clump=0;const grid=Array(12).fill(0);const prev=cards.map(k=>k.sc);
-for(let i=0;i<8000;i++){const t=i*16;if(i%625==300)deal(t);step(t,.016);cards.forEach((k,j)=>{if(k.x>0&&k.x<O.W)mn=Math.min(mn,k.sc);ys[j][0]=Math.min(ys[j][0],k.y);xs[j][0]=Math.min(xs[j][0],k.x);xs[j][1]=Math.max(xs[j][1],k.x);ys[j][1]=Math.max(ys[j][1],k.y);jump=Math.max(jump,Math.abs(k.sc-prev[j]));prev[j]=k.sc});if(i%4)continue;render(t);const rs=[];for(const k of cards){const r=k.c.getBoundingClientRect(),q={l:r.left-hr.left,r:r.right-hr.left,t:r.top-hr.top,b:r.bottom-hr.top};
+for(let i=-60;i<0;i++)step(i*16+960,.016);// 1 s warm-up (spawn settles while the intro covers the hero)
+for(let i=0;i<8000;i++){const t=i*16+960;if(i%625==300)deal(t);step(t,.016);cards.forEach((k,j)=>{if(k.x>0&&k.x<O.W)mn=Math.min(mn,k.sc);ys[j][0]=Math.min(ys[j][0],k.y);xs[j][0]=Math.min(xs[j][0],k.x);xs[j][1]=Math.max(xs[j][1],k.x);ys[j][1]=Math.max(ys[j][1],k.y);jump=Math.max(jump,Math.abs(k.sc-prev[j]));prev[j]=k.sc});if(i%4)continue;render(t);const rs=[];for(const k of cards){const r=k.c.getBoundingClientRect(),q={l:r.left-hr.left,r:r.right-hr.left,t:r.top-hr.top,b:r.bottom-hr.top};
 R.forEach((o,j)=>{const ox=Math.min(q.r,o.r+GAP)-Math.max(q.l,o.l-GAP),oy=Math.min(q.b,o.b+GAP)-Math.max(q.t,o.t-GAP);if(ox>0&&oy>0){hits++;if(log.length<4)log.push(k.i+'@'+i+':'+j+':'+ox.toFixed(1)+'x'+oy.toFixed(1))}});
 rs.push(q);if(q.t<O.top-GAP){hdr++;if(log.length<4)log.push(k.i+'hdr'+(O.top-GAP-q.t).toFixed(1))}}
 const ar=r=>Math.max(0,r.r-Math.max(r.l,0))*0+(r.r-r.l)*(r.b-r.t);let fm=0;
