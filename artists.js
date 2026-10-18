@@ -14,14 +14,16 @@ const DFX_RELEASES=[
 {t:'Residue (AR Remix, & Dereck DFX)',d:'04/08/2026',by:'AR & Dereck DFX',ar:1,arn:'Su primer sencillo viral'},
 {t:'Entering the room (AR Remix)',d:'04/08/2026',by:'Dereck DFX & AR',ar:1},
 {t:'Entering the Elevator (AR Remix)',d:'04/08/2026',by:'Dereck DFX & AR',ar:1},
-{t:'The Elevator (AR Remix)',d:'04/08/2026',by:'Dereck DFX & AR',ar:1}];
+{t:'The Elevator (AR Remix)',d:'04/08/2026',by:'Dereck DFX & AR',ar:1},
+{t:'Pink Diamond (feat. AR)',d:'13/08/2026',by:'Dereck DFX feat. AR',ar:1,post:1,q:'Primer lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.'}];
 const DFX_ANNOUNCED=[{d:'10/2026',h:'Anunció su álbum “Las Reinas del Perreo”'},{d:'10/2026',t:'Sencillo “Moteles”',rel:1},{d:'10/2026',t:'Sencillo “Always”',rel:1}];
 // "Su primer lanzamiento", "Su segundo lanzamiento"… counted oldest→newest over releases only (the album announcement is not a release)
 const ORD=['primer','segundo','tercer','cuarto','quinto','sexto','séptimo','octavo','noveno','décimo','undécimo','duodécimo','decimotercer','decimocuarto','decimoquinto','decimosexto'];
 [...DFX_RELEASES.map(r=>(r.rel=1,r)),...DFX_ANNOUNCED].filter(r=>r.rel).forEach((r,k)=>{r.n=`Su ${ORD[k]} lanzamiento`+(r.ar?' · Con AR':'')});
+const PRE=DFX_RELEASES.filter(r=>!r.post),POST=DFX_RELEASES.filter(r=>r.post),AR_JOIN={d:'03/08/2026',h:'Se unió a Forge Records'};
 const ARTISTS=[
-{s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tl:TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...DFX_RELEASES.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...DFX_ANNOUNCED.map(r=>({...r})))},
-{s:'ar',n:'AR',img:'img/ar.jpg',tl:TL(FOUND,...DFX_RELEASES.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn})),{...SALE},{d:'10/2026',h:'Se unió a Forge Records'})},
+{s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tl:TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})))},
+{s:'ar',n:'AR',img:'img/ar.jpg',tl:TL(FOUND,AR_JOIN,...PRE.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn})),{...SALE},...POST.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn,q:r.q})))},
 {s:'zoe-jpr',n:'Zoe J. P. R.',img:'img/c7.jpg'},
 {s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/c8.jpg'}
 ].map(a=>({...a,tl:a.tl||JOIN}));
@@ -34,11 +36,13 @@ const CARDS=[
 const LABEL_TL=TL(
 {d:'27/07/2026',h:'Fundación de Forge Records'},
 {d:'27/07/2026',t:'Dereck DFX se unió a Forge Records',a:'dereck-dfx'},
-...DFX_RELEASES.map(r=>({d:r.d||'',t:(r.by||'Dereck DFX')+' — '+r.t,n:r.n,a:'dereck-dfx'})),
+...PRE.filter(r=>r.d!=='03/08/2026'&&r.d!=='04/08/2026').map(r=>({d:r.d||'',t:(r.by||'Dereck DFX')+' — '+r.t,n:r.n,a:'dereck-dfx'})),
+{d:'03/08/2026',t:'AR se unió a Forge Records',a:'ar'},
+...PRE.filter(r=>r.d==='03/08/2026'||r.d==='04/08/2026').map(r=>({d:r.d,t:(r.by||'Dereck DFX')+' — '+r.t,n:r.n,a:'dereck-dfx'})),
 {...SALE},
+...POST.map(r=>({d:r.d||'',t:(r.by||'Dereck DFX')+' — '+r.t,n:r.n,q:r.q,a:'dereck-dfx'})),
 {d:'10/2026',t:'Dereck DFX anunció su álbum “Las Reinas del Perreo”',a:'dereck-dfx'},
 {d:'10/2026',t:'Dereck DFX — sencillo “Moteles”',n:DFX_ANNOUNCED[1].n,a:'dereck-dfx'},
 {d:'10/2026',t:'Dereck DFX — sencillo “Always”',n:DFX_ANNOUNCED[2].n,a:'dereck-dfx'},
-{d:'10/2026',t:'AR se unió a Forge Records',a:'ar'},
 {d:'10/2026',t:'Zoe J. P. R. se unió a Forge Records',a:'zoe-jpr'},
 {d:'10/2026',t:'Santiago “Capito” Campos se unió a Forge Records',a:'santiago-campos'});
