@@ -1,7 +1,7 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Forge Records</title><meta name="theme-color" content="#000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=29">
+<link rel="stylesheet" href="style.css?v=30">
 <style>
 html,body{overflow-x:hidden;overflow-y:auto;height:auto}
 body{background:#000}
@@ -52,7 +52,7 @@ body{background:#000}
 <i class="fend"></i>
 </section>
 
-<script src="badge.js?v=29"></script><script src="artists.js?v=29"></script>
+<script src="badge.js?v=30"></script><script src="artists.js?v=30"></script>
 <script>
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG('a'+i));
 const q=new URLSearchParams(location.search),slug=q.get('a');
@@ -63,7 +63,7 @@ if(!A){m.innerHTML='<div class="nf"><p>Artista no encontrado.</p><p><a href="/">
 else{document.title=A.n+' · Forge Records';
 m.innerHTML=`<section class="ahead"><div class="aphoto" style="background-image:url('${A.img}')" role="img" aria-label="${esc(A.n)}"></div><h1 class="aname">${esc(A.n)}</h1></section>
 <section class="abody"><div class="abg" style="background-image:url('${A.img}')"></div><div class="tl">${A.tl.map(g=>`<h2 class="yr${isNaN(g.y)?' sm':''}">${g.y}</h2>`+g.items.map((it,i)=>`<div class="ev${it.h?'':' s'}">${it.d?`<div class="d">${it.d}</div>`:''}<div class="h">${esc(it.h||it.t)}</div></div>`).join('')).join('')}
-<div class="ev s"><div class="d">27 jul 2026</div><div class="h">Forge Records fue fundada</div></div></div></section>`}
+</div></section>`}
 {const fm=document.querySelector('#foot .fform');fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}fm.innerHTML='<p class="fthanks">¡Gracias! Te mantendremos al tanto.</p>'}}
 const pr=document.getElementById('prog');function up(){const h=document.documentElement.scrollHeight-innerHeight;pr.style.height=(h>0?scrollY/h:0)*100+'vh'}addEventListener('scroll',up,{passive:true});up();
 </script></body></html>
