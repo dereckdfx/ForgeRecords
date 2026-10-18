@@ -177,3 +177,8 @@ grid-template-areas:"top top top" "soc join logos" "form jl logos" "form . copy"
 #foot>.flegal{grid-area:legal;justify-content:flex-start;max-width:none;font-size:12px}#foot .flegal a:first-child{padding-left:0}
 #foot>.fend{grid-area:end;width:100%;margin-top:70px}
 }
+/* legal links: separator belongs to the preceding item, so a wrapped line never starts with "|" */
+.flegal a,.flegal a:first-child{border:0;padding:0;white-space:nowrap;display:inline-flex;align-items:center}
+.flegal a::after{content:"";display:inline-block;width:1px;height:.95em;background:#fff;margin:0 7px}
+.flegal a:last-child::after{display:none}
+#foot .flegal a:first-child{padding-left:0}
