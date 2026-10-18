@@ -25,7 +25,7 @@ const DFX_RELEASES=[
 {t:'Super S! (fr. T.Y.N) (feat. T.Y.N)',d:'15/09/2026',con:'T.Y.N',feat:['tyn'],post:1,q:'Octavo lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.'},
 {t:'Porn*gráfica (fr. S.I.N C.U.T.) (feat. S.I.N C.U.T., 5021 Records & S\'ny Music Entertainment España, S.L.)',d:'24/09/2026',con:'S.I.N C.U.T.',feat:['sin-cut'],post:1,q:'Sello: 5021 Records / S\'ny Music Entertainment España, S.L. (no es un lanzamiento de Forge Records).'},
 {t:'Angel Chavez Mateos FTS Session 001 (feat. Angel Chavez Mateos, 5021 Records, S\'ny Music Entertainment México, S.L., S\'ny Music Entertainment México, S.L. FTS Sessions & FTS Sessions) [S\'ny Music Entertainment México, S.L. FTS Session 001]',d:'01/10/2026',con:'Angel Chavez Mateos',feat:['angel-chavez-mateos'],post:1,q:'Sello: Fotos Sacadas del Classroom. Derechos: S\'ny Music Entertainment México, S.L. (no es un lanzamiento de Forge Records).'}];
-const DFX_ANNOUNCED=[{d:'10/2026',h:'Anunció su álbum “Las Reinas del Perreo”',n:'Con Anyelina y La Reina de Tecámac'},{d:'10/2026',t:'Sencillo “Moteles”',rel:1},{d:'10/2026',t:'Sencillo “Always”',rel:1}];
+const DFX_ANNOUNCED=[{d:'10/2026',h:'Anunció su álbum “Las Reinas del Perreo”',n:'Con Anyelina y La Reina de Tecámac'},{d:'10/2026',t:'Sencillo “Moteles”',rel:1},{d:'15/10/2026',t:'Always (Single)',rel:1,q:'Noveno lanzamiento de Dereck DFX bajo el sello: Dereck DFX LLC under exclusive license to Forge Records, an exclusive license from Starlight Records, a division of Alice Whitman.'}];
 // "Su primer lanzamiento", "Su segundo lanzamiento"… counted oldest→newest over releases only (the album announcement is not a release)
 const ORD=['primer','segundo','tercer','cuarto','quinto','sexto','séptimo','octavo','noveno','décimo','undécimo','duodécimo','decimotercer','decimocuarto','decimoquinto','decimosexto','decimoséptimo','decimoctavo','decimonoveno','vigésimo','vigésimo primer','vigésimo segundo','vigésimo tercer','vigésimo cuarto','vigésimo quinto'];
 [...DFX_RELEASES.map(r=>(r.rel=1,r)),...DFX_ANNOUNCED].filter(r=>r.rel).forEach((r,k)=>{r.n=`Su ${ORD[k]} lanzamiento`+(r.con?' · Con '+r.con:r.ar?' · Con AR':'')});
@@ -58,6 +58,6 @@ const LABEL_TL=TL(
 ...POST.map(r=>({d:r.d||'',t:(r.by||'Dereck DFX')+' — '+r.t,n:r.n,q:r.q,a:'dereck-dfx'})),
 {d:'10/2026',t:'Dereck DFX anunció su álbum “Las Reinas del Perreo”',n:'Con Anyelina y La Reina de Tecámac',a:'dereck-dfx'},
 {d:'10/2026',t:'Dereck DFX — sencillo “Moteles”',n:DFX_ANNOUNCED[1].n,a:'dereck-dfx'},
-{d:'10/2026',t:'Dereck DFX — sencillo “Always”',n:DFX_ANNOUNCED[2].n,a:'dereck-dfx'},
 {d:'10/2026',t:'La Reina de Tecámac se unió a Forge Records',a:'zoe-jpr'},
-{d:'10/2026',t:'Santiago “Capito” Campos se unió a Forge Records',a:'santiago-campos'});
+{d:'10/2026',t:'Santiago “Capito” Campos se unió a Forge Records',a:'santiago-campos'},
+{d:'15/10/2026',t:'Dereck DFX — Always (Single)',n:DFX_ANNOUNCED[2].n,q:DFX_ANNOUNCED[2].q,a:'dereck-dfx'});
