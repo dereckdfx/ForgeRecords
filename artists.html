@@ -1,14 +1,23 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Artistas · Forge Records</title><meta name="theme-color" content="#000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=43">
+<link rel="stylesheet" href="style.css?v=44">
 <style>
 html,body{overflow-x:hidden;overflow-y:auto;height:auto}body{background:#000}
 .atabs{flex:1;display:flex;gap:16px;margin-left:14px}.atabs a{font-family:Unbounded;font-weight:700;font-size:15px;color:#777;text-decoration:none}.atabs a.on{color:#fff}
 header .logo b{display:none}
-.asel{margin:calc(78px + env(safe-area-inset-top)) 10px 18px;position:relative}
-.asel select{width:100%;appearance:none;-webkit-appearance:none;background:#000;color:#fff;border:1.5px solid #fff;border-radius:6px;padding:9px 40px 9px 12px;font:700 11px Unbounded;letter-spacing:.02em}
-.asel svg{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:18px;pointer-events:none}
+.asel{position:fixed;left:10px;right:10px;top:calc(var(--hb,62px) + 6px);z-index:101;background:#000;box-shadow:0 -8px 0 #000,0 10px 0 #000}
+.asbtn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#000;color:#fff;border:1.5px solid #fff;border-radius:6px;padding:9px 12px;font:700 11px Unbounded;letter-spacing:.02em;cursor:pointer;text-align:left}
+.asbtn svg{width:18px;flex:none;transition:transform .25s}.asel.open .asbtn svg{transform:rotate(180deg)}
+.aslist{list-style:none;margin:0;padding:6px 12px 10px;background:#000;max-height:min(62vh,520px);overflow-y:auto;display:none;scrollbar-color:#fff #000;scrollbar-width:thin}
+.asel.open .aslist{display:block}
+.aslist li a{display:block;color:#fff;text-decoration:none;font:700 10px/1.2 Unbounded;letter-spacing:.01em;padding:11px 2px 9px;border-bottom:1px solid #fff}
+.aslist li a:hover,.aslist li a:focus{color:#bbb;outline:none}
+main.agrid{margin-top:calc(var(--hb,62px) + 62px)}
+@media(min-width:900px){.asel{position:relative;left:auto;right:auto;top:auto;width:290px;margin-right:18px}
+.asbtn{padding:11px 12px;border-radius:2px;border-color:#555}
+.aslist{position:absolute;left:0;right:0;top:calc(100% + 14px);padding:4px 14px 10px;max-height:calc(100vh - var(--hb,66px) - 40px)}
+main.agrid{margin-top:calc(var(--hb,66px) + 56px)}}
 .agrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;padding:0 6px}
 .acard{position:relative;display:block;aspect-ratio:1;background:#111 center/cover no-repeat;text-decoration:none;overflow:hidden}
 .acard::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35)}
@@ -18,12 +27,12 @@ header .logo b{display:none}
 .amail .frow{display:flex;gap:12px}.amail input[type=email]{flex:1;min-width:0;background:#000;border:1.5px solid #fff;border-radius:3px;color:#fff;padding:12px;font:700 14px Unbounded}
 .amail button{background:linear-gradient(#f4f4f4,#a9adb2);border:0;border-radius:3px;font:800 14px Unbounded;padding:0 20px;color:#000}
 .amail .ok{font-size:13px;color:#ccc}
-@media(min-width:700px){.agrid{grid-template-columns:repeat(4,1fr);max-width:1200px;margin:0 auto}.asel{max-width:1188px;margin-left:auto;margin-right:auto}}
+@media(min-width:700px){.agrid{grid-template-columns:repeat(4,1fr);max-width:1200px;margin-left:auto;margin-right:auto;gap:18px}.acard b{font-size:clamp(16px,1.6vw,22px)}}
 </style></head><body>
 <header><div class="logo"><a href="/?nointro=1" style="display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none"><span class="mini badge-slot"></span><b>1 year</b></a></div><nav class="atabs"><a class="on" href="artists.html">Artistas</a></nav>
 <div class="right">
+<div class="asel" id="aselw"><button type="button" class="asbtn" id="asbtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="aslist"><span>Selecciona un artista</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 6h18M6 12h12M10 18h4"/></svg></button><ul class="aslist" id="aslist" role="listbox" aria-label="Artistas"></ul></div>
 <a class="burger" href="/?menu=1&amp;nointro=1" aria-label="Menú"><i></i><i></i><i></i></a></div></header>
-<div class="asel"><select id="asel" aria-label="Selecciona un artista"><option value="">Selecciona un artista</option></select><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 6h18M6 12h12M10 18h4"/></svg></div>
 <main class="agrid" id="agrid"></main>
 <section class="site-foot" id="foot">
 <i class="fl"></i>
@@ -52,14 +61,21 @@ header .logo b{display:none}
 <nav class="flegal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Press</a><a href="#">Careers</a><a href="#">Contact Us</a><a href="#">Cookies Policy</a><a href="#">Cookies Settings</a></nav>
 <i class="fend"></i>
 </section>
-<script src="badge.js?v=43"></script><script src="artists.js?v=43"></script>
+<script src="badge.js?v=44"></script><script src="artists.js?v=44"></script>
 <script>
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG('b'+i));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const url=a=>`artist.html?a=${a.s}&frontpage=true`,list=[...ARTISTS].sort((x,y)=>x.n.localeCompare(y.n,'es'));
-const g=document.getElementById('agrid'),sel=document.getElementById('asel');
+const g=document.getElementById('agrid');
 let html='';list.forEach((a,i)=>{html+=`<a class="acard" href="${url(a)}" style="background-image:url('${a.img}')"><b>${esc(a.n)}</b></a>`;
-if(i===Math.min(5,list.length-1))html+=`<section class="amail"><h3>Únete a nuestra lista para enterarte de lo último de todos nuestros artistas</h3><form class="aform" novalidate><div class="frow"><input type="email" placeholder="Email" aria-label="Email" required><button type="submit">Submit</button></div></form></section>`});
-g.innerHTML=html;list.forEach(a=>sel.add(new Option(a.n,url(a))));sel.onchange=()=>{if(sel.value)location.href=sel.value};
+if(i===Math.min(7,list.length-1))html+=`<section class="amail"><h3>Únete a nuestra lista para enterarte de lo último de todos nuestros artistas</h3><form class="aform" novalidate><div class="frow"><input type="email" placeholder="Email" aria-label="Email" required><button type="submit">Submit</button></div></form></section>`});
+g.innerHTML=html;
+// custom "Selecciona un artista" dropdown (Atlantic style): bold names separated by thin white lines; click goes to the artist page
+{const w=document.getElementById('aselw'),b=document.getElementById('asbtn'),ul=document.getElementById('aslist');
+ul.innerHTML=list.map(a=>`<li role="option"><a href="${url(a)}">${esc(a.n)}</a></li>`).join('');
+const set=o=>{w.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};b.onclick=e=>{e.stopPropagation();set(!w.classList.contains('open'))};
+document.addEventListener('click',e=>{if(!w.contains(e.target))set(false)});addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});
+addEventListener('pageshow',e=>{if(e.persisted)set(false)});if(/[?&]open\b/.test(location.search))set(true)}
+{const hb=()=>document.documentElement.style.setProperty('--hb',document.querySelector('header').offsetHeight+'px');hb();addEventListener('resize',hb)}
 document.querySelectorAll('form.aform,#foot .fform').forEach(fm=>fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}fm.innerHTML='<p class="ok fthanks">¡Gracias! Te mantendremos al tanto.</p>'});
 </script></body></html>

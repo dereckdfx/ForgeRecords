@@ -24,13 +24,19 @@ const top=document.querySelector('header').getBoundingClientRect().bottom-hr.top
 const H=hero.clientHeight,ct=Math.min(...C.map(c=>c.t)),cb=Math.max(...C.map(c=>c.b));
 // horizontal "lanes" free of obstacles: above the badge, between badge and the corner icons, below the corners
 const bands=[[top,B.t],[B.b,ct],[cb,H]].map(([t0,b0])=>[t0+28,b0-28]).filter(([t0,b0])=>b0>t0);
-return OBS={all:[B,...C],top,W:hero.clientWidth,H,bands}}
+const W0=hero.clientWidth;return OBS={all:[B,...C,{l:1e5,r:1e5+1,t:-1e5,b:1e5}],B0:{...B},top,W:W0,W0,H,bands}}
+// desktop menu panel: the right-side panel becomes an obstacle whose left edge slides in with it, so cards are swept left and never sit under it
+const DESK=()=>innerWidth>=900;let PL=null;function panel(O,dt){const open=DESK()&&document.body.classList.contains('menu-open'),m=document.getElementById('menu'),tg=open?O.W0-m.offsetWidth:O.W0+40;if(PL==null||!DESK())PL=tg;else PL+=(tg-PL)*Math.min(1,dt*7);if(Math.abs(tg-PL)<.5)PL=tg;
+const P=O.all[3];if(PL<O.W0){P.l=PL-GAP;P.r=O.W0+4000}else{P.l=1e5;P.r=1e5+1}O.W=Math.min(O.W0,PL-GAP);O.pan=PL<O.W0-1;
+// the FORGE badge recentres in the space left of the panel (moves with it, so it stays an exact obstacle)
+BX=Math.min(0,(PL-O.W0)/2);const B0=O.B0,Bn=O.all[0];Bn.l=B0.l+BX;Bn.r=B0.r+BX;CS=Math.min(1,Math.pow(O.W/O.W0/.85,1.6))}let BX=0;
 function laneY(O,f){const tot=O.bands.reduce((s,b)=>s+b[1]-b[0],0);let d=Math.min(.999,Math.max(0,f))*tot;for(const b of O.bands){const L=b[1]-b[0];if(d<=L)return b[0]+d;d-=L}return O.bands.at(-1)[1]}
 const FX=1.32,FY=1.28,SEP=26,PAD=2,LR=mob?170:260,LRF=mob?22:30;// bbox allowance for 3D tilt
 const half=(k,sc)=>[k.s*sc*FX/2,k.h*sc*FY/2];
-function sdepth(k,t){return .82+.3*(.5+.5*Math.sin(t/1000*k.zf*6.283+k.zp))}// 0.82..1.12 "depth" scale
+let CS=1;// global card scale: <1 only while the desktop menu panel narrows the free hero
+function sdepth(k,t){return (.82+.3*(.5+.5*Math.sin(t/1000*k.zf*6.283+k.zp)))*CS}// 0.82..1.12 "depth" scale
 // push a card centre out of an expanded rect along the shallowest axis
-function resolve(k,O,sc){const [hw,hh]=half(k,sc);for(let it=0;it<3;it++){let moved=false;for(const o of O.all){
+function resolve(k,O,sc){const [hw,hh]=half(k,sc);for(let it=0;it<6;it++){let moved=false;for(const o of O.all){
 const ox=Math.min(k.x+hw,o.r)-Math.max(k.x-hw,o.l),oy=Math.min(k.y+hh,o.b)-Math.max(k.y-hh,o.t);
 if(ox>0&&oy>0){const cx=(o.l+o.r)/2,cy=(o.t+o.b)/2;if(ox<oy){k.x+=(k.x>cx?1:-1)*(ox+.01);k.vx*=.3}else{k.y+=(k.y>cy?1:-1)*(oy+.01);k.vy*=.3}moved=true}}
 const yt=O.top+hh;if(k.y<yt){k.y=yt;k.vy=Math.abs(k.vy)*.3;moved=true}const yb=O.H-hh;if(k.y>yb){k.y=yb;k.vy=-Math.abs(k.vy)*.3;moved=true}
@@ -50,7 +56,7 @@ ord.forEach((k,j)=>{LANES[k.i]=sl[j];k.ly=sl[j];if(k.sd!=null&&R()<.5)k.sd=-k.sd
 deal(-1e9);
 function setup(O){cards.forEach(k=>k.px=0);cards.forEach(k=>{for(let tries=0;tries<200;tries++){k.x=rnd(k.i,20+tries)*O.W;k.y=O.top+rnd(k.i,40+tries)*(O.H-O.top);const [hw,hh]=half(k,1.15);
 if(!O.all.some(o=>k.x+hw>o.l&&k.x-hw<o.r&&k.y+hh>o.t&&k.y-hh<o.b)&&k.y-hh>O.top&&k.x-hw>0&&k.x+hw<O.W&&k.y+hh<O.H&&!cards.some(m=>m!==k&&m.px&&Math.abs(m.x-k.x)<hw+half(m,1.15)[0]+8&&Math.abs(m.y-k.y)<hh+half(m,1.15)[1]+8))break}k.px=1;k.vx=0;k.vy=0;resolve(k,O,sdepth(k,0))});init=true}
-function step(t,dt){curT=t;const O=OBS||obs();if(!init)setup(O);const ts=t/1000;
+function step(t,dt){curT=t;const O=OBS||obs();panel(O,dt);if(!init)setup(O);const ts=t/1000;
 cards.forEach(k=>{// wander: each card seeks its own slowly moving target spread over the whole hero
 // Atlantic-style sweep: glide across the hero to beyond the far edge, then turn back on a new lane
 const [hwS]=half(k,sdepth(k,t));if(k.sd==null){k.sd=R()<.5?1:-1;k.ly=LANES[k.i]}
@@ -58,7 +64,7 @@ if((k.sd>0&&k.x>O.W-hwS-14)||(k.sd<0&&k.x<hwS+14)){k.sd=-k.sd;k.vx*=.35;k.ly=Mat
 if(k.lane==null){k.stall=(k.vx*k.sd<6)?(k.stall||0)+dt:0;if(k.stall>1.2+rnd(k.i,30)){k.sd=-k.sd;k.stall=0}}// blocked head-on: turn around
 const tx=k.sd>0?O.W+hwS*.3:-hwS*.3,ty=laneY(O,k.ly)+10*Math.sin(ts*k.f2+k.p2);
 const Ym=(O.all[0].t+O.all[0].b)/2,rc=k.y<Ym?0:1;k.rt=ty<Ym-40?0:ty>Ym+40?1:(k.rt??rc);
-let gx=tx,gy=ty;if(k.rt!==rc){const [hw0,hh0]=half(k,1.15);if(k.lane==null)k.lane=k.x<O.W/2?0:1;
+let gx=tx,gy=ty;if(k.rt!==rc){const [hw0,hh0]=half(k,1.15);if(k.lane==null)k.lane=(O.pan||k.x<O.W/2)?0:1;
 const Cn=O.all[1+k.lane],off=k.lane?O.W+hw0*.97:-hw0*.97,edge=k.lane?O.W-hw0-4:hw0+4,dir=k.rt?1:-1,yl=k.y+dir*(hh0+50);
 const need=Math.max(k.y,yl)+hh0>Cn.t&&Math.min(k.y,yl)-hh0<Cn.b,lx=need?off:edge;
 gy=k.rt?Math.max(ty,Ym+80):Math.min(ty,Ym-80);if(need&&Math.abs(k.x-off)>12)gy=k.y;gx=lx}else k.lane=null;
@@ -85,14 +91,14 @@ kf=Math.min(kf,(k.y-O.top)/hh1);k.sc=Math.max(.05,Math.min(sc,(k.sc??sc)+.02,kf)
 for(let it=0;it<5;it++){let any=false;for(let a1=0;a1<cards.length;a1++)for(let b1=a1+1;b1<cards.length;b1++){const p=cards[a1],q=cards[b1];if(ghost(p,O)||ghost(q,O))continue;const [pw,ph]=half(p,p.sc),[qw,qh]=half(q,q.sc);
 const ox=pw+qw+PAD-Math.abs(p.x-q.x),oy=ph+qh+PAD-Math.abs(p.y-q.y);if(ox>0&&oy>0){any=true;const sv=[p.x,p.y,q.x,q.y],tryAx=ax2=>{p.x=sv[0];p.y=sv[1];q.x=sv[2];q.y=sv[3];if(ax2){const s=(p.x<q.x?-1:1)*ox/2;p.x+=s;q.x-=s}else{const s=(p.y<q.y?-1:1)*oy/2;p.y+=s;q.y-=s}resolve(p,O,p.sc);resolve(q,O,q.sc);return Math.max(0,Math.min(pw+qw-Math.abs(p.x-q.x),ph+qh-Math.abs(p.y-q.y)))};
 if(tryAx(ox<oy)>0&&tryAx(!(ox<oy))>0&&it===4){const v=p.sc<q.sc?p:q;v.sq=Math.max(.45,v.sq-.03);v.sc=Math.max(.3,v.sc-.012)}}}if(!any)break}}
-function render(t){f.style.transform=`translate(-50%,-50%) perspective(700px) rotateY(${Math.sin(t/3400)*9}deg) rotateX(${4+Math.cos(t/4300)*3}deg) rotateZ(-1deg)`;
-cards.forEach(k=>{const ts=t/1000,d=(k.sc-.82)/.3;
+function render(t){f.style.transform=`translate(calc(-50% + ${BX}px),-50%) perspective(700px) rotateY(${Math.sin(t/3400)*9}deg) rotateX(${4+Math.cos(t/4300)*3}deg) rotateZ(-1deg)`;
+cards.forEach(k=>{const ts=t/1000,d=(k.sc/CS-.82)/.3;
 k.c.style.transform=`translate(${k.x-k.s/2}px,${k.y-k.h/2}px) scale(${k.sc}) perspective(600px) rotateY(${Math.sin(ts*k.ryf*6.283+k.p2)*k.ry}deg) rotateX(${Math.sin(ts*.13+k.p1)*k.rx}deg) rotateZ(${Math.sin(ts*.09+k.zp)*k.rz}deg)`;
 k.c.style.zIndex=1+Math.round(d*7);k.c.style.filter=`brightness(${.55+.5*d})`;k.c.style.opacity=.8+.2*d})}
 const NOLOOP=location.search.includes('check');
 const SIM=+(new URLSearchParams(location.search).get('sim')||0);let simDone=false;
 function loop(now){if(!simDone){simDone=true;for(let i=0;i<SIM/16;i++)step(i*16,.016);if(SIM){last=null}}if(last==null)last=now;const dt=Math.min(.05,(now-last)/1000);last=now;if(!document.body.classList.contains('timeView')){step(now+TOFF+SIM,dt);render(now+TOFF+SIM)}requestAnimationFrame(loop)}
-if(NOLOOP)setTimeout(()=>{const O=obs();const hr=hero.getBoundingClientRect();let hits=0,hdr=0,log=[];const R=O.all.map(o=>({l:o.l+GAP,r:o.r-GAP,t:o.t+GAP,b:o.b-GAP}));
+if(NOLOOP)setTimeout(()=>{const O=obs();panel(O,1);const hr=hero.getBoundingClientRect();let hits=0,hdr=0,log=[];const R=O.all.map(o=>({l:o.l+GAP,r:o.r-GAP,t:o.t+GAP,b:o.b-GAP}));
 let mn=9,xs=cards.map(()=>[1e9,-1e9]),ys=cards.map(()=>[1e9,-1e9]),jump=0,mxo=0,trj=[],offn=0,offl=0,offs=0,wl='',ov5=0,run=0,mrun=0,vis=0,clump=0;const grid=Array(12).fill(0);const prev=cards.map(k=>k.sc);
 for(let i=-60;i<0;i++)step(i*16+960,.016);// 1 s warm-up (spawn settles while the intro covers the hero)
 for(let i=0;i<8000;i++){const t=i*16+960;if(i%625==300)deal(t);step(t,.016);cards.forEach((k,j)=>{if(k.x>0&&k.x<O.W)mn=Math.min(mn,k.sc);ys[j][0]=Math.min(ys[j][0],k.y);xs[j][0]=Math.min(xs[j][0],k.x);xs[j][1]=Math.max(xs[j][1],k.x);ys[j][1]=Math.max(ys[j][1],k.y);jump=Math.max(jump,Math.abs(k.sc-prev[j]));prev[j]=k.sc});if(i%4)continue;render(t);const rs=[];for(const k of cards){const r=k.c.getBoundingClientRect(),q={l:r.left-hr.left,r:r.right-hr.left,t:r.top-hr.top,b:r.bottom-hr.top};
@@ -117,6 +123,7 @@ if(location.search.includes('time'))setView('time')}
 if(location.search.includes('shot')){document.getElementById('intro').classList.add('out');document.getElementById('intro').style.display='none';document.body.classList.add('ready')}
 
 const menu=document.getElementById('menu'),bg=document.querySelector('.burger');
+{const hb=()=>document.documentElement.style.setProperty('--hb',document.querySelector('header').offsetHeight+'px');hb();addEventListener('resize',hb)}
 menu.querySelector('.msoc').innerHTML=document.querySelector('nav.social').innerHTML;
 bg.onclick=()=>{const o=!document.body.classList.contains('menu-open');document.body.classList.toggle('menu-open',o);menu.setAttribute('aria-hidden',!o);bg.setAttribute('aria-expanded',o)};
 addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('menu-open'))bg.click()});
