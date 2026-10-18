@@ -34,7 +34,7 @@ const ARTISTS=[
 {s:'zoe-jpr',n:'Zoe J. P. R.',img:'img/c7.jpg',tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'})},
 {s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/c8.jpg'},
 // collaborators credited on Dereck DFX releases (no join date known, so no "joined" entry)
-...[['alc','ALC (Alice Whitman)'],['boyfiendyt','BoyFiendYT'],['iker','Iker'],['anyelina','Anyelina'],['super-67-dress','Super 67 / Dress','super67']].map(([s,n,f])=>({s,n,img:`img/${f||s}.jpg`,guest:1,tl:TL(FOUND,{...SALE},...FEAT(s))}))
+...[['alc','ALC (Alice Whitman)'],['boyfiendyt','BoyFiendYT'],['iker','Iker'],['anyelina','Anyelina','anyelina-photo'],['super-67-dress','Super 67 / Dress','super67']].map(([s,n,f])=>({s,n,img:`img/${f||s}.jpg`,guest:1,tl:TL(FOUND,{...SALE},...FEAT(s))}))
 ].map(a=>({...a,tl:a.tl||JOIN}));
 // cards on the home page: only the label's artists (repeated to fill the hero)
 const CARDS=[
