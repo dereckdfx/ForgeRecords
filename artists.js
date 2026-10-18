@@ -42,7 +42,7 @@ const ALL_ARTISTS=[
 {s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tagline:'Y Esta Mierda Apenas Empieza',taglineBy:'Dereck DFX',tl:TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})))},
 {s:'ar',n:'AR',img:'img/ar.jpg',tl:TL(FOUND,AR_JOIN,...PRE.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn})),{...SALE},...POST.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn,q:r.q})))},
 {s:'zoe-jpr',n:'La Reina de Tecámac',img:'img/zoe-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'},ALBUM_GUEST)},
-{s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/c8.jpg'},
+{s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/santiago-photo.jpg',fit:1},
 // collaborators credited on Dereck DFX releases (no join date known, so no "joined" entry)
 ...GUESTS.map(({s,n,f,hidden,fit})=>({s,n,img:`img/${f||s}.jpg`,fit,pos:s==='iker'?'center 12%':s==='daniel-nigro'?'center 8%':undefined,guest:1,hidden,tl:TL(FOUND,{...SALE},...FEAT(s),...(s==='anyelina'?[ALBUM_GUEST]:[]))}))
 ].map(a=>({...a,tl:a.tl||JOIN}));
@@ -50,7 +50,7 @@ const ARTISTS=ALL_ARTISTS.filter(a=>!a.hidden);// everything on the site reads A
 // cards on the home page: only the label's artists (repeated to fill the hero)
 const CARDS=[
 {n:'DERECK DFX',img:'img/dereck-dfx.jpg',s:'dereck-dfx'},{n:'AR',img:'img/ar.jpg',s:'ar'},{n:'LA REINA DE TECÁMAC',img:'img/zoe-photo.jpg',s:'zoe-jpr',fit:1},
-{n:'SANTIAGO “CAPITO” CAMPOS',img:'img/c8.jpg',s:'santiago-campos'}];
+{n:'SANTIAGO “CAPITO” CAMPOS',img:'img/santiago-photo.jpg',s:'santiago-campos',fit:1}];
 // featured collaborators: shown on the home hero too, but smaller and fewer than the 4 core artists
 const GUEST_CARDS=ARTISTS.filter(a=>a.guest).map(a=>({n:a.n.toUpperCase(),img:a.img,s:a.s,g:1,fit:a.fit}));
 
