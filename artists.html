@@ -1,7 +1,7 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Artistas · Forge Records</title><meta name="theme-color" content="#000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=50">
+<link rel="stylesheet" href="style.css?v=51">
 <style>
 html,body{overflow-x:hidden;overflow-y:auto;height:auto}body{background:#000}
 .atabs{flex:1;display:flex;gap:16px;margin-left:14px}.atabs a{font-family:Unbounded;font-weight:700;font-size:15px;color:#777;text-decoration:none}.atabs a.on{color:#fff}
@@ -61,13 +61,13 @@ main.agrid{margin-top:calc(var(--hb,66px) + 56px)}}
 <nav class="flegal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Press</a><a href="#">Careers</a><a href="#">Contact Us</a><a href="#">Cookies Policy</a><a href="#">Cookies Settings</a></nav>
 <i class="fend"></i>
 </section>
-<script src="badge.js?v=50"></script><script src="artists.js?v=50"></script>
+<script src="badge.js?v=51"></script><script src="artists.js?v=51"></script>
 <script>
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG('b'+i));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const url=a=>`artist.html?a=${a.s}&frontpage=true`,list=[...ARTISTS].sort((x,y)=>x.n.localeCompare(y.n,'es'));
 const g=document.getElementById('agrid');
-let html='';list.forEach((a,i)=>{html+=`<a class="acard" href="${url(a)}" style="background-image:url('${a.img}')${a.pos?';background-position:'+a.pos:''}"><b>${esc(a.n)}</b></a>`;
+let html='';list.forEach((a,i)=>{html+=`<a class="acard" href="${url(a)}" style="background-image:url('${a.img}')${a.pos?';background-position:'+a.pos:''}${a.fit?';background-size:contain;background-color:#000':''}"><b>${esc(a.n)}</b></a>`;
 if(i===Math.min(7,list.length-1))html+=`<section class="amail"><h3>Únete a nuestra lista para enterarte de lo último de todos nuestros artistas</h3><form class="aform" novalidate><div class="frow"><input type="email" placeholder="Email" aria-label="Email" required><button type="submit">Submit</button></div></form></section>`});
 g.innerHTML=html;
 // custom "Selecciona un artista" dropdown (Atlantic style): bold names separated by thin white lines; click goes to the artist page

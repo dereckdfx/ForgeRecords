@@ -9,8 +9,8 @@ const seq=[];while(seq.length<N-NG)seq.push(...shuf(CARDS));const list=[...seq.s
 // deterministic pseudo-random per card
 const rnd=(i,k)=>{const x=Math.sin((i+1)*12.9898+k*78.233)*43758.5453;return x-Math.floor(x)};
 list.forEach((a,i)=>{const c=document.createElement('a');c.className='card';c.href=`artist.html?a=${a.s}&frontpage=true`;c.setAttribute('aria-label',a.n);
-c.innerHTML=`<div class="art" style="background-image:url(${a.img})"></div><b>${a.n}</b>`;
-w.appendChild(c);const s=(mob?72:112)*(a.g?.94:1+(i%3)*.16),ar=[1.15,.85,1.3][i%3];
+c.innerHTML=`<div class="art" style="background-image:url(${a.img})${a.fit?';background-size:contain;background-repeat:no-repeat;background-color:#000':''}"></div><b>${a.n}</b>`;// fit: show the whole photo, uncropped
+w.appendChild(c);const s=(mob?72:112)*(a.g?.94:1+(i%3)*.16),ar=a.fit?4/3:[1.15,.85,1.3][i%3];
 c.style.width=s+'px';c.style.height=s*ar+'px';
 cards.push({c,i,s,h:s*ar,f1:.05+rnd(i,1)*.06,f2:.04+rnd(i,2)*.05,p1:rnd(i,3)*6.28,p2:rnd(i,4)*6.28,zf:1/(9+rnd(i,5)*9),zp:rnd(i,6)*6.28,
 ry:18+rnd(i,7)*26,ryf:1/(7+rnd(i,8)*8),rx:4+rnd(i,9)*6,rz:3+rnd(i,10)*4,sp:(mob?26:38)*(.75+rnd(i,11)*.5)})});

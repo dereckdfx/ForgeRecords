@@ -32,14 +32,14 @@ const FEAT=s=>DFX_RELEASES.filter(r=>(r.feat||[]).includes(s)).map(r=>({d:r.d,t:
 const ARTISTS=[
 {s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tl:TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})))},
 {s:'ar',n:'AR',img:'img/ar.jpg',tl:TL(FOUND,AR_JOIN,...PRE.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn})),{...SALE},...POST.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn,q:r.q})))},
-{s:'zoe-jpr',n:'La Reina de Tecámac',img:'img/c7.jpg',tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'},ALBUM_GUEST)},
+{s:'zoe-jpr',n:'La Reina de Tecámac',img:'img/zoe-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'},ALBUM_GUEST)},
 {s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/c8.jpg'},
 // collaborators credited on Dereck DFX releases (no join date known, so no "joined" entry)
 ...[['alc','ALC (Alice Whitman)'],['boyfiendyt','BoyFiendYT','boyfiendyt-photo'],['iker','Iker','iker-photo'],['anyelina','Anyelina','anyelina-photo'],['super-67-dress','Super 67 / Dress','super67']].map(([s,n,f])=>({s,n,img:`img/${f||s}.jpg`,pos:s==='iker'?'center 12%':undefined,guest:1,tl:TL(FOUND,{...SALE},...FEAT(s),...(s==='anyelina'?[ALBUM_GUEST]:[]))}))
 ].map(a=>({...a,tl:a.tl||JOIN}));
 // cards on the home page: only the label's artists (repeated to fill the hero)
 const CARDS=[
-{n:'DERECK DFX',img:'img/dereck-dfx.jpg',s:'dereck-dfx'},{n:'AR',img:'img/ar.jpg',s:'ar'},{n:'LA REINA DE TECÁMAC',img:'img/c7.jpg',s:'zoe-jpr'},
+{n:'DERECK DFX',img:'img/dereck-dfx.jpg',s:'dereck-dfx'},{n:'AR',img:'img/ar.jpg',s:'ar'},{n:'LA REINA DE TECÁMAC',img:'img/zoe-photo.jpg',s:'zoe-jpr',fit:1},
 {n:'SANTIAGO “CAPITO” CAMPOS',img:'img/c8.jpg',s:'santiago-campos'}];
 // featured collaborators: shown on the home hero too, but smaller and fewer than the 4 core artists
 const GUEST_CARDS=ARTISTS.filter(a=>a.guest).map(a=>({n:a.n.toUpperCase(),img:a.img,s:a.s,g:1}));
