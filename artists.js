@@ -1,13 +1,15 @@
 // Forge Records artist data (shared by index and artist pages)
 const JOIN=[{y:2026,items:[{d:'10/2026',h:'Se unió a Forge Records'}]}];
-// Dereck DFX releases, in the order the user gave them (#4 and #5 not received yet). Undated ones have no date on purpose.
+// Dereck DFX releases, exactly in the order the user gave them
 const DFX_RELEASES=[
-{t:'The eye always looks at you'},
-{t:'All Seeing Eye (From “La Historia: Chapter 4” Original Game Soundtrack)'},
-{t:'The eye always looks at you second edition (From “La Historia: Chapter 4” Original Game Soundtrack)'},
+{t:'The eye always looks at you (From “La Historia: Chapter 4” Original Game Soundtrack)',d:'07/2026'},
+{t:'All Seeing Eye (From “La Historia: Chapter 4” Original Game Soundtrack)',d:'07/2026'},
+{t:'The eye always looks at you second edition (From “La Historia: Chapter 4” Original Game Soundtrack)',d:'07/2026'},
+{t:'Don’t Wait For Me (From “La Historia: Chapter 4” Original Game Soundtrack)',d:'07/2026'},
+{t:'The Graveyard (From “La Historia: Chapter 4” Original Game Soundtrack)',d:'28/07/2026'},
 {t:'The Graveyard (From “La Historia: Chapter 4” Original Game Soundtrack Remastered)',d:'28/07/2026'},
 {t:'Soy Lo Peor (Bb Trickz Remix Instrumental)',d:'30/07/2026'},
-{t:'Primer EP “DepresionTrickz” (DepresionTrickz (AR)): Soy Lo Peor (Bb Trickz Remix Instrumental) · Todo Da Igual (AR Remix) · Es Verano y Qué (AR Remix)',d:'03/08/2026',by:'Dereck DFX & AR',ar:1},
+{t:'Primer EP “DepresionTrickz (AR)”: Soy Lo Peor (Bb Trickz Remix Instrumental) · Todo Da Igual (AR Remix) · Es Verano y Qué (AR Remix)',d:'03/08/2026',by:'Dereck DFX & AR',ar:1},
 {t:'Residue (AR Remix, & Dereck DFX)',d:'04/08/2026',by:'AR & Dereck DFX',ar:1}];
 const ARTISTS=[
 {s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tl:[{y:2026,items:[{d:'10/2026',h:'Anunció su álbum “Las Reinas del Perreo”'},{d:'10/2026',t:'Sencillo “Moteles”'},{d:'10/2026',t:'Sencillo “Always”'},{d:'07/2026',t:'Se unió a Forge Records'}]},{y:'Lanzamientos',items:DFX_RELEASES.map(r=>({d:r.d||'',t:r.t}))}]},
