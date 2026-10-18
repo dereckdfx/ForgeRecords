@@ -19,7 +19,7 @@ cards.forEach((k,j)=>{k.a=list[j];k.sw=0});
 // rotate featured collaborators: a guest card that is fully off-screen swaps to a collaborator not currently shown (never a duplicate)
 let ROT=false;function rotate(k,t){if(!k.a.g||t-k.sw<4000)return;const shown=new Set(cards.map(m=>m.a.s)),pool=GC.filter(g=>!shown.has(g.s));if(!pool.length)return;
 const g=pool[R()*pool.length|0];k.a=g;k.sw=t;k.c.href=`artist.html?a=${g.s}&frontpage=true`;k.c.setAttribute('aria-label',g.n);
-const art=k.c.querySelector('.art');art.style.backgroundImage=`url(${g.img})`;k.c.querySelector('b').textContent=g.n}
+const art=k.c.querySelector('.art');art.style.backgroundImage=`url(${g.img})`;art.style.backgroundSize=g.fit?'contain':'';art.style.backgroundRepeat=g.fit?'no-repeat':'';art.style.backgroundColor=g.fit?'#000':'';k.c.querySelector('b').textContent=g.n}
 const f=document.getElementById('forge'),hero=document.getElementById('hero');
 const TOFF=+(new URLSearchParams(location.search).get('t')||0);let OBS=null;addEventListener('resize',()=>{OBS=null;init=false});
 function obs(){const hr=hero.getBoundingClientRect(),rel=q=>{const r=q.getBoundingClientRect();return{l:r.left-hr.left,r:r.right-hr.left,t:r.top-hr.top,b:r.bottom-hr.top}};
