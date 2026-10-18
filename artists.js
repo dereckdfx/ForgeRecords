@@ -38,7 +38,7 @@ const ARTISTS=[
 {s:'zoe-jpr',n:'La Reina de Tecámac',img:'img/zoe-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'},ALBUM_GUEST)},
 {s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/c8.jpg'},
 // collaborators credited on Dereck DFX releases (no join date known, so no "joined" entry)
-...[['alc','ALC (Alice Whitman)'],['boyfiendyt','BoyFiendYT','boyfiendyt-photo'],['iker','Iker','iker-photo'],['anyelina','Anyelina','anyelina-photo'],['super-67-dress','Super 67 / Dress','super67'],['tyn','T.Y.N'],['sin-cut','S.I.N C.U.T.'],['angel-chavez-mateos','Angel Chavez Mateos']].map(([s,n,f])=>({s,n,img:`img/${f||s}.jpg`,pos:s==='iker'?'center 12%':undefined,guest:1,tl:TL(FOUND,{...SALE},...FEAT(s),...(s==='anyelina'?[ALBUM_GUEST]:[]))}))
+...[['alc','ALC (Alice Whitman)'],['boyfiendyt','BoyFiendYT','boyfiendyt-photo'],['iker','Iker','iker-photo'],['anyelina','Anyelina','anyelina-photo'],['super-67-dress','Super 67 / Dress','super67'],['tyn','T.Y.N','tyn-photo'],['sin-cut','S.I.N C.U.T.'],['angel-chavez-mateos','Angel Chavez Mateos','angel-chavez-mateos-photo']].map(([s,n,f])=>({s,n,img:`img/${f||s}.jpg`,pos:s==='iker'?'center 12%':undefined,guest:1,tl:TL(FOUND,{...SALE},...FEAT(s),...(s==='anyelina'?[ALBUM_GUEST]:[]))}))
 ].map(a=>({...a,tl:a.tl||JOIN}));
 // cards on the home page: only the label's artists (repeated to fill the hero)
 const CARDS=[
