@@ -18,7 +18,8 @@ const DFX_RELEASES=[
 {t:'Pink Diamond (feat. AR)',d:'13/08/2026',by:'Dereck DFX feat. AR',ar:1,post:1,q:'Primer lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.'},
 {t:'Persona featuring. ALC (Alice Whitman) (feat. ALC (Alice Whitman))',d:'17/08/2026',con:'ALC (Alice Whitman)',post:1,q:'Segundo lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.'},
 {t:'Purple',d:'25/08/2026',post:1,q:'Tercer lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.'},
-{t:'Paint The Town Blue (from the series Arcane League of Legends: Season Two Original Soundtrack)',d:'09/09/2026',post:1,q:'Cuarto lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman y Riot Games.'}];
+{t:'Paint The Town Blue (from the series Arcane League of Legends: Season Two Original Soundtrack)',d:'09/09/2026',post:1,q:'Cuarto lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman y Riot Games.'},
+{t:'¿Qué Me Miras Las Crocs? (feat. Zoe Janet Perez Rios, BoyFiendYT, Iker, Anyelina & Super 67 / Dress) [Super 67, EXTREME PARENTAL ADVISORY EXPLICIT CONTENT Records®, todo qué vr records®, ehmmm i don\'t call u records® & VeVOL Records® Remix]',d:'11/09/2026',con:'Zoe J. P. R., BoyFiendYT, Iker, Anyelina & Super 67 / Dress',zoe:1,post:1,q:'Quinto lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman. Otros sellos: EXTREME PARENTAL ADVISORY EXPLICIT CONTENT Records®, todo qué vr records®, ehmmm i don\'t call u records® y VeVOL Records® (sello creado por Dereck DFX).'}];
 const DFX_ANNOUNCED=[{d:'10/2026',h:'Anunció su álbum “Las Reinas del Perreo”'},{d:'10/2026',t:'Sencillo “Moteles”',rel:1},{d:'10/2026',t:'Sencillo “Always”',rel:1}];
 // "Su primer lanzamiento", "Su segundo lanzamiento"… counted oldest→newest over releases only (the album announcement is not a release)
 const ORD=['primer','segundo','tercer','cuarto','quinto','sexto','séptimo','octavo','noveno','décimo','undécimo','duodécimo','decimotercer','decimocuarto','decimoquinto','decimosexto','decimoséptimo','decimoctavo','decimonoveno','vigésimo'];
@@ -27,7 +28,7 @@ const PRE=DFX_RELEASES.filter(r=>!r.post),POST=DFX_RELEASES.filter(r=>r.post),AR
 const ARTISTS=[
 {s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tl:TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})))},
 {s:'ar',n:'AR',img:'img/ar.jpg',tl:TL(FOUND,AR_JOIN,...PRE.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn})),{...SALE},...POST.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn,q:r.q})))},
-{s:'zoe-jpr',n:'Zoe J. P. R.',img:'img/c7.jpg'},
+{s:'zoe-jpr',n:'Zoe J. P. R.',img:'img/c7.jpg',tl:TL(FOUND,{...SALE},...POST.filter(r=>r.zoe).map(r=>({d:r.d,t:r.t,n:'Con Dereck DFX',q:r.q})),{d:'10/2026',h:'Se unió a Forge Records'})},
 {s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/c8.jpg'}
 ].map(a=>({...a,tl:a.tl||JOIN}));
 // cards on the home page: only the label's artists (repeated to fill the hero)

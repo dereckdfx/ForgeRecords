@@ -149,3 +149,4 @@ body.timeView #hero{display:none}body.timeView #timeview{display:block}
 #timeview .ev .q{margin-top:8px;font:italic 400 13px/1.45 system-ui,-apple-system,sans-serif;color:#c9cbcf}
 .flicense{font:400 10px/1.4 system-ui,sans-serif;color:#9a9da2;margin:2px 0 8px;text-align:center}
 .nointro #intro{display:none!important}
+#timeview .ev,.ev{overflow-wrap:break-word;min-width:0;max-width:100%}
