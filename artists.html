@@ -1,0 +1,65 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Artistas · Forge Records</title><meta name="theme-color" content="#000">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=24">
+<style>
+html,body{overflow-x:hidden;overflow-y:auto;height:auto}body{background:#000}
+.atabs{flex:1;display:flex;gap:16px;margin-left:14px}.atabs a{font-family:Unbounded;font-weight:700;font-size:15px;color:#777;text-decoration:none}.atabs a.on{color:#fff}
+header .logo b{display:none}
+.asel{margin:calc(78px + env(safe-area-inset-top)) 10px 18px;position:relative}
+.asel select{width:100%;appearance:none;-webkit-appearance:none;background:#000;color:#fff;border:1.5px solid #fff;border-radius:6px;padding:9px 40px 9px 12px;font:700 11px Unbounded;letter-spacing:.02em}
+.asel svg{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:18px;pointer-events:none}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;padding:0 6px}
+.acard{position:relative;display:block;aspect-ratio:1;background:#111 center/cover no-repeat;text-decoration:none;overflow:hidden}
+.acard::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35)}
+.acard b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;font:800 clamp(14px,4.4vw,22px)/1.2 Unbounded;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.amail{grid-column:1/-1;padding:26px 10px 20px;font-family:Unbounded}
+.amail h3{font-size:14px;font-weight:700;line-height:1.35;margin:0 0 18px}
+.amail .frow{display:flex;gap:12px}.amail input[type=email]{flex:1;min-width:0;background:#000;border:1.5px solid #fff;border-radius:3px;color:#fff;padding:12px;font:700 14px Unbounded}
+.amail button{background:linear-gradient(#f4f4f4,#a9adb2);border:0;border-radius:3px;font:800 14px Unbounded;padding:0 20px;color:#000}
+.amail .ok{font-size:13px;color:#ccc}
+@media(min-width:700px){.agrid{grid-template-columns:repeat(4,1fr);max-width:1200px;margin:0 auto}.asel{max-width:1188px;margin-left:auto;margin-right:auto}}
+</style></head><body>
+<header><div class="logo"><a href="/" style="display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none"><span class="mini badge-slot"></span><b>1 year</b></a></div><nav class="atabs"><a class="on" href="artists.html">Artistas</a></nav>
+<div class="right">
+<a class="burger" href="/?menu=1" aria-label="Menú"><i></i><i></i><i></i></a></div></header>
+<div class="asel"><select id="asel" aria-label="Selecciona un artista"><option value="">Selecciona un artista</option></select><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 6h18M6 12h12M10 18h4"/></svg></div>
+<main class="agrid" id="agrid"></main>
+<section class="site-foot" id="foot">
+<i class="fl"></i>
+<div class="fsoc">
+<a aria-label="TikTok" href="#"><svg viewBox="0 0 24 24"><path d="M12.5 2h3.1c.2 1.9 1.4 3.3 3.6 3.5v3.1c-1.4 0-2.6-.4-3.6-1.1v6.4a5.6 5.6 0 1 1-5.6-5.6v3.2a2.5 2.5 0 1 0 2.5 2.4z"/></svg></a>
+<a aria-label="Facebook" href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4"/><path fill="#000" d="M13.6 22v-7.5h2.5l.4-2.9h-2.9V9.8c0-.8.3-1.4 1.5-1.4h1.5V5.8c-.3 0-1.2-.1-2.2-.1-2.1 0-3.6 1.3-3.6 3.7v2.2H8.4v2.9h2.4V22z"/></svg></a>
+<a aria-label="X" href="#"><svg viewBox="0 0 24 24"><path d="M17.8 2.5h3.1l-6.8 7.8 8 11.2h-6.3l-4.9-6.5-5.6 6.5H2.2l7.3-8.4L1.8 2.5h6.4l4.4 5.9zm-1.1 17.1h1.7L7.4 4.3H5.6z"/></svg></a>
+<a aria-label="Instagram" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6" fill="#fff"/></svg></a>
+<a aria-label="SoundCloud" href="#"><svg viewBox="0 0 30 24"><path d="M14 8.5a6 6 0 0 1 11 3.3 3.6 3.6 0 0 1 .4 7.2H14z"/><rect x="11" y="9" width="1.6" height="10"/><rect x="8" y="10.5" width="1.6" height="8.5"/><rect x="5" y="12" width="1.6" height="7"/><rect x="2" y="13.5" width="1.6" height="5.5"/></svg></a>
+<a aria-label="Spotify" href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5"/><g fill="none" stroke="#000" stroke-linecap="round"><path d="M6.5 9c4-1.2 8-.8 11.2 1" stroke-width="2"/><path d="M7 12.5c3.3-.9 6.5-.6 9.3.9" stroke-width="1.7"/><path d="M7.6 15.7c2.6-.6 5.1-.4 7.3.7" stroke-width="1.4"/></g></svg></a>
+<a aria-label="YouTube" href="#"><svg viewBox="0 0 28 24"><rect x="1" y="4" width="26" height="16" rx="5"/><path fill="#000" d="M11.5 8.5v7l6-3.5z"/></svg></a>
+</div>
+<form class="fform" novalidate><div class="frow"><input type="email" placeholder="Email" aria-label="Email" required><button type="submit">Submit</button></div>
+<label class="fchk"><input type="checkbox"><span></span><p>I want Forge Records to send me marketing messages about Forge Records. Unsubscribe at any time. Please read our <a href="#">Privacy Policy</a> for more information about how we handle your personal information, including for marketing.</p></label></form>
+<i class="fl"></i>
+<div class="fjoin"><a class="ft" href="#">Join Our Team</a><div class="fsub"><a href="#">Careers</a><a href="#">Internships</a></div></div>
+<i class="fl"></i>
+<div class="flogos">
+<svg viewBox="0 0 120 40" aria-label="FORGE"><defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#9aa0a8"/><stop offset=".55" stop-color="#3b4047"/><stop offset=".7" stop-color="#e9ecef"/><stop offset="1" stop-color="#7d838b"/></linearGradient></defs><text x="60" y="27" text-anchor="middle" font-family="Archivo Black" font-size="19" letter-spacing="2" fill="url(#fg)" stroke="#fff" stroke-width=".4">FORGE</text></svg>
+<span class="fbadge badge-slot"></span>
+<svg viewBox="0 0 60 60" aria-label="Forge emblem"><defs><radialGradient id="fr" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#7d838b"/><stop offset="1" stop-color="#1a1c1f"/></radialGradient></defs><circle cx="30" cy="30" r="27" fill="none" stroke="url(#fr)" stroke-width="4"/><circle cx="30" cy="30" r="21" fill="#0b0c0d" stroke="#555" stroke-width="1"/><text x="30" y="35" text-anchor="middle" font-family="Archivo Black" font-style="italic" font-size="12" fill="url(#fg)" transform="rotate(-12 30 30)">FORGE</text></svg>
+<svg viewBox="0 0 80 56" aria-label="Forge swirl"><defs><linearGradient id="fg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#9aa0a8"/><stop offset=".55" stop-color="#3b4047"/><stop offset=".7" stop-color="#e9ecef"/><stop offset="1" stop-color="#7d838b"/></linearGradient></defs><g transform="translate(40 18)"><circle r="14" fill="url(#fr)"/><path transform="rotate(0)" d="M-2 -1 C 2 -9, 10 -10, 13 -4" fill="none" stroke="#0d0f11" stroke-width="3" stroke-linecap="round"/><path transform="rotate(120)" d="M-2 -1 C 2 -9, 10 -10, 13 -4" fill="none" stroke="#0d0f11" stroke-width="3" stroke-linecap="round"/><path transform="rotate(240)" d="M-2 -1 C 2 -9, 10 -10, 13 -4" fill="none" stroke="#0d0f11" stroke-width="3" stroke-linecap="round"/></g><text x="40" y="49" text-anchor="middle" font-family="Archivo Black" font-size="11" letter-spacing="1" fill="url(#fg2)">FORGE</text></svg>
+<svg viewBox="0 0 110 40" aria-label="Forge script"><text x="55" y="29" text-anchor="middle" font-family="Kaushan Script" font-size="24" fill="url(#fg)" stroke="#fff" stroke-width=".3">Forge</text></svg>
+</div>
+<p class="fcopy">© 2026 Forge Records</p>
+<nav class="flegal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Press</a><a href="#">Careers</a><a href="#">Contact Us</a><a href="#">Cookies Policy</a><a href="#">Cookies Settings</a></nav>
+<i class="fend"></i>
+</section>
+<script src="badge.js?v=24"></script><script src="artists.js?v=24"></script>
+<script>
+document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG('b'+i));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const url=a=>`artist.html?a=${a.s}&frontpage=true`,list=[...ARTISTS].sort((x,y)=>x.n.localeCompare(y.n,'es'));
+const g=document.getElementById('agrid'),sel=document.getElementById('asel');
+let html='';list.forEach((a,i)=>{html+=`<a class="acard" href="${url(a)}" style="background-image:url('${a.img}')"><b>${esc(a.n)}</b></a>`;
+if(i===5)html+=`<section class="amail"><h3>Únete a nuestra lista para enterarte de lo último de todos nuestros artistas</h3><form class="aform" novalidate><div class="frow"><input type="email" placeholder="Email" aria-label="Email" required><button type="submit">Submit</button></div></form></section>`});
+g.innerHTML=html;list.forEach(a=>sel.add(new Option(a.n,url(a))));sel.onchange=()=>{if(sel.value)location.href=sel.value};
+document.querySelectorAll('form.aform,#foot .fform').forEach(fm=>fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}fm.innerHTML='<p class="ok fthanks">¡Gracias! Te mantendremos al tanto.</p>'});
+</script></body></html>

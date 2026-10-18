@@ -21,3 +21,13 @@ const CARDS=[
 {n:'LOS FORJADOS',img:'img/c2.jpg',s:'los-forjados'},{n:'MOTELES',img:'img/c4.jpg',s:'dereck-dfx'},{n:'SOLENNE',img:'img/c5.jpg',s:'solenne'},
 {n:'ALWAYS',img:'img/c5.jpg',s:'dereck-dfx'},{n:'VALKYRA',img:'img/c3.jpg',s:'valkyra'},{n:'KAI VERTIGO',img:'img/c1.jpg',s:'kai-vertigo'},
 {n:'REY HIERRO',img:'img/c2.jpg',s:'rey-hierro'},{n:'MIRA SAINT',img:'img/c5.jpg',s:'mira-saint'},{n:'DJ OBSIDIANA',img:'img/c1.jpg',s:'dj-obsidiana'}];
+
+// label timeline (only what we know: founded 2026, the October 2026 announcements and signings)
+const LABEL_TL=[{y:2026,items:[
+{d:'10/2026',h:'Dereck DFX anunció su álbum “Las Reinas del Perreo”',a:'dereck-dfx'},
+{d:'10/2026',t:'Dereck DFX — sencillo “Moteles”',a:'dereck-dfx'},
+{d:'10/2026',t:'Dereck DFX — sencillo “Always”',a:'dereck-dfx'},
+{d:'10/2026',t:'AR se unió a Forge Records',a:'ar'},
+{d:'10/2026',t:'Zoe J. P. R. se unió a Forge Records',a:'zoe-jpr'},
+{d:'10/2026',t:'Dereck DFX se unió a Forge Records',a:'dereck-dfx'},
+{d:'2026',t:'Fundación de Forge Records'}]}];

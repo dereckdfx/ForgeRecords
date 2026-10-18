@@ -133,3 +133,14 @@ header{z-index:100!important;background:#000!important}body.menu-open header{bac
 #hero .corner{z-index:30}#hero #stage{z-index:0}
 
 a.card{display:block;color:#fff;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+
+/* time view (clock icon / logo): label timeline replaces the hero */
+#timeview{display:none;position:relative;min-height:100svh;padding:calc(96px + env(safe-area-inset-top)) 34px 40px 40px;background:#000;font-family:Unbounded}
+body.timeView #hero{display:none}body.timeView #timeview{display:block}
+#timeview .tvprog{position:absolute;left:0;top:calc(80px + env(safe-area-inset-top));bottom:0;width:3px;background:linear-gradient(#fff,rgba(255,255,255,.15));box-shadow:0 0 10px rgba(255,255,255,.5)}
+#timeview .yr{font-weight:900;font-size:clamp(48px,14vw,96px);margin:0 0 26px;color:#fff}
+#timeview .ev{margin-bottom:30px}#timeview .ev .d{font-weight:700;font-size:17px;margin-bottom:12px;color:#fff}
+#timeview .ev .h{font:400 20px/1.4 system-ui,-apple-system,sans-serif;color:#fff}
+#timeview .ev.s .d{font-size:11px;color:#9a9da2;margin-bottom:8px}#timeview .ev.s .h{font-size:14px;color:#a6a9ae}
+#timeview .ev a{color:inherit;text-decoration:none}#timeview .ev a:active{opacity:.7}
+.logo{cursor:pointer}
