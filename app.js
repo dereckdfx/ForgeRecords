@@ -102,7 +102,9 @@ mxo=Math.max(mxo,fm);if(fm>.03){run++;mrun=Math.max(mrun,run)}else run=0;
 const Cl=O.all[1],Cr=O.all[2];cards.forEach(k=>{if(!(k.x>0&&k.x<O.W)){offn++;if(k.lane!=null)offl++;if(k.sc<.6)offs++}if(k.x>0&&k.x<O.W){vis++;if(k.x>Cl.r&&k.x<Cr.l&&k.y>Math.min(Cl.t,Cr.t))clump++;grid[Math.min(2,Math.floor(k.x/O.W*3))*4+Math.min(3,Math.max(0,Math.floor((k.y-O.top)/(O.H-O.top)*4)))]++}})}
 window.TRJ=trj;document.title='HITS '+hits+' HDR '+hdr+' MAXOV '+(mxo*100).toFixed(1)+'% '+wl+' pairs>5% '+ov5+' vis '+(vis/2000).toFixed(1)+' off '+(offn/2000).toFixed(1)+'/lane '+(offl/2000).toFixed(1)+'/small '+(offs/2000).toFixed(1)+' longest>3%run '+(mrun*64)+'ms clump '+(clump/vis*100).toFixed(1)+'% grid '+grid.map(g=>(g/vis*100|0)).join(',')+' minsc '+mn.toFixed(2)+' maxScaleStep '+(+jump||0).toFixed(3)+' yrange '+ys.map(r=>(r[1]-r[0])|0).join(',')+' xrange '+xs.map(r=>(r[1]-r[0])|0).join(',')+' pos '+cards.map(k=>[k.x|0,k.y|0,k.sc.toFixed(2),k.sd,k.lane,(k.vx|0)].join('/')).join(' ')+' '+log.join(' ')},300);
 else requestAnimationFrame(loop);
-setTimeout(()=>{document.getElementById('intro').classList.add('out');document.body.classList.add('ready')},1500);
+const NOINTRO=document.documentElement.classList.contains('nointro');
+if(NOINTRO){document.getElementById('intro').classList.add('out');document.body.classList.add('ready')}
+else setTimeout(()=>{document.getElementById('intro').classList.add('out');document.body.classList.add('ready')},1500);
 // View by: grid (the floating artists) or time (label timeline), like the reference site
 {const tvl=document.getElementById('tvl'),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 tvl.innerHTML=LABEL_TL.map(g=>`<h2 class="yr${isNaN(g.y)?' sm':''}">${g.y}</h2>`+g.items.map(it=>{const tx=`${it.d?`<div class="d">${it.d}</div>`:''}<div class="h">${esc(it.h||it.t)}</div>${it.n?`<div class="n">${esc(it.n)}</div>`:''}${it.q?`<div class="q">${esc(it.q)}</div>`:''}`;return `<div class="ev${it.h?'':' s'}">${it.a?`<a href="artist.html?a=${it.a}&frontpage=true">${tx}</a>`:tx}</div>`}).join('')).join('');
@@ -117,7 +119,13 @@ menu.querySelector('.msoc').innerHTML=document.querySelector('nav.social').inner
 bg.onclick=()=>{const o=!document.body.classList.contains('menu-open');document.body.classList.toggle('menu-open',o);menu.setAttribute('aria-hidden',!o);bg.setAttribute('aria-expanded',o)};
 addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('menu-open'))bg.click()});
 menu.querySelector('form').onsubmit=e=>{e.preventDefault();const i=e.target.querySelector('input');if(i.checkValidity()){e.target.innerHTML='<p class="ok">¡Gracias! Te avisaremos.</p>'}};
-if(location.search.includes('menu')){document.body.classList.add('notrans');bg.click()}
+if(/[?&]menu\b/.test(location.search)){document.body.classList.add('notrans');bg.click();requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.remove('notrans')))}
+// keep the address clean: drop one-shot params (menu, nointro) so going back/reloading lands on the plain index
+{const u=new URL(location.href);let ch=false;['menu','nointro'].forEach(k=>{if(u.searchParams.has(k)){u.searchParams.delete(k);ch=true}});if(ch)history.replaceState(null,'',u.pathname+(u.search?u.search:'')+u.hash)}
+const closeMenu=()=>{if(document.body.classList.contains('menu-open')){document.body.classList.add('notrans');bg.click();requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.remove('notrans')))}};
+// leaving through a menu link closes the menu, so a back navigation (incl. bfcache restore) shows the closed home
+menu.addEventListener('click',e=>{const l=e.target.closest('a[href]');if(l&&!l.getAttribute('href').startsWith('#'))setTimeout(closeMenu,400)});
+addEventListener('pageshow',e=>{if(e.persisted){closeMenu();const it=document.getElementById('intro');it.classList.add('out');it.style.display='none';document.body.classList.add('ready')}});
 
 document.querySelectorAll('.fsoc').forEach(e=>e.innerHTML=document.querySelector('nav.social').innerHTML);
 function wireFoot(root){const fm=root.querySelector('.fform');fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}fm.innerHTML='<p class="fthanks">¡Gracias! Te mantendremos al tanto.</p>'}}

@@ -1,7 +1,7 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Forge Records</title><meta name="theme-color" content="#000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=33">
+<link rel="stylesheet" href="style.css?v=34">
 <style>
 html,body{overflow-x:hidden;overflow-y:auto;height:auto}
 body{background:#000}
@@ -21,9 +21,9 @@ body{background:#000}
 .ev .q{margin-top:8px;font:italic 400 13px/1.45 system-ui,-apple-system,sans-serif;color:#c9cbcf}
 .nf{padding:160px 30px;font-family:Unbounded;text-align:center}.nf a{color:#fff}
 </style></head><body>
-<header><div class="logo"><a href="/" style="display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none"><span class="mini badge-slot"></span><b>1 year</b></a></div>
+<header><div class="logo"><a href="/?nointro=1" style="display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none"><span class="mini badge-slot"></span><b>1 year</b></a></div>
 <div class="right"><div class="view"><span>View by</span><button class="on" aria-label="Galería"><svg viewBox="0 0 20 20"><rect x="2" y="7" width="11" height="11" fill="#fff"/><rect x="8" y="2" width="10" height="10" fill="#fff" stroke="#000" stroke-width="1.5"/></svg></button><button aria-label="Cronología"><svg viewBox="0 0 20 20" fill="none" stroke="#bbb" stroke-width="1.8"><circle cx="10" cy="10" r="8"/><path d="M10 5v5l3 2"/></svg></button></div>
-<a class="burger" href="/?menu=1" aria-label="Menú"><i></i><i></i><i></i></a></div></header>
+<a class="burger" href="/?menu=1&amp;nointro=1" aria-label="Menú"><i></i><i></i><i></i></a></div></header>
 <div class="prog" id="prog"></div>
 <main id="artist"></main>
 <section class="site-foot" id="foot">
@@ -54,14 +54,14 @@ body{background:#000}
 <i class="fend"></i>
 </section>
 
-<script src="badge.js?v=33"></script><script src="artists.js?v=33"></script>
+<script src="badge.js?v=34"></script><script src="artists.js?v=34"></script>
 <script>
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG('a'+i));
 const q=new URLSearchParams(location.search),slug=q.get('a');
 if(q.get('frontpage')!=='true'){q.set('frontpage','true');history.replaceState(null,'','?'+q.toString())}
 const A=ARTISTS.find(x=>x.s===slug),m=document.getElementById('artist');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-if(!A){m.innerHTML='<div class="nf"><p>Artista no encontrado.</p><p><a href="/">Volver</a></p></div>'}
+if(!A){m.innerHTML='<div class="nf"><p>Artista no encontrado.</p><p><a href="/?nointro=1">Volver</a></p></div>'}
 else{document.title=A.n+' · Forge Records';
 m.innerHTML=`<section class="ahead"><div class="aphoto" style="background-image:url('${A.img}')" role="img" aria-label="${esc(A.n)}"></div><h1 class="aname">${esc(A.n)}</h1></section>
 <section class="abody"><div class="abg" style="background-image:url('${A.img}')"></div><div class="tl">${A.tl.map(g=>`<h2 class="yr${isNaN(g.y)?' sm':''}">${g.y}</h2>`+g.items.map((it,i)=>`<div class="ev${it.h?'':' s'}">${it.d?`<div class="d">${it.d}</div>`:''}<div class="h">${esc(it.h||it.t)}</div>${it.n?`<div class="n">${esc(it.n)}</div>`:''}${it.q?`<div class="q">${esc(it.q)}</div>`:''}</div>`).join('')).join('')}
