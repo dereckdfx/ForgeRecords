@@ -1,13 +1,13 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Forge Records</title><meta name="theme-color" content="#000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=46">
+<link rel="stylesheet" href="style.css?v=47">
 <style>
 html,body{overflow-x:hidden;overflow-y:auto;height:auto}
 body{background:#000}
 .ahead{display:flex;align-items:center;gap:18px;padding:calc(92px + env(safe-area-inset-top)) 10px 26px}
 .aphoto{flex:none;width:min(46vw,260px);aspect-ratio:1;background:#111 center/cover no-repeat}
-.aname{font-family:Unbounded;font-weight:900;font-size:clamp(24px,7.6vw,56px);letter-spacing:.04em;word-break:break-word;text-transform:uppercase;color:#cfd2d6;line-height:1.15}
+.aname{font-family:Unbounded;font-weight:900;font-size:clamp(24px,7.6vw,56px);letter-spacing:.04em;word-break:normal;overflow-wrap:normal;hyphens:none;text-transform:uppercase;min-width:0;flex:1;color:#cfd2d6;line-height:1.15}
 .abody{position:relative;min-height:100vh;padding:30px 40px 60px;overflow:hidden}
 .abg{position:absolute;inset:0;background:#000 center/cover no-repeat;opacity:.42;filter:grayscale(.2) blur(1px);transform:scale(1.15);transform-origin:top center}
 .abody::after{content:"";position:absolute;inset:0;background:linear-gradient(#000 0,rgba(0,0,0,0) 18%,rgba(0,0,0,0) 70%,#000 100%);pointer-events:none}
@@ -54,7 +54,7 @@ body{background:#000}
 <i class="fend"></i>
 </section>
 
-<script src="badge.js?v=46"></script><script src="artists.js?v=46"></script>
+<script src="badge.js?v=47"></script><script src="artists.js?v=47"></script>
 <script>
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG('a'+i));
 const q=new URLSearchParams(location.search),slug=q.get('a');
@@ -68,4 +68,6 @@ m.innerHTML=`<section class="ahead"><div class="aphoto" style="background-image:
 </div></section>`}
 {const fm=document.querySelector('#foot .fform');fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}fm.innerHTML='<p class="fthanks">¡Gracias! Te mantendremos al tanto.</p>'}}
 const pr=document.getElementById('prog');function up(){const h=document.documentElement.scrollHeight-innerHeight;pr.style.height=(h>0?scrollY/h:0)*100+'vh'}addEventListener('scroll',up,{passive:true});up();
+// shrink the name so no single word is cut mid-word
+{const h=document.querySelector('.aname');const fit=()=>{if(!h)return;h.style.fontSize='';let fs=parseFloat(getComputedStyle(h).fontSize);while(fs>14&&h.scrollWidth>h.clientWidth+1){fs-=1;h.style.fontSize=fs+'px'}};fit();addEventListener('resize',fit);document.fonts&&document.fonts.ready.then(fit)}
 </script></body></html>
