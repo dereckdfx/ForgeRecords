@@ -1,12 +1,16 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Forge Records</title><meta name="theme-color" content="#000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=57">
+<link rel="stylesheet" href="style.css?v=58">
 <style>
 html,body{overflow-x:hidden;overflow-y:auto;height:auto}
 body{background:#000}
 .ahead{display:flex;align-items:center;gap:18px;padding:calc(92px + env(safe-area-inset-top)) 10px 26px}
 .aphoto{flex:none;width:min(46vw,260px);aspect-ratio:1;background:#111 center/cover no-repeat}
+.ahtx{flex:1;min-width:0}.ahtx .aname{flex:none;width:100%}
+.atag{margin:14px 0 0;padding:0 0 0 12px;border-left:2px solid rgba(255,255,255,.75);max-width:34ch}
+.atag p{margin:0;font:italic 400 clamp(14px,3.9vw,22px)/1.35 Georgia,'Times New Roman',serif;color:#e9ebee;letter-spacing:.01em;overflow-wrap:break-word}
+.atag cite{display:block;margin-top:6px;font:700 clamp(9px,2.4vw,11px)/1.2 Unbounded,sans-serif;font-style:normal;letter-spacing:.18em;text-transform:uppercase;color:#9a9ea4}
 .aname{font-family:Unbounded;font-weight:900;font-size:clamp(24px,7.6vw,56px);letter-spacing:.04em;word-break:normal;overflow-wrap:normal;hyphens:none;text-transform:uppercase;min-width:0;flex:1;color:#cfd2d6;line-height:1.15}
 .abody{position:relative;min-height:100vh;padding:30px 40px 60px;overflow:hidden}
 .abg{position:absolute;inset:0;background:#000 center/cover no-repeat;opacity:.42;filter:grayscale(.2) blur(1px);transform:scale(1.15);transform-origin:top center}
@@ -54,7 +58,7 @@ body{background:#000}
 <i class="fend"></i>
 </section>
 
-<script src="badge.js?v=57"></script><script src="artists.js?v=57"></script>
+<script src="badge.js?v=58"></script><script src="artists.js?v=58"></script>
 <script>
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG('a'+i));
 const q=new URLSearchParams(location.search),slug=q.get('a');
@@ -63,7 +67,7 @@ const A=ARTISTS.find(x=>x.s===slug),m=document.getElementById('artist');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 if(!A){m.innerHTML='<div class="nf"><p>Artista no encontrado.</p><p><a href="/?nointro=1">Volver</a></p></div>'}
 else{document.title=A.n+' · Forge Records';
-m.innerHTML=`<section class="ahead"><div class="aphoto" style="background-image:url('${A.img}')${A.pos?';background-position:'+A.pos:''}${A.fit?';background-size:contain;background-color:#000':''}" role="img" aria-label="${esc(A.n)}"></div><h1 class="aname">${esc(A.n)}</h1></section>
+m.innerHTML=`<section class="ahead"><div class="aphoto" style="background-image:url('${A.img}')${A.pos?';background-position:'+A.pos:''}${A.fit?';background-size:contain;background-color:#000':''}" role="img" aria-label="${esc(A.n)}"></div><div class="ahtx"><h1 class="aname">${esc(A.n)}</h1>${A.tagline?`<blockquote class="atag"><p>“${esc(A.tagline)}”</p>${A.taglineBy?`<cite>— ${esc(A.taglineBy)}</cite>`:''}</blockquote>`:''}</div></section>
 <section class="abody"><div class="abg" style="background-image:url('${A.img}')"></div><div class="tl">${A.tl.map(g=>`<h2 class="yr${isNaN(g.y)?' sm':''}">${g.y}</h2>`+g.items.map((it,i)=>`<div class="ev${it.h?'':' s'}">${it.d?`<div class="d">${it.d}</div>`:''}<div class="h">${esc(it.h||it.t)}</div>${it.n?`<div class="n">${esc(it.n)}</div>`:''}${it.q?`<div class="q">${esc(it.q)}</div>`:''}</div>`).join('')).join('')}
 </div></section>`}
 {const fm=document.querySelector('#foot .fform');fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}fm.innerHTML='<p class="fthanks">¡Gracias! Te mantendremos al tanto.</p>'}}

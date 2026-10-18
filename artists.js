@@ -33,7 +33,7 @@ const PRE=DFX_RELEASES.filter(r=>!r.post),POST=DFX_RELEASES.filter(r=>r.post),AR
 const ALBUM_GUEST={d:'10/2026',t:'Aparecerá en el álbum “Las Reinas del Perreo” de Dereck DFX'};
 const FEAT=s=>DFX_RELEASES.filter(r=>(r.feat||[]).includes(s)).map(r=>({d:r.d,t:r.t,n:'Con Dereck DFX',q:r.q}));
 const ARTISTS=[
-{s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tl:TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})))},
+{s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tagline:'Y Esta Mierda Apenas Empieza',taglineBy:'Dereck DFX',tl:TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})))},
 {s:'ar',n:'AR',img:'img/ar.jpg',tl:TL(FOUND,AR_JOIN,...PRE.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn})),{...SALE},...POST.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn,q:r.q})))},
 {s:'zoe-jpr',n:'La Reina de Tecámac',img:'img/zoe-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'},ALBUM_GUEST)},
 {s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/c8.jpg'},
