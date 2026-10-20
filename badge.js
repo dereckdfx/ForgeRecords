@@ -14,3 +14,10 @@ ${[0,60,120,180,240,300].map(a=>`<use href="#sw${id}" transform="rotate(${a})"/>
 <text x="200" y="250" text-anchor="middle" font-family="Archivo Black" font-size="46" letter-spacing="10" textLength="270" fill="url(#c${id})" stroke="#fff" stroke-width="1" filter="url(#b${id})">FORGE</text></svg>`}
 
 function forgeMail(em){var s='Quiero recibir el boletín de Forge Records',b='Hola Forge Records,\n\nQuiero suscribirme al boletín y recibir notificaciones por email de nuevos lanzamientos, artistas y noticias.\n\nMi correo: '+(em||'')+'\n\n¡Gracias!';location.href='mailto:email@forgerecordsmusicgroup.com?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(b)}
+
+(function(){var st=document.createElement('style');st.textContent='@keyframes fxshine{0%{background-position:100% 0}100%{background-position:0% 0}}.fx-shine{background-image:linear-gradient(100deg,#2a2a2a 0%,#2a2a2a 38%,#fff 50%,#2a2a2a 62%,#2a2a2a 100%)!important;background-size:300% 100%!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:transparent!important;animation:fxshine 1.4s linear infinite!important}';(document.head||document.documentElement).appendChild(st);
+var SEL='h1,h2,h3,h4,h5,h6,p,a,li,b,strong,em,small,label,button,.logo b,.ilogo,span';
+function pick(t){var e=t&&t.closest?t.closest(SEL):null;while(e&&(e.querySelector('svg,img,input')||!e.textContent.trim()))e=e.parentElement&&e.parentElement.closest(SEL);return e}
+var cur=null;function on(e){var el=pick(e.target);if(el===cur)return;off();if(el){cur=el;el.classList.add('fx-shine')}}function off(){if(cur){cur.classList.remove('fx-shine');cur=null}}
+document.addEventListener('mouseover',on);document.addEventListener('mouseout',function(e){if(cur&&!cur.contains(e.relatedTarget))off()});
+document.addEventListener('touchstart',on,{passive:true});document.addEventListener('touchend',off);document.addEventListener('touchcancel',off);})();
