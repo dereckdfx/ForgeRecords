@@ -134,7 +134,7 @@ const menu=document.getElementById('menu'),bg=document.querySelector('.burger');
 menu.querySelector('.msoc').innerHTML=document.querySelector('nav.social').innerHTML;
 bg.onclick=()=>{const o=!document.body.classList.contains('menu-open');document.body.classList.toggle('menu-open',o);menu.setAttribute('aria-hidden',!o);bg.setAttribute('aria-expanded',o)};
 addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('menu-open'))bg.click()});
-menu.querySelector('form').onsubmit=e=>{e.preventDefault();const i=e.target.querySelector('input');if(i.checkValidity()){e.target.innerHTML='<p class="ok">¡Gracias! Te avisaremos.</p>'}};
+menu.querySelector('form').onsubmit=e=>{e.preventDefault();const i=e.target.querySelector('input');if(i.checkValidity()){forgeMail(i.value);e.target.innerHTML='<p class="ok">¡Casi listo! Envía el correo que se abrió para suscribirte.</p>'}};
 if(/[?&]menu\b/.test(location.search)){document.body.classList.add('notrans');bg.click();requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.remove('notrans')))}
 // keep the address clean: drop one-shot params (menu, nointro) so going back/reloading lands on the plain index
 {const u=new URL(location.href);let ch=false;['menu','nointro'].forEach(k=>{if(u.searchParams.has(k)){u.searchParams.delete(k);ch=true}});if(ch)history.replaceState(null,'',u.pathname+(u.search?u.search:'')+u.hash)}
@@ -144,7 +144,7 @@ menu.addEventListener('click',e=>{const l=e.target.closest('a[href]');if(l&&!l.g
 addEventListener('pageshow',e=>{if(e.persisted){closeMenu();const it=document.getElementById('intro');it.classList.add('out');it.style.display='none';document.body.classList.add('ready')}});
 
 document.querySelectorAll('.fsoc').forEach(e=>e.innerHTML=document.querySelector('nav.social').innerHTML);
-function wireFoot(root){const fm=root.querySelector('.fform');fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}fm.innerHTML='<p class="fthanks">¡Gracias! Te mantendremos al tanto.</p>'}}
+function wireFoot(root){const fm=root.querySelector('.fform');fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}forgeMail(i.value);fm.innerHTML='<p class="fthanks">¡Casi listo! Envía el correo que se abrió para suscribirte.</p>'}}
 wireFoot(document.getElementById('foot'));
 {const cl=document.getElementById('foot').cloneNode(true);cl.removeAttribute('id');cl.querySelectorAll('.fl')[0].remove();cl.querySelector('.fsoc').remove();cl.querySelector('.fform').remove();cl.querySelectorAll('.fjoin').forEach(x=>x.remove());const fl=cl.querySelectorAll('.fl');if(fl[0])fl[0].remove();menu.querySelector('.mwrap').appendChild(cl)}
 if(location.search.includes('foot'))document.getElementById('hero').style.display='none';

@@ -1,7 +1,7 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Artistas · Forge Records</title><meta name="theme-color" content="#000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=67">
+<link rel="stylesheet" href="style.css?v=68">
 <style>
 html,body{overflow-x:hidden;overflow-y:auto;height:auto}body{background:#000}
 .atabs{flex:1;display:flex;gap:16px;margin-left:14px}.atabs a{font-family:Unbounded;font-weight:700;font-size:15px;color:#777;text-decoration:none}.atabs a.on{color:#fff}
@@ -61,7 +61,7 @@ main.agrid{margin-top:calc(var(--hb,66px) + 56px)}}
 <nav class="flegal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Press</a><a href="#">Careers</a><a href="contact-info.html?nointro=1">Contact Us</a><a href="#">Cookies Policy</a><a href="#">Cookies Settings</a></nav>
 <i class="fend"></i>
 </section>
-<script src="badge.js?v=67"></script><script src="artists.js?v=67"></script>
+<script src="badge.js?v=68"></script><script src="artists.js?v=68"></script>
 <script>
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG('b'+i));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -77,5 +77,5 @@ const set=o=>{w.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};b.
 document.addEventListener('click',e=>{if(!w.contains(e.target))set(false)});addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});
 addEventListener('pageshow',e=>{if(e.persisted)set(false)});if(/[?&]open\b/.test(location.search))set(true)}
 {const hb=()=>document.documentElement.style.setProperty('--hb',document.querySelector('header').offsetHeight+'px');hb();addEventListener('resize',hb)}
-document.querySelectorAll('form.aform,#foot .fform').forEach(fm=>fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}fm.innerHTML='<p class="ok fthanks">¡Gracias! Te mantendremos al tanto.</p>'});
+document.querySelectorAll('form.aform,#foot .fform').forEach(fm=>fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}forgeMail(i.value);fm.innerHTML='<p class="ok fthanks">¡Casi listo! Envía el correo que se abrió para suscribirte.</p>'});
 </script></body></html>

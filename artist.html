@@ -1,7 +1,7 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Forge Records</title><meta name="theme-color" content="#000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=67">
+<link rel="stylesheet" href="style.css?v=68">
 <style>
 html,body{overflow-x:hidden;overflow-y:auto;height:auto}
 body{background:#000}
@@ -58,7 +58,7 @@ body{background:#000}
 <i class="fend"></i>
 </section>
 
-<script src="badge.js?v=67"></script><script src="artists.js?v=67"></script>
+<script src="badge.js?v=68"></script><script src="artists.js?v=68"></script>
 <script>
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG('a'+i));
 const q=new URLSearchParams(location.search),slug=q.get('a');
@@ -71,7 +71,7 @@ else{document.title=A.n+' · Forge Records';
 m.innerHTML=`<section class="ahead"><div class="aphoto" style="background-image:url('${A.img}')${A.pos?';background-position:'+A.pos:''}${A.fit?';background-size:contain;background-color:#000':''}" role="img" aria-label="${esc(A.n)}"></div><div class="ahtx"><h1 class="aname">${esc(A.n)}</h1>${A.tagline?`<blockquote class="atag"><p>“${esc(A.tagline)}”</p>${A.taglineBy?`<cite>— ${esc(A.taglineBy)}</cite>`:''}</blockquote>`:''}</div></section>
 <section class="abody"><div class="abg" style="background-image:url('${A.img}')"></div><div class="tl">${A.tl.map(g=>`<h2 class="yr${isNaN(g.y)?' sm':''}">${g.y}</h2>`+g.items.map((it,i)=>`<div class="ev${it.h?'':' s'}">${it.d?`<div class="d">${it.d}</div>`:''}<div class="h">${esc(it.h||it.t)}</div>${it.n?`<div class="n">${esc(it.n)}</div>`:''}${it.q?`<div class="q">${esc(it.q)}</div>`:''}</div>`).join('')).join('')}
 </div></section>`}
-{const fm=document.querySelector('#foot .fform');fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}fm.innerHTML='<p class="fthanks">¡Gracias! Te mantendremos al tanto.</p>'}}
+{const fm=document.querySelector('#foot .fform');fm.onsubmit=e=>{e.preventDefault();const i=fm.querySelector('input[type=email]');if(!i.value||!i.checkValidity()){i.focus();i.style.borderColor='#ff6b6b';return}forgeMail(i.value);fm.innerHTML='<p class="fthanks">¡Casi listo! Envía el correo que se abrió para suscribirte.</p>'}}
 const pr=document.getElementById('prog');function up(){const h=document.documentElement.scrollHeight-innerHeight;pr.style.height=(h>0?scrollY/h:0)*100+'vh'}addEventListener('scroll',up,{passive:true});up();
 // shrink the name so no single word is cut mid-word
 {const h=document.querySelector('.aname');const fit=()=>{if(!h)return;h.style.fontSize='';let fs=parseFloat(getComputedStyle(h).fontSize);while(fs>14&&h.scrollWidth>h.clientWidth+1){fs-=1;h.style.fontSize=fs+'px'}};fit();addEventListener('resize',fit);document.fonts&&document.fonts.ready.then(fit)}

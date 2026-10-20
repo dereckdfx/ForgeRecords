@@ -12,3 +12,5 @@ function badgeSVG(id){return `<svg viewBox="-20 -20 440 350" xmlns="http://www.w
 ${[0,60,120,180,240,300].map(a=>`<use href="#sw${id}" transform="rotate(${a})"/>`).join('')}<circle r="9" fill="url(#d${id})"/></g>
 <rect x="40" y="206" width="320" height="56" rx="28" fill="url(#k${id})" stroke="url(#d${id})" stroke-width="5" filter="url(#b${id})"/>
 <text x="200" y="250" text-anchor="middle" font-family="Archivo Black" font-size="46" letter-spacing="10" textLength="270" fill="url(#c${id})" stroke="#fff" stroke-width="1" filter="url(#b${id})">FORGE</text></svg>`}
+
+function forgeMail(em){var s='Quiero recibir el boletín de Forge Records',b='Hola Forge Records,\n\nQuiero suscribirme al boletín y recibir notificaciones por email de nuevos lanzamientos, artistas y noticias.\n\nMi correo: '+(em||'')+'\n\n¡Gracias!';location.href='mailto:email@forgerecordsmusicgroup.com?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(b)}
