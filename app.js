@@ -123,6 +123,7 @@ else setTimeout(()=>{document.getElementById('intro').classList.add('out');docum
 // View by: grid (the floating artists) or time (label timeline), like the reference site
 {const tvl=document.getElementById('tvl'),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 tvl.innerHTML=LABEL_TL.map(g=>`<h2 class="yr${isNaN(g.y)?' sm':''}">${g.y}</h2>`+g.items.map(it=>{const tx=`${it.d?`<div class="d">${it.d}</div>`:''}<div class="h">${esc(it.h||it.t)}</div>${it.n?`<div class="n">${esc(it.n)}</div>`:''}${it.q?`<div class="q">${esc(it.q)}</div>`:''}`;return `<div class="ev${it.h?'':' s'}">${it.a?`<a href="artist.html?a=${it.a}&frontpage=true">${tx}</a>`:tx}</div>`}).join('')).join('');
+{const f=tvl.querySelector('.ev');f&&f.classList.add('now')}
 const vb=[...document.querySelectorAll('.view button')],setView=v=>{document.body.classList.toggle('timeView',v==='time');vb.forEach((x,i)=>x.classList.toggle('on',(i===1)===(v==='time')));scrollTo(0,0);OBS=null};
 vb[0].onclick=()=>setView('grid');vb[1].onclick=()=>setView('time');
 document.querySelector('header .logo').onclick=()=>setView(document.body.classList.contains('timeView')?'grid':'time');
