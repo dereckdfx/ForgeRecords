@@ -1,4 +1,4 @@
-document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML=badgeSVG(i));
+document.querySelectorAll('.badge-slot').forEach(e=>e.innerHTML='<img src="img/forge-logo.png" alt="Forge Records" style="width:100%;height:100%;object-fit:contain">');
 const w=document.getElementById('world'),mob=innerWidth<600,cards=[],GAP=6;
 const N=mob?(innerHeight<740?8:10):14;
 // random order on every visit (like a shuffled artist feed); artist cards are always included
