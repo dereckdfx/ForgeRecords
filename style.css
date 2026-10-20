@@ -200,3 +200,4 @@ grid-template-areas:"top top top" "soc join logos" "form jl logos" "form . copy"
 @media(max-width:700px){.vinyl,.swirl{width:84px!important;height:84px!important}.corner{font-size:10px!important}.corner.l{left:calc(19.5vw - 42px)!important}.corner.r{right:calc(19.2vw - 42px)!important}}
 .corner.l,.corner.r{bottom:calc(120px + env(safe-area-inset-bottom))!important}
 @media(max-width:700px){.corner.l,.corner.r{bottom:calc(150px + env(safe-area-inset-bottom))!important}}
+body:not(.timeView) #foot>.fl:first-child{display:none}
