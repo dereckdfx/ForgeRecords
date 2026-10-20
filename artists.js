@@ -29,7 +29,7 @@ const DFX_RELEASES=[
 {t:'Super S! (fr. T.Y.N) (feat. T.Y.N)',d:'15/09/2026',con:'T.Y.N',feat:['tyn'],post:1,q:'Octavo lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.'},
 {t:'Porn*gráfica (fr. S.I.N C.U.T.) (feat. S.I.N C.U.T., 5021 Records & S\'ny Music Entertainment España, S.L.)',d:'24/09/2026',con:'S.I.N C.U.T.',feat:['sin-cut'],post:1,q:'Noveno lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman (producido por Forge Records). Publicado por 5021 Records / S\'ny Music Entertainment España, S.L.'},
 {t:'Angel Chavez Mateos FTS Session 001 (feat. Angel Chavez Mateos, 5021 Records, S\'ny Music Entertainment México, S.L., S\'ny Music Entertainment México, S.L. FTS Sessions & FTS Sessions) [S\'ny Music Entertainment México, S.L. FTS Session 001]',d:'01/10/2026',con:'Angel Chavez Mateos',feat:['angel-chavez-mateos'],post:1,q:'Décimo lanzamiento de Dereck DFX bajo el sello: Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman (producido por Forge Records y Starlight). Publicado por el sello Fotos Sacadas del Classroom, derechos: S\'ny Music Entertainment México, S.L.'}];
-const DFX_ANNOUNCED=[{d:'10/2026',h:'Anunció su álbum “Las Reinas del Perreo”',n:'Con Anyelina y La Reina de Tecámac'},{d:'10/2026',t:'Sencillo “Moteles”',rel:1},{d:'15/10/2026',t:'Always (Single)',rel:1,q:'Undécimo lanzamiento de Dereck DFX bajo el sello: Dereck DFX LLC under exclusive license to Forge Records, an exclusive license from Starlight Records, a division of Alice Whitman.'},{d:'18/10/2026',t:'POSSESSION',rel:1,q:'Duodécimo lanzamiento de Dereck DFX bajo el sello: Atlantic Recording Corporation / Forge Records, an exclusive license from Starlight Records, a division of Alice Whitman. Primer lanzamiento de Dereck DFX como parte de Atlantic Recording Corporation y posiblemente su último lanzamiento con Forge Records.'}];
+const DFX_ANNOUNCED=[{d:'10/2026',h:'Anunció su álbum “Las Reinas del Perreo”',n:'Con Anyelina y La Reina de Tecámac'},{d:'10/2026',t:'Sencillo “Moteles”',rel:1},{d:'15/10/2026',t:'Always (Single)',rel:1,q:'Undécimo lanzamiento de Dereck DFX bajo el sello: Dereck DFX LLC under exclusive license to Forge Records, an exclusive license from Starlight Records, a division of Alice Whitman.'},{d:'18/10/2026',t:'POSSESSION',rel:1,q:'Duodécimo lanzamiento de Dereck DFX bajo el sello: Atlantic Recording Corporation / Forge Records, an exclusive license from Starlight Records, a division of Alice Whitman. Primer lanzamiento de Dereck DFX como parte de Atlantic Recording Corporation y posiblemente su último lanzamiento con Forge Records.'},{d:'19/10/2026',h:'Anunció el álbum “Que Tengan Celos De Lo Que Escribí De Ti”',n:'Con Valentina Granciano y Santiago “Capito” Campos'}];
 // hidden collaborators: drop them from feat; if every credited collaborator is hidden, drop the 'Con …' label too (returns automatically when unhidden)
 DFX_RELEASES.forEach(r=>{if(!r.feat||!r.feat.length)return;r.feat=r.feat.filter(s=>!HIDDEN.has(s));if(!r.feat.length)delete r.con});
 // "Su primer lanzamiento", "Su segundo lanzamiento"… counted oldest→newest over releases only (the album announcement is not a release)
@@ -38,11 +38,13 @@ const ORD=['primer','segundo','tercer','cuarto','quinto','sexto','séptimo','oct
 const PRE=DFX_RELEASES.filter(r=>!r.post),POST=DFX_RELEASES.filter(r=>r.post),AR_JOIN={d:'03/08/2026',h:'Se unió a Forge Records'};
 const ALBUM_GUEST={d:'10/2026',t:'Aparecerá en el álbum “Las Reinas del Perreo” de Dereck DFX'};
 const FEAT=s=>DFX_RELEASES.filter(r=>(r.feat||[]).includes(s)).map(r=>({d:r.d,t:r.t,n:'Con Dereck DFX',q:r.q}));
+const VG_ALBUM={d:'19/10/2026',h:'Anunció el álbum “Que Tengan Celos De Lo Que Escribí De Ti”',n:'De Dereck DFX, Valentina Granciano y Santiago “Capito” Campos'};
 const ALL_ARTISTS=[
 {s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tagline:'Y Esta Mierda Apenas Empieza',taglineBy:'Dereck DFX',tl:TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})))},
 {s:'ar',n:'AR',img:'img/ar.jpg',tl:TL(FOUND,AR_JOIN,...PRE.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn})),{...SALE},...POST.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn,q:r.q})))},
 {s:'zoe-jpr',n:'La Reina de Tecámac',img:'img/zoe-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'},ALBUM_GUEST)},
-{s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/santiago-photo.jpg',fit:1},
+{s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/santiago-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},{d:'10/2026',h:'Se unió a Forge Records'},{...VG_ALBUM})},
+{s:'valentina-granciano',n:'Valentina Granciano',img:'img/valentina-photo.jpg',pos:'center 60%',tl:TL(FOUND,{...SALE},{d:'19/10/2026',h:'Se unió a Forge Records'},{...VG_ALBUM})},
 // collaborators credited on Dereck DFX releases (no join date known, so no "joined" entry)
 ...GUESTS.map(({s,n,f,hidden,fit})=>({s,n,img:`img/${f||s}.jpg`,fit,pos:s==='iker'?'center 12%':s==='daniel-nigro'?'center 8%':undefined,guest:1,hidden,tl:TL(FOUND,{...SALE},...FEAT(s),...(s==='anyelina'?[ALBUM_GUEST]:[]))}))
 ].map(a=>({...a,tl:a.tl||JOIN}));
@@ -50,7 +52,8 @@ const ARTISTS=ALL_ARTISTS.filter(a=>!a.hidden);// everything on the site reads A
 // cards on the home page: only the label's artists (repeated to fill the hero)
 const CARDS=[
 {n:'DERECK DFX',img:'img/dereck-dfx.jpg',s:'dereck-dfx'},{n:'AR',img:'img/ar.jpg',s:'ar'},{n:'LA REINA DE TECÁMAC',img:'img/zoe-photo.jpg',s:'zoe-jpr',fit:1},
-{n:'SANTIAGO “CAPITO” CAMPOS',img:'img/santiago-photo.jpg',s:'santiago-campos',fit:1}];
+{n:'SANTIAGO “CAPITO” CAMPOS',img:'img/santiago-photo.jpg',s:'santiago-campos',fit:1},
+{n:'VALENTINA GRANCIANO',img:'img/valentina-photo.jpg',s:'valentina-granciano',pos:'center 60%'}];
 // featured collaborators: shown on the home hero too, but smaller and fewer than the 4 core artists
 const GUEST_CARDS=ARTISTS.filter(a=>a.guest).map(a=>({n:a.n.toUpperCase(),img:a.img,s:a.s,g:1,fit:a.fit}));
 
@@ -68,4 +71,6 @@ const LABEL_TL=TL(
 {d:'10/2026',t:'La Reina de Tecámac se unió a Forge Records',a:'zoe-jpr'},
 {d:'10/2026',t:'Santiago “Capito” Campos se unió a Forge Records',a:'santiago-campos'},
 {d:'15/10/2026',t:'Dereck DFX — Always (Single)',n:DFX_ANNOUNCED[2].n,q:DFX_ANNOUNCED[2].q,a:'dereck-dfx'},
-{d:'18/10/2026',t:'Dereck DFX — POSSESSION',n:DFX_ANNOUNCED[3].n,q:DFX_ANNOUNCED[3].q,a:'dereck-dfx'});
+{d:'18/10/2026',t:'Dereck DFX — POSSESSION',n:DFX_ANNOUNCED[3].n,q:DFX_ANNOUNCED[3].q,a:'dereck-dfx'},
+{d:'19/10/2026',t:'Valentina Granciano se unió a Forge Records',a:'valentina-granciano'},
+{d:'19/10/2026',t:'Dereck DFX, Valentina Granciano y Santiago “Capito” Campos anunciaron el álbum “Que Tengan Celos De Lo Que Escribí De Ti”',a:'valentina-granciano'});
