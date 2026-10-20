@@ -187,3 +187,7 @@ grid-template-areas:"top top top" "soc join logos" "form jl logos" "form . copy"
 #tvl .ev.now::before{content:"";position:absolute;left:-49px;top:-1px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,#fff 0 22%,rgba(255,255,255,.55) 38%,rgba(255,255,255,0) 70%);box-shadow:0 0 22px 9px rgba(255,255,255,.55);animation:fflare 3.6s ease-in-out infinite}
 #tvl .ev.now::after{content:"";position:absolute;left:-40px;top:9px;width:34px;height:2px;background:linear-gradient(90deg,transparent,#fff,transparent);box-shadow:0 0 8px #fff;animation:fflare 3.6s ease-in-out infinite;pointer-events:none}
 @keyframes fflare{0%,100%{opacity:.7;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+/* línea de tiempo separada de la orilla */
+#timeview{padding-left:calc(clamp(22px,9vw,150px) + 40px)}
+#timeview .tvprog{left:clamp(22px,9vw,150px)}
+#timeview .ev.now::after{left:-80px;width:80px;background:linear-gradient(90deg,transparent,#fff 50%,transparent)}
