@@ -35,13 +35,21 @@ DFX_RELEASES.forEach(r=>{if(!r.feat||!r.feat.length)return;r.feat=r.feat.filter(
 // "Su primer lanzamiento", "Su segundo lanzamiento"… counted oldest→newest over releases only (the album announcement is not a release)
 const ORD=['primer','segundo','tercer','cuarto','quinto','sexto','séptimo','octavo','noveno','décimo','undécimo','duodécimo','decimotercer','decimocuarto','decimoquinto','decimosexto','decimoséptimo','decimoctavo','decimonoveno','vigésimo','vigésimo primer','vigésimo segundo','vigésimo tercer','vigésimo cuarto','vigésimo quinto'];
 [...DFX_RELEASES.map(r=>(r.rel=1,r)),...DFX_ANNOUNCED].filter(r=>r.rel).forEach((r,k)=>{r.n=`Su ${ORD[k]} lanzamiento`+(r.con?' · Con '+r.con:r.ar?' · Con AR':'')});
+// U.L.T.R.A album series + upcoming albums (cv = cover). Released ones go in the 2026 timeline; the rest in "Próximamente"
+const ULTRA_LBL='Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.';
+const UA=(t,s,c,up,x)=>({t,cv:`img/albums/${s}.jpg`,n:`Álbum · ${c} canciones${x?' · '+x:''}`,q:ULTRA_LBL,up});
+const DFX_ALBUMS=[UA('U.L.T.R.A (Normal)','ultra-normal',50),UA('U.L.T.R.A (Premium)','ultra-premium',59),UA('U.L.T.R.A (VIP)','ultra-vip',68),UA('U.L.T.R.A (Luxury)','ultra-luxury',76),UA('U.L.T.R.A (Deluxe)','ultra-deluxe',85),UA('U.L.T.R.A (Edición de Lujo)','ultra-edicion-de-lujo',94),UA('U.L.T.R.A (Elite)','ultra-elite',103),UA('U.L.T.R.A (Signature)','ultra-signature',112),UA('U.L.T.R.A (Prestige)','ultra-prestige',121),UA('U.L.T.R.A (First Class)','ultra-first-class',129),UA('U.L.T.R.A (Platinum)','ultra-platinum',138),
+UA('U.L.T.R.A (Black)','ultra-black',147,1),UA('U.L.T.R.A (Limited)','ultra-limited',156,1),UA("U.L.T.R.A (Collector's)",'ultra-collectors',165,1),UA('U.L.T.R.A (Special)','ultra-special',174,1),UA('U.L.T.R.A (Anniversary)','ultra-anniversary',182,1),UA('U.L.T.R.A (Gold Diamond)','ultra-gold-diamond',191,1),UA('U.L.T.R.A (Custom Tailored)','ultra-custom-tailored',200,1),
+UA('HD','hd',66,1,'Instrumental'),UA('Pantheon','pantheon',33,1),UA('UKTRA (Alternate Version of U.L.T.R.A)','ultra-uktra',200,1)];
+const ALB_OUT=DFX_ALBUMS.filter(a=>!a.up).map(a=>({d:'2026',...a})),ALB_UP=DFX_ALBUMS.filter(a=>a.up).map(a=>({...a,d:'Próximamente'}));
+const SOON=(g,f=x=>x)=>[{y:'Próximamente',items:ALB_UP.map(f).reverse()},...g];
 const PRE=DFX_RELEASES.filter(r=>!r.post),POST=DFX_RELEASES.filter(r=>r.post),AR_JOIN={d:'03/08/2026',h:'Se unió a Forge Records'};
 const ALBUM_GUEST={d:'10/2026',t:'Aparecerá en el álbum “Las Reinas del Perreo” de Dereck DFX'};
 const AREA69={d:'10/2026',t:'Aparece en el álbum “Las Reinas del Perreo (Area 69, Second Edition)” de Dereck DFX'};
 const FEAT=s=>DFX_RELEASES.filter(r=>(r.feat||[]).includes(s)).map(r=>({d:r.d,t:r.t,n:'Con Dereck DFX',q:r.q}));
 const VG_ALBUM={d:'19/10/2026',h:'Anunció el álbum “Que Tengan Celos De Lo Que Escribí De Ti”',n:'De Dereck DFX, Valentina Granciano y Santiago “Capito” Campos'};
 const ALL_ARTISTS=[
-{s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tagline:'Y Esta Mierda Apenas Empieza',taglineBy:'Dereck DFX',tl:TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})))},
+{s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tagline:'Y Esta Mierda Apenas Empieza',taglineBy:'Dereck DFX',tl:SOON(TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})),...ALB_OUT))},
 {s:'ar',n:'AR',img:'img/ar.jpg',tl:TL(FOUND,AR_JOIN,...PRE.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn})),{...SALE},...POST.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn,q:r.q})),AREA69)},
 {s:'zoe-jpr',n:'La Reina de Tecámac',img:'img/zoe-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'},ALBUM_GUEST,AREA69)},
 {s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/santiago-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},{d:'10/2026',h:'Se unió a Forge Records'},{...VG_ALBUM})},
@@ -59,7 +67,7 @@ const CARDS=[
 const GUEST_CARDS=ARTISTS.filter(a=>a.guest).map(a=>({n:a.n.toUpperCase(),img:a.img,s:a.s,g:1,fit:a.fit}));
 
 // label timeline (only what we know: founded 2026, the October 2026 announcements and signings)
-const LABEL_TL=TL(
+const LABEL_TL=SOON(TL(
 {d:'27/07/2026',h:'Fundación de Forge Records'},
 {d:'27/07/2026',t:'Dereck DFX se unió a Forge Records',a:'dereck-dfx'},
 ...PRE.filter(r=>r.d!=='03/08/2026'&&r.d!=='04/08/2026').map(r=>({d:r.d||'',t:(r.by||'Dereck DFX')+' — '+r.t,n:r.n,a:'dereck-dfx'})),
@@ -74,4 +82,5 @@ const LABEL_TL=TL(
 {d:'15/10/2026',t:'Dereck DFX — Always (Single)',n:DFX_ANNOUNCED[2].n,q:DFX_ANNOUNCED[2].q,a:'dereck-dfx'},
 {d:'18/10/2026',t:'Dereck DFX — POSSESSION',n:DFX_ANNOUNCED[3].n,q:DFX_ANNOUNCED[3].q,a:'dereck-dfx'},
 {d:'19/10/2026',t:'Valentina Granciano se unió a Forge Records',a:'valentina-granciano'},
-{d:'19/10/2026',t:'Dereck DFX, Valentina Granciano y Santiago “Capito” Campos anunciaron el álbum “Que Tengan Celos De Lo Que Escribí De Ti”',a:'valentina-granciano'});
+{d:'19/10/2026',t:'Dereck DFX, Valentina Granciano y Santiago “Capito” Campos anunciaron el álbum “Que Tengan Celos De Lo Que Escribí De Ti”',a:'valentina-granciano'},
+...ALB_OUT.map(a=>({...a,t:'Dereck DFX — '+a.t,a:'dereck-dfx'}))),a=>({...a,t:'Dereck DFX — '+a.t,a:'dereck-dfx'}));

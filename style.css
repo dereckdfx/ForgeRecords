@@ -201,3 +201,5 @@ grid-template-areas:"top top top" "soc join logos" "form jl logos" "form . copy"
 .corner.l,.corner.r{bottom:calc(120px + env(safe-area-inset-bottom))!important}
 @media(max-width:700px){.corner.l,.corner.r{bottom:calc(150px + env(safe-area-inset-bottom))!important}}
 body:not(.timeView) #foot>.fl:first-child{display:none}
+
+.ev .cv{display:block;width:150px;max-width:60%;aspect-ratio:1;object-fit:cover;border-radius:6px;margin:4px 0 10px;box-shadow:0 6px 22px rgba(0,0,0,.5)}
