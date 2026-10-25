@@ -1,7 +1,7 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Artistas · Forge Records</title><meta name="theme-color" content="#000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=90">
+<link rel="stylesheet" href="style.css?v=92">
 <style>
 html,body{overflow-x:hidden;overflow-y:auto;height:auto}body{background:#000}
 .atabs{flex:1;display:flex;gap:16px;margin-left:14px}.atabs a{font-family:Unbounded;font-weight:700;font-size:15px;color:#777;text-decoration:none}.atabs a.on{color:#fff}
@@ -9,14 +9,16 @@ header .logo b{display:none}
 .asel{position:fixed;left:10px;right:10px;top:calc(var(--hb,62px) + 6px);z-index:101;background:#000;box-shadow:0 -8px 0 #000,0 10px 0 #000}
 .asbtn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#000;color:#fff;border:1.5px solid #fff;border-radius:6px;padding:9px 12px;font:700 11px Unbounded;letter-spacing:.02em;cursor:pointer;text-align:left}
 .asbtn svg{width:18px;flex:none;transition:transform .25s}.asel.open .asbtn svg{transform:rotate(180deg)}
-.aslist{list-style:none;margin:0;padding:6px 12px 10px;background:#000;max-height:min(62vh,520px);overflow-y:auto;display:none;scrollbar-color:#fff #000;scrollbar-width:thin}
-.asel.open .aslist{display:block}
+.aslist{list-style:none;margin:0;padding:0 12px;background:#000;max-height:0;overflow-y:auto;opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top center;transition:max-height .45s cubic-bezier(.4,0,.2,1),padding .45s cubic-bezier(.4,0,.2,1),opacity .3s ease,transform .4s cubic-bezier(.22,.61,.36,1),visibility 0s linear .45s;scrollbar-color:#fff #000;scrollbar-width:thin}
+.asel.open .aslist{max-height:min(62vh,520px);padding:6px 12px 10px;opacity:1;visibility:visible;transform:none;transition:max-height .5s cubic-bezier(.22,.61,.36,1),padding .4s ease,opacity .35s ease,transform .45s cubic-bezier(.22,.61,.36,1),visibility 0s}
+.aslist li{opacity:0;transform:translateY(-6px);transition:opacity .25s ease,transform .3s ease}.asel.open .aslist li{opacity:1;transform:none;transition-delay:calc(var(--i,0)*25ms + 80ms)}
+@media(prefers-reduced-motion:reduce){.aslist,.aslist li,.asel.open .aslist,.asel.open .aslist li,.asbtn svg{transition:none!important}}
 .aslist li a{display:block;color:#fff;text-decoration:none;font:700 10px/1.2 Unbounded;letter-spacing:.01em;padding:11px 2px 9px;border-bottom:1px solid #fff}
 .aslist li a:hover,.aslist li a:focus{color:#bbb;outline:none}
 main.agrid{margin-top:calc(var(--hb,62px) + 62px)}
 @media(min-width:900px){.asel{position:relative;left:auto;right:auto;top:auto;width:290px;margin-right:18px}
 .asbtn{padding:11px 12px;border-radius:2px;border-color:#555}
-.aslist{position:absolute;left:0;right:0;top:calc(100% + 14px);padding:4px 14px 10px;max-height:calc(100vh - var(--hb,66px) - 40px)}
+.aslist{position:absolute;left:0;right:0;top:calc(100% + 14px);padding:0 14px}.asel.open .aslist{padding:4px 14px 10px;max-height:calc(100vh - var(--hb,66px) - 40px)}
 main.agrid{margin-top:calc(var(--hb,66px) + 56px)}}
 .agrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;padding:0 6px}
 .acard{position:relative;display:block;aspect-ratio:1;background:#111 center/cover no-repeat;text-decoration:none;overflow:hidden}
@@ -61,7 +63,7 @@ main.agrid{margin-top:calc(var(--hb,66px) + 56px)}}
 <nav class="flegal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Press</a><a href="#">Careers</a><a href="contact-info.html?nointro=1">Contact Us</a><a href="#">Cookies Policy</a><a href="#">Cookies Settings</a></nav>
 <i class="fend"></i>
 </section>
-<script src="badge.js?v=90"></script><script src="artists.js?v=91"></script>
+<script src="badge.js?v=92"></script><script src="artists.js?v=92"></script>
 <script>
 document.querySelectorAll('.badge-slot').forEach((e,i)=>e.innerHTML='<img src="img/forge-logo.png" alt="Forge Records" style="width:100%;height:100%;object-fit:contain">');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -72,7 +74,7 @@ if(i===Math.min(7,list.length-1))html+=`<section class="amail"><h3>Únete a nues
 g.innerHTML=html;
 // custom "Selecciona un artista" dropdown (Atlantic style): bold names separated by thin white lines; click goes to the artist page
 {const w=document.getElementById('aselw'),b=document.getElementById('asbtn'),ul=document.getElementById('aslist');
-ul.innerHTML=list.map(a=>`<li role="option"><a href="${url(a)}">${esc(a.n)}</a></li>`).join('');
+ul.innerHTML=list.map((a,i)=>`<li role="option" style="--i:${Math.min(i,20)}"><a href="${url(a)}">${esc(a.n)}</a></li>`).join('');
 const set=o=>{w.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};b.onclick=e=>{e.stopPropagation();set(!w.classList.contains('open'))};
 document.addEventListener('click',e=>{if(!w.contains(e.target))set(false)});addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});
 addEventListener('pageshow',e=>{if(e.persisted)set(false)});if(/[?&]open\b/.test(location.search))set(true)}
