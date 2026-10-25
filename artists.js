@@ -44,6 +44,9 @@ UA('HD','hd',66,1,'Instrumental'),UA('Pantheon','pantheon',33,1),UA('UKTRA (Alte
 // DistroKid albums (label line: Forge Records)
 const DK=(t,s,c,x,d)=>({t,cv:`img/albums/${s}.jpg`,n:`Álbum · ${c} canciones${x?' · '+x:''}`,q:'Forge Records',d});
 DFX_ALBUMS.unshift(DK('Las Reinas del Perreo','reinas-del-perreo',35,'Explícito · Con Anyelina, La Reina de Tecámac, Seven Sex, ẞ, La Fineasse y AR','16/10/2026'),DK('Las Reinas del Perreo (Area 69, Second Edition)','reinas-del-perreo',35,'Explícito · Con Anyelina, La Reina de Tecámac, Seven Sex, ẞ, La Fineasse y AR','2026'),DK('Las Reinas del Perreo (Deluxe, Third Edition)','reinas-del-perreo',35,'Explícito · Con Anyelina, La Reina de Tecámac, Seven Sex, ẞ, La Fineasse y AR','2026'),DK('if','if',15,'Inspirado en BRAT','21/10/2026'),DK('Petal','petal',12,'Explícito · Inspirado en “Petal” de Ariana Grande','2026'));
+DFX_ALBUMS.push({t:'Visualizer de “Petal”',cv:'img/albums/petal.jpg',n:'Dereck DFX lanzó el Visualizer de la canción “Petal” del álbum “Petal”',q:'Forge Records',d:'2026'});
+// featured artists of Las Reinas del Perreo: the 3 editions on their own pages
+const RG=DFX_ALBUMS.filter(a=>/^Las Reinas del Perreo/.test(a.t)).reverse().map(a=>({d:a.d,t:'Aparece en el álbum “'+a.t+'” de Dereck DFX',cv:a.cv,n:'Álbum · 35 canciones · Explícito',q:'Forge Records'}));
 const ALB_OUT=DFX_ALBUMS.filter(a=>!a.up).map(a=>({...a,d:a.d||'2026'})),ALB_UP=DFX_ALBUMS.filter(a=>a.up).map(a=>({...a}));
 const SOON=(g,f=x=>x)=>[{y:'Próximamente',items:ALB_UP.map(f).reverse()},...g];
 const PRE=DFX_RELEASES.filter(r=>!r.post),POST=DFX_RELEASES.filter(r=>r.post),AR_JOIN={d:'03/08/2026',h:'Se unió a Forge Records'};
@@ -53,12 +56,12 @@ const FEAT=s=>DFX_RELEASES.filter(r=>(r.feat||[]).includes(s)).map(r=>({d:r.d,t:
 const VG_ALBUM={d:'19/10/2026',h:'Anunció el álbum “Que Tengan Celos De Lo Que Escribí De Ti”',n:'De Dereck DFX, Valentina Granciano y Santiago “Capito” Campos'};
 const ALL_ARTISTS=[
 {s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tagline:'Y Esta Mierda Apenas Empieza',taglineBy:'Dereck DFX',tl:SOON(TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})),...ALB_OUT))},
-{s:'ar',n:'AR',img:'img/ar.jpg',tl:TL(FOUND,AR_JOIN,...PRE.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn})),{...SALE},...POST.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn,q:r.q})),AREA69)},
-{s:'zoe-jpr',n:'La Reina de Tecámac',img:'img/zoe-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'},ALBUM_GUEST,AREA69)},
+{s:'ar',n:'AR',img:'img/ar.jpg',tl:TL(FOUND,AR_JOIN,...PRE.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn})),{...SALE},...POST.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn,q:r.q})),...RG)},
+{s:'zoe-jpr',n:'La Reina de Tecámac',img:'img/zoe-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'},...RG)},
 {s:'santiago-campos',n:'Santiago “Capito” Campos',img:'img/santiago-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},{d:'10/2026',h:'Se unió a Forge Records'},{...VG_ALBUM})},
 {s:'valentina-granciano',n:'Valentina Granciano',img:'img/valentina-photo.jpg',pos:'center 60%',tl:TL(FOUND,{...SALE},{d:'19/10/2026',h:'Se unió a Forge Records'},{...VG_ALBUM})},
 // collaborators credited on Dereck DFX releases (no join date known, so no "joined" entry)
-...GUESTS.map(({s,n,f,hidden,fit,a69})=>({s,n,img:`img/${f||s}.jpg`,fit,pos:s==='iker'?'center 12%':s==='daniel-nigro'?'center 8%':undefined,guest:1,hidden,tl:TL(FOUND,{...SALE},...FEAT(s),...(s==='anyelina'?[ALBUM_GUEST,AREA69]:a69?[AREA69]:[]))}))
+...GUESTS.map(({s,n,f,hidden,fit,a69})=>({s,n,img:`img/${f||s}.jpg`,fit,pos:s==='iker'?'center 12%':s==='daniel-nigro'?'center 8%':undefined,guest:1,hidden,tl:TL(FOUND,{...SALE},...FEAT(s),...(s==='anyelina'||a69?RG:[]))}))
 ].map(a=>({...a,tl:a.tl||JOIN}));
 const ARTISTS=ALL_ARTISTS.filter(a=>!a.hidden);// everything on the site reads ARTISTS, so hidden artists never show
 // cards on the home page: only the label's artists (repeated to fill the hero)
