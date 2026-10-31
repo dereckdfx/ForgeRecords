@@ -192,3 +192,123 @@
         let isCoverFront = true;
         let audioCtx = null;
         let vinylCrackleNode = null;
+        let musicGain = null;
+        let oscillators = [];
+
+        // Toggle Album Cover depth position (Front <-> Behind Vinyl)
+        function toggleCoverDepth() {
+            const cover = document.getElementById('album-cover');
+            if (isCoverFront) {
+                cover.classList.remove('depth-front');
+                cover.classList.add('depth-back');
+                isCoverFront = false;
+            } else {
+                cover.classList.remove('depth-back');
+                cover.classList.add('depth-front');
+                isCoverFront = true;
+            }
+        }
+
+        // Toggle Playback and Tonearm Position
+        function togglePlayState() {
+            isPlaying = !isPlaying;
+            const vinylDisc = document.getElementById('vinyl-disc');
+            const tonearm = document.getElementById('tonearm');
+
+            if (isPlaying) {
+                vinylDisc.classList.remove('vinyl-paused');
+                tonearm.classList.remove('tonearm-stopped');
+                tonearm.classList.add('tonearm-playing');
+                startSoundtrack();
+            } else {
+                vinylDisc.classList.add('vinyl-paused');
+                tonearm.classList.remove('tonearm-playing');
+                tonearm.classList.add('tonearm-stopped');
+                stopSoundtrack();
+            }
+        }
+
+        // Web Audio Synthesizer for warm ambient tone & vinyl crackle
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function startSoundtrack() {
+            initAudioContext();
+            stopSoundtrack();
+
+            musicGain = audioCtx.createGain();
+            musicGain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+            musicGain.connect(audioCtx.destination);
+
+            // Warm vinyl chord synth (Db maj7 harmonic structure)
+            const chords = [138.59, 174.61, 207.65, 261.63, 311.13];
+            chords.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+
+                osc.connect(gain);
+                gain.connect(musicGain);
+                osc.start();
+                oscillators.push(osc);
+            });
+
+            // Realistic vinyl crackle background noise
+            const bufferSize = audioCtx.sampleRate * 2;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+
+            for (let i = 0; i < bufferSize; i++) {
+                if (Math.random() < 0.0012) {
+                    output[i] = (Math.random() * 2 - 1) * 0.7; // Pop/Crackle
+                } else {
+                    output[i] = (Math.random() * 2 - 1) * 0.015; // Surface hiss
+                }
+            }
+
+            vinylCrackleNode = audioCtx.createBufferSource();
+            vinylCrackleNode.buffer = noiseBuffer;
+            vinylCrackleNode.loop = true;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 1400;
+
+            const noiseGain = audioCtx.createGain();
+            noiseGain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+
+            vinylCrackleNode.connect(filter);
+            filter.connect(noiseGain);
+            noiseGain.connect(audioCtx.destination);
+            vinylCrackleNode.start();
+        }
+
+        function stopSoundtrack() {
+            if (oscillators.length > 0) {
+                oscillators.forEach(osc => {
+                    try { osc.stop(); } catch(e){}
+                });
+                oscillators = [];
+            }
+            if (vinylCrackleNode) {
+                try { vinylCrackleNode.stop(); } catch(e){}
+                vinylCrackleNode = null;
+            }
+            if (musicGain) {
+                musicGain.disconnect();
+                musicGain = null;
+            }
+        }
+    </script>
+</body>
+</html>
