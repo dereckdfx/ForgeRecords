@@ -1,1 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinilo - Que tengan celos de lo que escribi de tí | Forge Records Group</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e5e3db;
+            color: #1a1a1a;
+            overflow: hidden;
+        }
 
+        /* Continuous vinyl spin animation */
+        @keyframes spin-vinyl {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .vinyl-spin {
+            animation: spin-vinyl 2.8s linear infinite;
+        }
+        .vinyl-paused {
+            animation-play-state: paused;
+        }
+
+        /* Authentic dark vinyl grooves texture */
+        .vinyl-grooves {
+            background: 
+                radial-gradient(circle, 
+                    #cbb979 0%, #cbb979 19.5%, 
+                    #0f0f0f 20%, #171717 20.5%, 
+                    #0b0b0b 25%, #1c1c1c 30%, 
+                    #0d0d0d 35%, #181818 42%, 
+                    #080808 50%, #1b1b1b 60%, 
+                    #0d0d0d 70%, #151515 85%, 
+                    #080808 100%
+                );
+            box-shadow: 
+                0 30px 50px -10px rgba(0, 0, 0, 0.45),
+                0 10px 20px -5px rgba(0, 0, 0, 0.3),
+                inset 0 0 15px rgba(255, 255, 255, 0.12);
+        }
+
+        /* Vinyl shine reflection layer */
+        .vinyl-shine {
+            background: conic-gradient(
+                from 45deg at 50% 50%,
+                rgba(255, 255, 255, 0.15) 0deg,
+                rgba(255, 255, 255, 0.0) 45deg,
+                rgba(255, 255, 255, 0.12) 180deg,
+                rgba(255, 255, 255, 0.0) 225deg,
+                rgba(255, 255, 255, 0.15) 360deg
+            );
+        }
+
+        /* Tonearm rotation and smooth transition */
+        .tonearm-wrapper {
+            transform-origin: 65px 65px;
+            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .tonearm-playing {
+            transform: rotate(0deg);
+        }
+        .tonearm-stopped {
+            transform: rotate(-26deg);
+        }
+
+        /* Album Cover smooth repositioning */
+        .album-cover-container {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;
+        }
+
+        /* Smooth depth z-index swap transition */
+        .depth-front {
+            z-index: 30 !important;
+            transform: translate(0, 0) scale(1) !important;
+            box-shadow: -10px 25px 40px rgba(0, 0, 0, 0.35);
+        }
+        .depth-back {
+            z-index: 10 !important;
+            transform: translate(30px, 0) scale(0.98) !important;
+            box-shadow: -5px 15px 25px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="w-screen h-screen flex items-center justify-center p-0 m-0 bg-[#e6e4dc]">
+
+    <!-- Main Stage Container (Replicating exact iPad viewport aspect ratio & layout) -->
+    <div class="relative w-full h-full max-w-[1180px] max-h-[820px] bg-[#e6e4dc] flex items-center justify-center overflow-hidden">
+
+        <!-- ALBUM COVER (Clickable to switch depth position) -->
+        <div id="album-cover" 
+             class="album-cover-container depth-front absolute left-[6%] md:left-[8%] top-[12%] md:top-[14%] w-[42vw] max-w-[480px] aspect-square rounded-sm cursor-pointer select-none"
+             onclick="toggleCoverDepth()">
+            
+            <div class="w-full h-full relative overflow-hidden rounded-sm shadow-xl bg-[#dfd6b8]">
+                <!-- Custom Album Cover Image -->
+                <img src="https://i.ibb.co/gFzCkSv7/Que-Tengan-Celos-De-Lo-Que-Escribi-de-ti-cover-5000-X-5000-1.png" 
+                     alt="Album Cover" 
+                     class="w-full h-full object-cover block"
+                     onerror="this.src='https://placehold.co/800x800/d8cbb5/333?text=Cover+Image'">
+                
+                <!-- Tiny subtle inner border reflection like physical cardboard -->
+                <div class="absolute inset-0 border border-black/10 pointer-events-none"></div>
+            </div>
+        </div>
+
+        <!-- VINYL DISC CONTAINER -->
+        <div id="vinyl-container" 
+             class="absolute right-[12%] md:right-[15%] top-[10%] md:top-[12%] w-[52vw] max-w-[580px] aspect-square rounded-full z-20 flex items-center justify-center cursor-pointer"
+             onclick="togglePlayState()">
+            
+            <!-- Vinyl Record Body -->
+            <div id="vinyl-disc" class="w-full h-full rounded-full vinyl-grooves vinyl-spin vinyl-paused relative flex items-center justify-center">
+                
+                <!-- Light sheen across the grooves -->
+                <div class="absolute inset-0 rounded-full vinyl-shine pointer-events-none"></div>
+
+                <!-- Central Yellow Vinyl Label (Exact Replica of photo design) -->
+                <div class="w-[38%] h-[38%] rounded-full bg-[#f4e27e] relative flex flex-col items-center justify-center border border-amber-300/40 shadow-inner overflow-hidden text-center">
+                    
+                    <!-- Micro barcode graphic on top edge -->
+                    <div class="absolute top-2 w-12 h-2 opacity-60 flex justify-center space-x-[1px]">
+                        <div class="w-[1px] h-full bg-black"></div>
+                        <div class="w-[2px] h-full bg-black"></div>
+                        <div class="w-[1px] h-full bg-black"></div>
+                        <div class="w-[3px] h-full bg-black"></div>
+                        <div class="w-[1px] h-full bg-black"></div>
+                        <div class="w-[2px] h-full bg-black"></div>
+                        <div class="w-[1px] h-full bg-black"></div>
+                    </div>
+
+                    <!-- Label Typography (Replicated upside-down / oriented as in Sade vinyl) -->
+                    <div class="flex flex-col items-center justify-center transform rotate-180">
+                        <span class="text-[11px] md:text-[13px] font-semibold text-stone-900 tracking-tight leading-none mb-1">By Your Side</span>
+                        <span class="text-[9px] md:text-[10px] text-stone-700 tracking-normal font-medium">Sade</span>
+                    </div>
+
+                    <!-- Center Spindle Hole -->
+                    <div class="w-3.5 h-3.5 md:w-4 md:h-4 rounded-full bg-[#e6e4dc] border border-stone-800 shadow-inner z-10 absolute"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TONEARM MECHANISM (Exact position, base outlines & headshell as in picture) -->
+        <div id="tonearm-base" 
+             class="absolute right-[4%] md:right-[6%] top-[6%] md:top-[8%] w-[160px] h-[340px] md:w-[180px] md:h-[400px] z-40 pointer-events-auto cursor-pointer"
+             onclick="togglePlayState()">
+            
+            <!-- White rounded base outline on the turntable surface -->
+            <div class="absolute right-2 top-2 w-28 h-44 rounded-full border border-stone-400/40 bg-transparent pointer-events-none">
+                <div class="absolute top-2 right-2 w-20 h-20 rounded-full border border-stone-400/30"></div>
+            </div>
+
+            <!-- Tonearm Assembly -->
+            <div id="tonearm" class="w-full h-full relative tonearm-wrapper tonearm-stopped">
+                
+                <!-- Pivot Base Mount -->
+                <div class="absolute top-8 right-10 w-14 h-14 rounded-full bg-[#e2ded5] shadow-md border border-stone-300 flex items-center justify-center">
+                    <div class="w-10 h-10 rounded-full bg-[#d6d0c4] border border-stone-400/50 shadow-inner flex items-center justify-center">
+                        <div class="w-4 h-4 rounded-full bg-stone-300 border border-stone-400"></div>
+                    </div>
+                </div>
+
+                <!-- Metallic Arm Shaft -->
+                <div class="absolute top-14 right-[62px] w-[6px] h-[240px] md:h-[280px] bg-gradient-to-r from-stone-200 via-stone-100 to-stone-400 rounded-full shadow-md"></div>
+
+                <!-- White Cartridge / Headshell at the end -->
+                <div class="absolute bottom-6 md:bottom-10 right-[38px] w-9 h-14 bg-[#f7f5f0] border border-stone-300 shadow-md rounded-sm transform -rotate-12 flex flex-col items-center justify-between p-1">
+                    <!-- Finger Lift -->
+                    <div class="w-1.5 h-4 bg-stone-300 rounded-full absolute -right-2 top-3"></div>
+                    <!-- Stylus Cartridge detail -->
+                    <div class="w-full h-2 bg-stone-200 border-b border-stone-300"></div>
+                    <div class="w-2 h-2 rounded-full bg-stone-800 mb-1"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Web Audio Engine -->
+    <script>
+        let isPlaying = false;
+        let isCoverFront = true;
+        let audioCtx = null;
+        let vinylCrackleNode = null;
