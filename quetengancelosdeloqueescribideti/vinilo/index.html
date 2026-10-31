@@ -133,7 +133,7 @@
             transform: translateX(10vw);
         }
         .stage-playing {
-            transform: translateX(0);
+            transform: translateX(-4vw);
         }
 
         .font-cinzel {
@@ -146,11 +146,11 @@
     <!-- Ambient Vignette & Glow Overlay -->
     <div class="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_40%,_rgba(0,0,0,0.5)_100%)] z-50"></div>
 
-    <!-- Main Stage Container (Responsive and Screen-fitted) -->
-    <div id="player-wrapper" class="player-wrapper stage-centered relative w-full h-full max-w-[1050px] max-h-[750px] flex items-center justify-center">
+    <!-- Main Stage Container (Responsive and Screen-fitted with larger scale) -->
+    <div id="player-wrapper" class="player-wrapper stage-centered relative w-full h-full max-w-[1150px] max-h-[820px] flex items-center justify-center scale-105">
 
         <!-- ALBUM SLEEVE & VINYL DISK GROUP -->
-        <div class="relative w-[40vw] min-w-[300px] max-w-[460px] aspect-square flex items-center justify-center">
+        <div class="relative w-[44vw] min-w-[340px] max-w-[500px] aspect-square flex items-center justify-center">
             
             <!-- VINYL DISC (Restored to classic full size) -->
             <div id="vinyl-container" 
@@ -218,13 +218,13 @@
 
         </div>
 
-        <!-- TONEARM MECHANISM (Fitted safely inside screen margins) -->
+        <!-- TONEARM MECHANISM (Separated from disc edge and centered better) -->
         <div id="tonearm-base" 
-             class="absolute right-[8%] sm:right-[10%] md:right-[12%] top-[12%] sm:top-[14%] w-[130px] h-[300px] sm:w-[150px] sm:h-[350px] md:w-[160px] md:h-[380px] z-40 pointer-events-auto cursor-pointer"
+             class="absolute right-[4%] sm:right-[6%] md:right-[8%] top-[10%] sm:top-[12%] w-[140px] h-[320px] sm:w-[160px] sm:h-[370px] md:w-[175px] md:h-[400px] z-40 pointer-events-auto cursor-pointer"
              onclick="togglePlayState()">
             
-            <!-- White rounded base outline -->
-            <div class="absolute right-1 top-1 w-24 sm:w-28 h-36 sm:h-40 rounded-full border border-white/20 bg-transparent pointer-events-none">
+            <!-- White rounded base outline (Shifted slightly right to separate from disc) -->
+            <div class="absolute right-0 top-0 w-24 sm:w-28 h-36 sm:h-40 rounded-full border border-white/20 bg-transparent pointer-events-none">
                 <div class="absolute top-2 right-2 w-16 sm:w-20 h-16 sm:h-20 rounded-full border border-white/15"></div>
             </div>
 
@@ -232,17 +232,17 @@
             <div id="tonearm" class="w-full h-full relative tonearm-wrapper tonearm-stopped">
                 
                 <!-- Pivot Base Mount -->
-                <div class="absolute top-6 right-8 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#e2ded5] shadow-lg border border-stone-300 flex items-center justify-center">
+                <div class="absolute top-6 right-7 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#e2ded5] shadow-lg border border-stone-300 flex items-center justify-center">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#d6d0c4] border border-stone-400/50 shadow-inner flex items-center justify-center">
                         <div class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-stone-300 border border-stone-400"></div>
                     </div>
                 </div>
 
                 <!-- Metallic Arm Shaft -->
-                <div class="absolute top-12 right-[50px] sm:right-[58px] w-[5px] sm:w-[6px] h-[210px] sm:h-[250px] md:h-[270px] bg-gradient-to-r from-stone-200 via-stone-100 to-stone-400 rounded-full shadow-lg"></div>
+                <div class="absolute top-12 right-[46px] sm:right-[54px] w-[5px] sm:w-[6px] h-[220px] sm:h-[260px] md:h-[285px] bg-gradient-to-r from-stone-200 via-stone-100 to-stone-400 rounded-full shadow-lg"></div>
 
                 <!-- White Cartridge / Headshell -->
-                <div class="absolute bottom-6 sm:bottom-8 right-[32px] sm:right-[38px] w-8 sm:w-9 h-12 sm:h-14 bg-[#f7f5f0] border border-stone-300 shadow-xl rounded-sm transform -rotate-12 flex flex-col items-center justify-between p-1">
+                <div class="absolute bottom-6 sm:bottom-8 right-[28px] sm:right-[34px] w-8 sm:w-9 h-12 sm:h-14 bg-[#f7f5f0] border border-stone-300 shadow-xl rounded-sm transform -rotate-12 flex flex-col items-center justify-between p-1">
                     <div class="w-1.5 h-3.5 bg-stone-300 rounded-full absolute -right-1.5 top-2.5"></div>
                     <div class="w-full h-1.5 bg-stone-200 border-b border-stone-300"></div>
                     <div class="w-1.5 h-1.5 rounded-full bg-stone-800 mb-0.5"></div>
