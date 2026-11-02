@@ -61,7 +61,7 @@ const ALL_ARTISTS=[
 {s:'zoe-jpr',n:'La Reina de Tecámac',img:'img/zoe-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'},...RG)},
 {s:'santiago-campos',n:'Campos',img:'img/santiago-photo.jpg?v=2',fit:1,tl:TL(FOUND,{...SALE},{d:'10/2026',h:'Se unió a Forge Records'},{...VG_ALBUM})},
 {s:'valentina-granciano',n:'Valentina Granciano',img:'img/valentina-photo.jpg',pos:'center 60%',tl:TL(FOUND,{...SALE},{d:'19/10/2026',h:'Se unió a Forge Records'},{...VG_ALBUM})},
-{s:'emma-bennett-nv',n:'Emma Bennett NV',img:'img/emma-bennett-nv.svg',fit:1,guest:1,tl:TL({...EMMA_RELEASE})},
+{s:'emma-bennett-nv',n:'Emma Bennett NV',img:'img/emma-bennett-nv.jpg',fit:1,guest:1,tl:TL({...EMMA_RELEASE})},
 // collaborators credited on Dereck DFX releases (no join date known, so no "joined" entry)
 ...GUESTS.map(({s,n,f,hidden,fit,a69,email})=>({s,n,email,img:`img/${f||s}.jpg`,fit,pos:s==='iker'?'center 12%':s==='daniel-nigro'?'center 8%':undefined,guest:1,hidden,tl:TL(FOUND,{...SALE},...FEAT(s),...(s==='anyelina'||a69?RG:[]),...(s==='alc'?[{...EMMA_RELEASE}]:[]))}))
 ].map(a=>({...a,tl:a.tl||JOIN}));
