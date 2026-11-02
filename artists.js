@@ -54,14 +54,16 @@ const ALBUM_GUEST={d:'10/2026',t:'Aparecerá en el álbum “Las Reinas del Perr
 const AREA69={d:'10/2026',t:'Aparece en el álbum “Las Reinas del Perreo (Area 69, Second Edition)” de Dereck DFX'};
 const FEAT=s=>DFX_RELEASES.filter(r=>(r.feat||[]).includes(s)).map(r=>({d:r.d,t:r.t,n:'Con Dereck DFX',q:r.q,details:r.details}));
 const VG_ALBUM={d:'19/10/2026',h:'Anunció el álbum “Que Tengan Celos De Lo Que Escribí De Ti”',n:'De Dereck DFX, Valentina Granciano y Campos'};
+const EMMA_RELEASE={t:"Love it's life 4 Emma",n:'Dereck DFX · ALC (Alice Whitman) · Emma Bennett NV'};
 const ALL_ARTISTS=[
-{s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tagline:'Y Esta Mierda Apenas Empieza',taglineBy:'Dereck DFX',tl:SOON(TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})),...ALB_OUT))},
+{s:'dereck-dfx',n:'Dereck DFX',img:'img/dereck-dfx.jpg',tagline:'Y Esta Mierda Apenas Empieza',taglineBy:'Dereck DFX',tl:SOON(TL(FOUND,{d:'07/2026',h:'Se unió a Forge Records'},...PRE.map(r=>({d:r.d||'',t:r.t,n:r.n})),{...SALE},...POST.map(r=>({d:r.d,t:r.t,n:r.n,q:r.q})),...DFX_ANNOUNCED.map(r=>({...r})),...ALB_OUT,{...EMMA_RELEASE}))},
 {s:'ar',n:'AR',img:'img/ar.jpg',tl:TL(FOUND,AR_JOIN,...PRE.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn})),{...SALE},...POST.filter(r=>r.ar).map(r=>({d:r.d,t:r.t,n:r.arn,q:r.q})),...RG)},
 {s:'zoe-jpr',n:'La Reina de Tecámac',img:'img/zoe-photo.jpg',fit:1,tl:TL(FOUND,{...SALE},...FEAT('zoe-jpr'),{d:'10/2026',h:'Se unió a Forge Records'},...RG)},
 {s:'santiago-campos',n:'Campos',img:'img/santiago-photo.jpg?v=2',fit:1,tl:TL(FOUND,{...SALE},{d:'10/2026',h:'Se unió a Forge Records'},{...VG_ALBUM})},
 {s:'valentina-granciano',n:'Valentina Granciano',img:'img/valentina-photo.jpg',pos:'center 60%',tl:TL(FOUND,{...SALE},{d:'19/10/2026',h:'Se unió a Forge Records'},{...VG_ALBUM})},
+{s:'emma-bennett-nv',n:'Emma Bennett NV',img:'img/emma-bennett-nv.svg',fit:1,guest:1,tl:TL({...EMMA_RELEASE})},
 // collaborators credited on Dereck DFX releases (no join date known, so no "joined" entry)
-...GUESTS.map(({s,n,f,hidden,fit,a69,email})=>({s,n,email,img:`img/${f||s}.jpg`,fit,pos:s==='iker'?'center 12%':s==='daniel-nigro'?'center 8%':undefined,guest:1,hidden,tl:TL(FOUND,{...SALE},...FEAT(s),...(s==='anyelina'||a69?RG:[]))}))
+...GUESTS.map(({s,n,f,hidden,fit,a69,email})=>({s,n,email,img:`img/${f||s}.jpg`,fit,pos:s==='iker'?'center 12%':s==='daniel-nigro'?'center 8%':undefined,guest:1,hidden,tl:TL(FOUND,{...SALE},...FEAT(s),...(s==='anyelina'||a69?RG:[]),...(s==='alc'?[{...EMMA_RELEASE}]:[]))}))
 ].map(a=>({...a,tl:a.tl||JOIN}));
 const ARTISTS=ALL_ARTISTS.filter(a=>!a.hidden);// everything on the site reads ARTISTS, so hidden artists never show
 // cards on the home page: only the label's artists (repeated to fill the hero)
