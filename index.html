@@ -1,7 +1,7 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Forge Records</title><meta name="theme-color" content="#000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Archivo+Black&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=92"><link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" type="image/png" href="img/favicon.png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"></head><body>
+<link rel="stylesheet" href="style.css?v=92"><link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" type="image/png" href="img/favicon.png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png"><link rel="stylesheet" href="language.css"><script defer src="locales.js"></script><script defer src="language.js"></script></head><body>
 <script>/* play the intro only on a fresh landing (typed URL, external link, reload) — never when coming back from our own pages */
 (function(){try{var n=performance.getEntriesByType('navigation')[0],t=n?n.type:'navigate',q=location.search,r=document.referrer,own=false;try{own=!!r&&new URL(r).origin===location.origin}catch(e){}
 if(/[?&](shot|nointro)\b/.test(q)||t==='back_forward'||(t==='navigate'&&own))document.documentElement.classList.add('nointro')}catch(e){}})();</script>
@@ -51,6 +51,7 @@ if(/[?&](shot|nointro)\b/.test(q)||t==='back_forward'||(t==='navigate'&&own))doc
 <svg viewBox="0 0 110 40" aria-label="Forge script"><text x="55" y="29" text-anchor="middle" font-family="Kaushan Script" font-size="24" fill="url(#fg)" stroke="#fff" stroke-width=".3">Forge</text></svg>
 </div>
 <p class="fcopy">© 2026 Forge Records</p><p class="flicense">Forge Records, under exclusive license from Starlight Records, a division of Alice Whitman.</p>
+<div data-language></div>
 <nav class="flegal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Press</a><a href="#">Careers</a><a href="contact-info.html?nointro=1">Contact Us</a><a href="#">Cookies Policy</a><a href="#">Cookies Settings</a></nav>
 <i class="fend"></i>
 </section>
